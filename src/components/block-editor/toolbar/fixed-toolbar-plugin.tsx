@@ -1,0 +1,15 @@
+import { createPlatePlugin } from "platejs/react";
+
+import { FixedToolbar } from "./fixed-toolbar";
+import { FixedToolbarButtons } from "./fixed-toolbar-buttons";
+
+export const FixedToolbarPlugin = createPlatePlugin({
+  key: "fixed-toolbar",
+  render: {
+    beforeEditable: () => (
+      <FixedToolbar>
+        <FixedToolbarButtons />
+      </FixedToolbar>
+    ),
+  },
+});
