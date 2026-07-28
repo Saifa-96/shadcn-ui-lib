@@ -1,5 +1,5 @@
 {
-  "name": "@ws/ui",
+  "name": "shadcn-ui-lib",
   "version": "0.0.1",
   "type": "module",
   "exports": {
@@ -11,26 +11,32 @@
       "types": "./dist/block-editor.d.ts",
       "import": "./dist/block-editor.js"
     },
-    "./styles/globals.css": "./src/styles/globals.css"
+    "./styles/*": "./src/styles/*"
   },
   "sideEffects": false,
+  "files": [
+    "dist",
+    "src/styles",
+    "src/**/*.{ts,tsx}"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build --config vite.config.build.ts",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.0",
+    "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^26.1.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "@vitejs/plugin-react": "^4.3.0",
+    "@typescript/typescript6": "^6.0.2",
+    "@vitejs/plugin-react": "^6.0.4",
     "lucide-react": "^1.27.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.1.0",
-    "typescript": "^5.7.0",
-    "vite": "^6.0.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.1.5",
     "vite-plugin-dts": "^5.0.3"
   },
   "peerDependencies": {
