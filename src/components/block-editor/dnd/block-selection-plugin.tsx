@@ -1,5 +1,8 @@
-import { BlockSelectionPlugin } from "@platejs/selection/react";
+import { BlockMenuPlugin, BlockSelectionPlugin } from "@platejs/selection/react";
 import { getPluginTypes, KEYS } from "platejs";
+
+import { BlockSelection } from "./block-selection";
+import { BlockContextMenu } from "./block-context-menu";
 
 export const BlockSelectionKit = BlockSelectionPlugin.configure(({ editor }) => ({
   options: {
@@ -9,4 +12,16 @@ export const BlockSelectionKit = BlockSelectionPlugin.configure(({ editor }) => 
         element.type
       ),
   },
+  render: {
+    belowRootNodes: (props) => {
+      if (!props.attributes.className?.includes("slate-selectable"))
+        return null;
+
+      return <BlockSelection />;
+    },
+  },
 }));
+
+export const BlockMenuKit = BlockMenuPlugin.configure({
+  render: { aboveEditable: BlockContextMenu },
+});

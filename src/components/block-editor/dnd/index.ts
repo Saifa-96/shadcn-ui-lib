@@ -1,4 +1,4 @@
-import { BlockSelectionKit } from "./block-selection-plugin";
+import { BlockSelectionKit, BlockMenuKit } from "./block-selection-plugin";
 import { DndKit } from "./dnd-plugin";
 
-export const DndPlugins = [BlockSelectionKit, DndKit];
+export const DndPlugins = [BlockSelectionKit, BlockMenuKit, DndKit];
