@@ -1,0 +1,34 @@
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+
+export function DialogSection() {
+  return (
+    <section className="space-y-3">
+      <h2 className="text-lg font-semibold text-foreground">Dialog</h2>
+      <Dialog>
+        <DialogTrigger render={<Button variant="outline" />}>
+          Open Dialog
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Dialog Title</DialogTitle>
+            <DialogDescription>
+              This is a dialog built with Base UI primitives.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button>Confirm</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </section>
+  );
+}
