@@ -1,4 +1,4 @@
-# ws-ui
+# shadcn-ui-lib
 
 Internal UI component library built on [shadcn/ui](https://ui.shadcn.com/) + [Base UI](https://base-ui.com/) + Tailwind CSS v4.
 
@@ -14,7 +14,7 @@ Internal UI component library built on [shadcn/ui](https://ui.shadcn.com/) + [Ba
 ### 1. Install
 
 ```bash
-pnpm add @ws/ui
+pnpm add shadcn-ui-lib
 ```
 
 Peer dependencies (install if not already present):
@@ -29,10 +29,10 @@ Install Tailwind CSS v4 in your project, then in your app's entry CSS file:
 
 ```css
 /* Import theme variables + base reset */
-@import "@ws/ui/styles/globals.css";
+@import "shadcn-ui-lib/styles/globals.css";
 
-/* Tell Tailwind to scan ws-ui source for utility classes */
-@source "../../node_modules/@ws/ui/src/**/*.{ts,tsx}";
+/* Tell Tailwind to scan the library source for utility classes */
+@source "../../node_modules/shadcn-ui-lib/src/**/*.{ts,tsx}";
 ```
 
 > Adjust the relative path based on where your CSS entry file lives relative to `node_modules`.
@@ -40,8 +40,8 @@ Install Tailwind CSS v4 in your project, then in your app's entry CSS file:
 ### 3. Use components
 
 ```tsx
-import { Button, Dialog, DialogContent, DialogTrigger } from "@ws/ui";
-import { BlockEditor } from "@ws/ui/block-editor";
+import { Button, Dialog, DialogContent, DialogTrigger } from "shadcn-ui-lib";
+import { BlockEditor } from "shadcn-ui-lib/block-editor";
 ```
 
 ## Dev
