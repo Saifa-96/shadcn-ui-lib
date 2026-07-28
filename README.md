@@ -4,9 +4,10 @@ Internal UI component library built on [shadcn/ui](https://ui.shadcn.com/) + [Ba
 
 ## How it works
 
-- Components live in `src/` as plain React + Tailwind source (Base UI as headless primitive layer).
-- No CSS is bundled — consuming projects use Tailwind to scan this package and generate only the utility classes they use.
-- Theme variables and base styles are exported via `src/styles/globals.css`.
+- Components are pre-built as ESM with full type declarations.
+- All dependencies (Base UI, platejs, etc.) are bundled — consumers only need to install peer dependencies.
+- Multi-entry build with `sideEffects: false` enables tree-shaking: only imported components end up in your bundle.
+- Theme variables and base styles are exported via `src/styles/globals.css` — Tailwind utility classes are generated on demand by the consuming project.
 
 ## Usage in your project
 
@@ -22,36 +23,34 @@ Peer dependencies (install if not already present):
 pnpm add react react-dom lucide-react
 ```
 
-### 2. Import global styles
+### 2. Setup Tailwind
 
-In your app's entry CSS file, import the global styles (CSS variables + Tailwind base reset):
+Install Tailwind CSS v4 in your project, then in your app's entry CSS file:
 
 ```css
+/* Import theme variables + base reset */
 @import "@ws/ui/styles/globals.css";
-```
 
-### 3. Add Tailwind source scanning
-
-In the same CSS file, tell Tailwind to scan this package's components so utility classes are generated on demand:
-
-```css
+/* Tell Tailwind to scan ws-ui source for utility classes */
 @source "../../node_modules/@ws/ui/src/**/*.{ts,tsx}";
 ```
 
 > Adjust the relative path based on where your CSS entry file lives relative to `node_modules`.
 
-### 4. Use components
+### 3. Use components
 
 ```tsx
-import { Button } from "@ws/ui";
-import { Dialog, DialogContent, DialogTrigger } from "@ws/ui";
+import { Button, Dialog, DialogContent, DialogTrigger } from "@ws/ui";
+import { BlockEditor } from "@ws/ui/block-editor";
 ```
 
 ## Dev
 
 ```bash
 pnpm install
-pnpm dev    # starts vite dev server with component showcase
+pnpm dev        # starts vite dev server with component showcase
+pnpm build      # builds ESM output to dist/
+pnpm typecheck  # runs tsc --noEmit
 ```
 
 ## Adding components
@@ -62,4 +61,4 @@ Use the shadcn CLI with Base UI style:
 pnpm dlx shadcn@latest add <component>
 ```
 
-Or manually copy component source into `src/components/ui/` and re-export from `src/index.ts`.
+Then re-export from `src/index.ts`.

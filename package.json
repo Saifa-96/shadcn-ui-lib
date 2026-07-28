@@ -3,17 +3,25 @@
   "version": "0.0.1",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
-    "./styles/globals.css": "./src/styles/globals.css",
-    "./tailwind.preset": "./src/tailwind.preset.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./block-editor": {
+      "types": "./dist/block-editor.d.ts",
+      "import": "./dist/block-editor.js"
+    },
+    "./styles/globals.css": "./src/styles/globals.css"
   },
+  "sideEffects": false,
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --config vite.config.build.ts",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.0",
+    "@types/node": "^26.1.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.0",
@@ -22,7 +30,8 @@
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.1.0",
     "typescript": "^5.7.0",
-    "vite": "^6.0.0"
+    "vite": "^6.0.0",
+    "vite-plugin-dts": "^5.0.3"
   },
   "peerDependencies": {
     "lucide-react": "^1.0.0",
