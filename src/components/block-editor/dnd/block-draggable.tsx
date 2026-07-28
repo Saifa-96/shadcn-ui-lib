@@ -23,6 +23,8 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
+import { InsertBlockButton } from "./insert-block-button";
+
 const UNDRAGGABLE_KEYS = [KEYS.column, KEYS.tr, KEYS.td];
 
 export const BlockDraggable: RenderNodeWrapper = (props) => {
@@ -127,15 +129,19 @@ function Draggable(props: PlateElementProps) {
           >
             <div
               className={cn(
-                "slate-blockToolbar relative w-4.5",
-                "pointer-events-auto mr-1 flex items-center",
+                "slate-blockToolbar relative flex w-9",
+                "pointer-events-auto mr-1 items-center gap-0.5",
                 isInColumn && "mr-1.5"
               )}
             >
+              <InsertBlockButton
+                className="absolute -left-4.5 h-6 w-4.5 p-0"
+                style={{ top: `${dragButtonTop + 3}px` }}
+              />
               <Button
                 ref={handleRef}
                 variant="ghost"
-                className="-left-0 absolute h-6 w-full p-0"
+                className="-left-0 absolute h-6 w-4.5 p-0"
                 style={{ top: `${dragButtonTop + 3}px` }}
                 data-plate-prevent-deselect
               >
