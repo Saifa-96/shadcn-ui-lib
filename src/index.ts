@@ -19,6 +19,7 @@ export * from "./components/ui/tooltip";
 
 // block editor
 export * from "./components/block-editor/editor";
+export { blockEditorValueSchema, type BlockEditorValue } from "./components/block-editor/schema";
 
 // utils
 export { cn } from "./lib/utils";
