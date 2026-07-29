@@ -8,7 +8,7 @@ export const BlockSelectionKit = BlockSelectionPlugin.configure(({ editor }) => 
   options: {
     enableContextMenu: true,
     isSelectable: (element) =>
-      !getPluginTypes(editor, [KEYS.column, KEYS.codeLine, KEYS.td]).includes(
+      !getPluginTypes(editor, [KEYS.column, KEYS.codeLine, KEYS.td, KEYS.tr, KEYS.table]).includes(
         element.type
       ),
   },
