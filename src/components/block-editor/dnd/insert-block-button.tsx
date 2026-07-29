@@ -2,6 +2,7 @@ import * as React from "react";
 import { Plus } from "lucide-react";
 import { KEYS } from "platejs";
 import { useEditorRef, useElement } from "platejs/react";
+import { insertTable } from "@platejs/table";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +19,7 @@ const INSERT_ITEMS = [
   { type: KEYS.h2, label: "Heading 2" },
   { type: KEYS.h3, label: "Heading 3" },
   { type: KEYS.blockquote, label: "Blockquote" },
+  { type: KEYS.table, label: "Table" },
 ];
 
 interface InsertBlockButtonProps {
@@ -32,6 +34,13 @@ export function InsertBlockButton({ className, style }: InsertBlockButtonProps) 
   const handleInsert = (type: string) => {
     const path = editor.api.findPath(element);
     if (!path) return;
+
+    if (type === KEYS.table) {
+      const nextPath = [path[0]! + 1];
+      editor.tf.select({ path: nextPath, offset: 0 });
+      insertTable(editor, {});
+      return;
+    }
 
     const nextPath = [path[0]! + 1];
     editor.tf.insertNodes(
