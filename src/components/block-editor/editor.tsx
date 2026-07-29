@@ -2,15 +2,18 @@
 
 import { useState } from "react";
 import type { Value } from "platejs";
+import type { PlateEditor } from "platejs/react";
 
 import { Plate, PlateContent, usePlateEditor } from "platejs/react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { plugins } from "./plugins";
 
+export type { PlateEditor };
+
 export interface BlockEditorProps {
   initialValue?: Value;
   onValueChange?: (v: Value) => void;
-  onEditorReady?: (editor: ReturnType<typeof usePlateEditor>) => void;
+  onEditorReady?: (editor: PlateEditor) => void;
 }
 
 export const BlockEditor: React.FC<BlockEditorProps> = (props) => {
