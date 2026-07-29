@@ -34,8 +34,10 @@ export default defineConfig({
     lib: {
       entry: {
         index: resolve(__dirname, "src/index.ts"),
-        "block-editor": resolve(__dirname, "src/components/block-editor/editor.tsx"),
-        "lib/utils": resolve(__dirname, "src/lib/utils.ts"),
+        ui: resolve(__dirname, "src/ui.ts"),
+        "block-editor": resolve(__dirname, "src/block-editor.ts"),
+        lib: resolve(__dirname, "src/lib.ts"),
+        hooks: resolve(__dirname, "src/hooks.ts"),
         ...uiEntries,
       },
       formats: ["es"],
