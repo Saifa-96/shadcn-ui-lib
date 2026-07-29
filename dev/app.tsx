@@ -2,18 +2,30 @@ import { useState } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Separator } from "@/components/ui/separator";
 import {
-  ButtonSection,
-  InputSection,
-  CheckboxSection,
-  SelectSection,
-  DialogSection,
+  AlertSection,
   AlertDialogSection,
-  DropdownMenuSection,
-  PopoverSection,
-  TooltipSection,
-  HoverCardSection,
   AvatarSection,
+  BadgeSection,
+  BreadcrumbSection,
+  ButtonSection,
+  CardSection,
+  CheckboxSection,
+  CollapsibleSection,
+  DialogSection,
+  DropdownMenuSection,
+  HoverCardSection,
+  InputSection,
+  PopoverSection,
+  ProgressSection,
+  RadioGroupSection,
+  SelectSection,
   SeparatorSection,
+  SkeletonSection,
+  SliderSection,
+  SwitchSection,
+  TabsSection,
+  ToggleSection,
+  TooltipSection,
 } from "./ui-sections";
 import { BlockEditor } from "@/components/block-editor/editor";
 import { Value } from "platejs";
@@ -171,29 +183,53 @@ function TabButton({ active, onClick, children }: TabButtonProps) {
 function UiTab() {
   return (
     <div className="space-y-8">
-      <ButtonSection />
-      <Separator />
-      <InputSection />
-      <Separator />
-      <CheckboxSection />
-      <Separator />
-      <SelectSection />
-      <Separator />
-      <DialogSection />
+      <AlertSection />
       <Separator />
       <AlertDialogSection />
       <Separator />
+      <AvatarSection />
+      <Separator />
+      <BadgeSection />
+      <Separator />
+      <BreadcrumbSection />
+      <Separator />
+      <ButtonSection />
+      <Separator />
+      <CardSection />
+      <Separator />
+      <CheckboxSection />
+      <Separator />
+      <CollapsibleSection />
+      <Separator />
+      <DialogSection />
+      <Separator />
       <DropdownMenuSection />
-      <Separator />
-      <PopoverSection />
-      <Separator />
-      <TooltipSection />
       <Separator />
       <HoverCardSection />
       <Separator />
-      <AvatarSection />
+      <InputSection />
+      <Separator />
+      <PopoverSection />
+      <Separator />
+      <ProgressSection />
+      <Separator />
+      <RadioGroupSection />
+      <Separator />
+      <SelectSection />
       <Separator />
       <SeparatorSection />
+      <Separator />
+      <SkeletonSection />
+      <Separator />
+      <SliderSection />
+      <Separator />
+      <SwitchSection />
+      <Separator />
+      <TabsSection />
+      <Separator />
+      <ToggleSection />
+      <Separator />
+      <TooltipSection />
     </div>
   );
 }
