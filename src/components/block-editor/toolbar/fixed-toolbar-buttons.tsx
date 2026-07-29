@@ -34,6 +34,7 @@ import {
 import { useTableMergeState } from "@platejs/table/react";
 
 import { ToolbarButton, ToolbarGroup } from "./toolbar";
+import { RedoToolbarButton, UndoToolbarButton } from "./history-toolbar-button";
 
 export function FixedToolbarButtons() {
   const editor = useEditorRef();
@@ -43,6 +44,10 @@ export function FixedToolbarButtons() {
 
   return (
     <>
+      <ToolbarGroup>
+        <UndoToolbarButton />
+        <RedoToolbarButton />
+      </ToolbarGroup>
       <ToolbarGroup>
         <MarkButton nodeType={KEYS.bold} tooltip="Bold (⌘+B)">
           <BoldIcon />
