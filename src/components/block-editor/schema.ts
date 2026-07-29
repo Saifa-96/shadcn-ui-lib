@@ -27,7 +27,7 @@ const headingSchema = z.object({
 
 const blockquoteSchema = z.object({
   type: z.literal("blockquote"),
-  children: inlineChildrenSchema,
+  children: z.array(paragraphSchema).min(1),
 });
 
 // ─── Table ───────────────────────────────────────────────────────────────────

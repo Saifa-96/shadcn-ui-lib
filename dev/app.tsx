@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import type { SlateEditor } from "platejs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Separator } from "@/components/ui/separator";
+import { withAgentEdit } from "@/components/block-editor/with-agent-edit";
 import {
   AlertSection,
   AlertDialogSection,
@@ -28,12 +30,13 @@ import {
   TooltipSection,
 } from "./ui-sections";
 import { BlockEditor } from "@/components/block-editor/editor";
-import { Value } from "platejs";
+import type { Value } from "platejs";
 
 type Tab = "ui" | "block-editor";
 
 export function App() {
-  const [tab, setTab] = useState<Tab>("ui");
+  const [tab, setTab] = useState<Tab>("block-editor");
+  const editorRef = useRef<SlateEditor | null>(null);
 
   return (
     <TooltipProvider>
@@ -51,7 +54,34 @@ export function App() {
 
         <div className="mt-8">
           {tab === "ui" && <UiTab />}
-          {tab === "block-editor" && <BlockEditor initialValue={initialValue} />}
+          {tab === "block-editor" && (
+            <div className="space-y-4">
+              <button
+                type="button"
+                className="rounded bg-primary px-3 py-1.5 text-sm text-primary-foreground"
+                onClick={() => {
+                  const editor = editorRef.current;
+                  if (!editor) return;
+                  const result = withAgentEdit(editor, () => {
+                    editor.tf.insertNodes(
+                      {
+                        type: "p",
+                        children: [{ text: "🤖 This paragraph was inserted by withAgentEdit!" }],
+                      },
+                      { at: [editor.children.length] }
+                    );
+                  });
+                  console.log("withAgentEdit result:", result);
+                }}
+              >
+                Agent Edit: Insert Paragraph
+              </button>
+              <BlockEditor
+                initialValue={initialValue}
+                onEditorReady={(editor) => { editorRef.current = editor; }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </TooltipProvider>
