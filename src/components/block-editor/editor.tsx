@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import type { Value } from "platejs";
 import type { PlateEditor } from "platejs/react";
 
 import { Plate, PlateContent, usePlateEditor } from "platejs/react";
-import { Skeleton } from "@/components/ui/skeleton";
 import { plugins } from "./plugins";
 
 export type { PlateEditor };
@@ -18,29 +17,13 @@ export interface BlockEditorProps {
 
 export const BlockEditor: React.FC<BlockEditorProps> = (props) => {
   const { initialValue, onValueChange, onEditorReady } = props;
-  const [ready, setReady] = useState(false);
+  const editor = usePlateEditor({ plugins, value: initialValue });
 
-  const editor = usePlateEditor({
-    plugins,
-    value: initialValue,
-    onReady: ({ editor }) => {
-      setReady(true);
-      onEditorReady?.(editor);
-    },
-  });
+  useEffect(() => {
+    if (!editor) return;
 
-  if (!ready) {
-    return (
-      <div className="space-y-3" style={{ padding: "16px 64px" }}>
-        <Skeleton className="h-8 w-3/4" />
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-5/6" />
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-2/3" />
-      </div>
-    );
-  }
+    onEditorReady?.(editor);
+  }, [editor, onEditorReady]);
 
   return (
     <Plate editor={editor} onChange={({ value }) => onValueChange?.(value)}>
