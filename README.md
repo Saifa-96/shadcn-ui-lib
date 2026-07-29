@@ -20,7 +20,7 @@ pnpm add shadcn-ui-lib
 Peer dependencies (install if not already present):
 
 ```bash
-pnpm add react react-dom lucide-react
+pnpm add react react-dom lucide-react zod
 ```
 
 ### 2. Setup Tailwind
