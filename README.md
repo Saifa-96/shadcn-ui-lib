@@ -28,14 +28,12 @@ pnpm add react react-dom lucide-react
 Install Tailwind CSS v4 in your project, then in your app's entry CSS file:
 
 ```css
-/* Import theme variables + base reset */
 @import "shadcn-ui-lib/styles/globals.css";
-
-/* Tell Tailwind to scan the library source for utility classes */
-@source "../../node_modules/shadcn-ui-lib/src/**/*.{ts,tsx}";
+@import "shadcn-ui-lib/styles/scrollbar.css";
+@source "../node_modules/shadcn-ui-lib/src";
 ```
 
-> Adjust the relative path based on where your CSS entry file lives relative to `node_modules`.
+> Adjust the `@source` path based on where your CSS entry file lives relative to `node_modules`.
 
 ### 3. Use components
 

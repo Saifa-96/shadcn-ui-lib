@@ -5,10 +5,10 @@ import { resolve } from "path";
 import { readFileSync, readdirSync } from "fs";
 
 const pkg = JSON.parse(readFileSync("./package.json", "utf-8"));
-
+const srcDir = resolve(__dirname, "src");
 const external = [
+  ...Object.keys(pkg.dependencies || {}),
   ...Object.keys(pkg.peerDependencies || {}),
-  "react/jsx-runtime",
 ];
 
 const uiEntries = Object.fromEntries(
@@ -44,7 +44,9 @@ export default defineConfig({
       external: (id) =>
         external.some((dep) => id === dep || id.startsWith(`${dep}/`)),
       output: {
-        chunkFileNames: "chunks/[name]-[hash].js",
+        preserveModules: true,
+        preserveModulesRoot: srcDir,
+        entryFileNames: "[name].js",
       },
     },
     cssCodeSplit: false,

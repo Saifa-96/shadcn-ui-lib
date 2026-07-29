@@ -1,3 +1,5 @@
+"use client";
+
 import type { Value } from "platejs";
 
 import { Plate, PlateContent, usePlateEditor } from "platejs/react";
