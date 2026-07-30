@@ -26,11 +26,13 @@ export const BlockEditor: React.FC<BlockEditorProps> = (props) => {
   }, [editor, onEditorReady]);
 
   return (
-    <Plate editor={editor} onChange={({ value }) => onValueChange?.(value)}>
-      <PlateContent
-        style={{ padding: "16px 64px", minHeight: "100px" }}
-        placeholder="Type your amazing content here..."
-      />
-    </Plate>
+    <div className="relative isolate">
+      <Plate editor={editor} onChange={({ value }) => onValueChange?.(value)}>
+        <PlateContent
+          style={{ padding: "16px 64px", minHeight: "100px" }}
+          placeholder="Type your amazing content here..."
+        />
+      </Plate>
+    </div>
   );
 };
