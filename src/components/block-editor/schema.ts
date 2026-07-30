@@ -15,15 +15,22 @@ const inlineChildrenSchema = z.array(textNodeSchema).min(1);
 
 // ─── Block elements ──────────────────────────────────────────────────────────
 
+const listFieldsSchema = z.object({
+  listStyleType: z.string().optional(),
+  indent: z.number().int().min(0).optional(),
+  listStart: z.number().int().min(1).optional(),
+  checked: z.boolean().optional(),
+});
+
 const paragraphSchema = z.object({
   type: z.literal("p"),
   children: inlineChildrenSchema,
-});
+}).merge(listFieldsSchema);
 
 const headingSchema = z.object({
   type: z.enum(["h1", "h2", "h3"]),
   children: inlineChildrenSchema,
-});
+}).merge(listFieldsSchema);
 
 const blockquoteSchema = z.object({
   type: z.literal("blockquote"),

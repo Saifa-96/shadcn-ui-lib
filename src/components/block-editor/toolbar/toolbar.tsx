@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as ToolbarPrimitive from "@radix-ui/react-toolbar";
 import { type VariantProps, cva } from "class-variance-authority";
+import { ChevronDown } from "lucide-react";
 
 import { Separator } from "@/components/ui/separator";
 import {
@@ -48,6 +49,29 @@ export function ToolbarToggleItem({
     />
   );
 }
+
+const dropdownArrowVariants = cva(
+  "inline-flex items-center justify-center rounded-r-md font-medium text-foreground text-sm transition-colors disabled:pointer-events-none disabled:opacity-50",
+  {
+    defaultVariants: {
+      size: "sm",
+      variant: "default",
+    },
+    variants: {
+      size: {
+        default: "h-9 w-6",
+        lg: "h-10 w-8",
+        sm: "h-8 w-4",
+      },
+      variant: {
+        default:
+          "bg-transparent hover:bg-muted hover:text-muted-foreground aria-checked:bg-accent aria-checked:text-accent-foreground",
+        outline:
+          "border border-input border-l-0 bg-transparent hover:bg-accent hover:text-accent-foreground",
+      },
+    },
+  }
+);
 
 const toolbarButtonVariants = cva(
   "inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm outline-none transition-[color,box-shadow] hover:bg-muted hover:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-checked:bg-accent aria-checked:text-accent-foreground [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
@@ -114,6 +138,73 @@ export function ToolbarButton({
   }
 
   return button;
+}
+
+export function ToolbarSplitButton({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof ToolbarButton>) {
+  return (
+    <ToolbarButton
+      className={cn("group flex gap-0 px-0 hover:bg-transparent", className)}
+      {...props}
+    />
+  );
+}
+
+interface ToolbarSplitButtonPrimaryProps
+  extends Omit<
+    React.ComponentPropsWithoutRef<typeof ToolbarToggleItem>,
+    "value"
+  >,
+    VariantProps<typeof toolbarButtonVariants> {}
+
+export function ToolbarSplitButtonPrimary({
+  children,
+  className,
+  size = "sm",
+  variant,
+  ...props
+}: ToolbarSplitButtonPrimaryProps) {
+  return (
+    <span
+      className={cn(
+        toolbarButtonVariants({ size, variant }),
+        "rounded-r-none",
+        "group-data-[pressed=true]:bg-accent group-data-[pressed=true]:text-accent-foreground",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </span>
+  );
+}
+
+interface ToolbarSplitButtonSecondaryProps
+  extends React.ComponentPropsWithoutRef<"span">,
+    VariantProps<typeof dropdownArrowVariants> {}
+
+export function ToolbarSplitButtonSecondary({
+  className,
+  size,
+  variant,
+  ...props
+}: ToolbarSplitButtonSecondaryProps) {
+  return (
+    <span
+      className={cn(
+        dropdownArrowVariants({ size, variant }),
+        "group-data-[pressed=true]:bg-accent group-data-[pressed=true]:text-accent-foreground",
+        className
+      )}
+      onClick={(e) => e.stopPropagation()}
+      role="button"
+      {...props}
+    >
+      <ChevronDown className="size-3.5 text-muted-foreground" />
+    </span>
+  );
 }
 
 export function ToolbarGroup({

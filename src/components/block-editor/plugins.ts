@@ -1,6 +1,6 @@
 import type { PluginConfig } from "platejs";
 import {
-    BlockquotePlugin,
+  BlockquotePlugin,
   BoldPlugin,
   H1Plugin,
   H2Plugin,
@@ -8,13 +8,23 @@ import {
   ItalicPlugin,
   UnderlinePlugin,
 } from "@platejs/basic-nodes/react";
+import { IndentPlugin } from "@platejs/indent/react";
+import {
+  BulletedListRules,
+  isOrderedList,
+  OrderedListRules,
+  TaskListRules,
+} from "@platejs/list";
+import { ListPlugin } from "@platejs/list/react";
 import {
   TablePlugin,
   TableRowPlugin,
   TableCellPlugin,
   TableCellHeaderPlugin,
 } from "@platejs/table/react";
+import { KEYS } from "platejs";
 import { ParagraphPlugin } from "platejs/react";
+import { BlockList } from "./blocks/list-node";
 import { ParagraphElement } from "./blocks/paragraph";
 import { H1Element, H2Element, H3Element } from "./blocks/headers";
 import { BlockquoteElement } from "./blocks/block-quote";
@@ -44,6 +54,49 @@ export const plugins: PluginConfig[] = [
 
   // quote
   BlockquotePlugin.withComponent(BlockquoteElement),
+
+  // indent
+  IndentPlugin.configure({
+    inject: {
+      targetPlugins: [...KEYS.heading, KEYS.p, KEYS.blockquote],
+    },
+    options: {
+      offset: 24,
+    },
+  }),
+
+  // list
+  ListPlugin.configure({
+    inputRules: [
+      BulletedListRules.markdown({ variant: "-" }),
+      BulletedListRules.markdown({ variant: "*" }),
+      OrderedListRules.markdown({ variant: "." }),
+      OrderedListRules.markdown({ variant: ")" }),
+      TaskListRules.markdown({ checked: false }),
+      TaskListRules.markdown({ checked: true }),
+    ],
+    inject: {
+      nodeProps: {
+        nodeKey: KEYS.listType,
+        query: ({ nodeProps }) => {
+          const element = nodeProps.element;
+          return !!element?.listStyleType && !isOrderedList(element);
+        },
+        transformProps: ({ props }) => ({
+          ...props,
+          role: "listitem",
+          style: {
+            ...props.style,
+            display: "list-item",
+          },
+        }),
+      },
+      targetPlugins: [...KEYS.heading, KEYS.p, KEYS.blockquote],
+    },
+    render: {
+      belowNodes: BlockList,
+    },
+  }),
 
   // table
   TablePlugin.configure({
