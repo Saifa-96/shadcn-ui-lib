@@ -4,7 +4,7 @@ export const BlockquoteElement: React.FC<PlateElementProps> = (props) => {
   return (
     <PlateElement
       as="blockquote"
-      className="my-1 border-l-2 border-[#eee] pl-6 italic text-[#666]"
+      className="my-1 border-l-2 pl-6 italic"
       {...props}
     />
   );

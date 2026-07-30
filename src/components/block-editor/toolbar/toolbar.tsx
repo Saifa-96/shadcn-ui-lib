@@ -74,7 +74,7 @@ const dropdownArrowVariants = cva(
 );
 
 const toolbarButtonVariants = cva(
-  "inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm outline-none transition-[color,box-shadow] hover:bg-muted hover:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-checked:bg-accent aria-checked:text-accent-foreground [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  "inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm outline-none transition-[color,box-shadow] hover:bg-muted hover:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-checked:bg-accent aria-checked:text-accent-foreground aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     defaultVariants: {
       size: "sm",
@@ -82,11 +82,14 @@ const toolbarButtonVariants = cva(
     },
     variants: {
       size: {
-        sm: "h-8 min-w-8 px-1.5",
         default: "h-9 min-w-9 px-2",
+        lg: "h-10 min-w-10 px-2.5",
+        sm: "h-8 min-w-8 px-1.5",
       },
       variant: {
         default: "bg-transparent",
+        outline:
+          "border border-input bg-transparent shadow-xs hover:bg-accent hover:text-accent-foreground",
       },
     },
   }
@@ -95,6 +98,7 @@ const toolbarButtonVariants = cva(
 interface ToolbarButtonProps
   extends Omit<React.ComponentPropsWithoutRef<typeof ToolbarToggleItem>, "asChild" | "value">,
     VariantProps<typeof toolbarButtonVariants> {
+  isDropdown?: boolean;
   pressed?: boolean;
   tooltip?: React.ReactNode;
 }
@@ -102,33 +106,56 @@ interface ToolbarButtonProps
 export function ToolbarButton({
   children,
   className,
+  isDropdown,
   pressed,
   size = "sm",
   tooltip,
   variant,
   ...props
 }: ToolbarButtonProps) {
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => { setMounted(true); }, []);
+
   const button =
     typeof pressed === "boolean" ? (
       <ToolbarToggleGroup disabled={props.disabled} value="single" type="single">
         <ToolbarToggleItem
-          className={cn(toolbarButtonVariants({ size, variant }), className)}
+          className={cn(
+            toolbarButtonVariants({ size, variant }),
+            isDropdown && "justify-between gap-1 pr-1",
+            className
+          )}
           value={pressed ? "single" : ""}
           {...props}
         >
-          {children}
+          {isDropdown ? (
+            <>
+              <div className="flex flex-1 items-center gap-2 whitespace-nowrap">
+                {children}
+              </div>
+              <div>
+                <ChevronDown className="size-3.5 text-muted-foreground" />
+              </div>
+            </>
+          ) : (
+            children
+          )}
         </ToolbarToggleItem>
       </ToolbarToggleGroup>
     ) : (
       <ToolbarPrimitive.Button
-        className={cn(toolbarButtonVariants({ size, variant }), className)}
+        className={cn(
+          toolbarButtonVariants({ size, variant }),
+          isDropdown && "pr-1",
+          className
+        )}
         {...props}
       >
         {children}
       </ToolbarPrimitive.Button>
     );
 
-  if (tooltip) {
+  if (tooltip && mounted) {
     return (
       <Tooltip>
         <TooltipTrigger render={button} />

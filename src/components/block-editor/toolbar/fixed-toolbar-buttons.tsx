@@ -35,6 +35,7 @@ import { useTableMergeState } from "@platejs/table/react";
 
 import { ToolbarButton, ToolbarGroup } from "./toolbar";
 import { RedoToolbarButton, UndoToolbarButton } from "./history-toolbar-button";
+import { IndentToolbarButton, OutdentToolbarButton } from "./indent-toolbar-button";
 import {
   BulletedListToolbarButton,
   NumberedListToolbarButton,
@@ -45,40 +46,46 @@ export function FixedToolbarButtons() {
   const editor = useEditorRef();
   const readOnly = useEditorReadOnly();
 
-  if (readOnly) return null;
-
   return (
-    <>
-      <ToolbarGroup>
-        <UndoToolbarButton />
-        <RedoToolbarButton />
-      </ToolbarGroup>
-      <ToolbarGroup>
-        <BulletedListToolbarButton />
-        <NumberedListToolbarButton />
-        <TodoListToolbarButton />
-      </ToolbarGroup>
-      <ToolbarGroup>
-        <MarkButton nodeType={KEYS.bold} tooltip="Bold (⌘+B)">
-          <BoldIcon />
-        </MarkButton>
-        <MarkButton nodeType={KEYS.italic} tooltip="Italic (⌘+I)">
-          <ItalicIcon />
-        </MarkButton>
-        <MarkButton nodeType={KEYS.underline} tooltip="Underline (⌘+U)">
-          <UnderlineIcon />
-        </MarkButton>
-      </ToolbarGroup>
-      <ToolbarGroup>
-        <ToolbarButton
-          tooltip="Insert Table"
-          onClick={() => insertTable(editor, {})}
-        >
-          <TableIcon />
-        </ToolbarButton>
-      </ToolbarGroup>
-      <TableToolbarButtons />
-    </>
+    <div className="flex w-full">
+      {!readOnly && (
+        <>
+          <ToolbarGroup>
+            <UndoToolbarButton />
+            <RedoToolbarButton />
+          </ToolbarGroup>
+          <ToolbarGroup>
+            <BulletedListToolbarButton />
+            <NumberedListToolbarButton />
+            <TodoListToolbarButton />
+          </ToolbarGroup>
+          <ToolbarGroup>
+            <MarkButton nodeType={KEYS.bold} tooltip="Bold (⌘+B)">
+              <BoldIcon />
+            </MarkButton>
+            <MarkButton nodeType={KEYS.italic} tooltip="Italic (⌘+I)">
+              <ItalicIcon />
+            </MarkButton>
+            <MarkButton nodeType={KEYS.underline} tooltip="Underline (⌘+U)">
+              <UnderlineIcon />
+            </MarkButton>
+          </ToolbarGroup>
+          <ToolbarGroup>
+            <OutdentToolbarButton />
+            <IndentToolbarButton />
+          </ToolbarGroup>
+          <ToolbarGroup>
+            <ToolbarButton
+              tooltip="Insert Table"
+              onClick={() => insertTable(editor, {})}
+            >
+              <TableIcon />
+            </ToolbarButton>
+          </ToolbarGroup>
+          <TableToolbarButtons />
+        </>
+      )}
+    </div>
   );
 }
 
