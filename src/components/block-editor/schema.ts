@@ -16,7 +16,22 @@ const inlineChildrenSchema = z.array(textNodeSchema).min(1);
 // ─── Block elements ──────────────────────────────────────────────────────────
 
 const listFieldsSchema = z.object({
-  listStyleType: z.string().optional(),
+  listStyleType: z
+    .enum([
+      // unordered
+      "disc",
+      "circle",
+      "square",
+      // ordered
+      "decimal",
+      "lower-alpha",
+      "upper-alpha",
+      "lower-roman",
+      "upper-roman",
+      // todo
+      "todo",
+    ])
+    .optional(),
   indent: z.number().int().min(0).optional(),
   listStart: z.number().int().min(1).optional(),
   checked: z.boolean().optional(),
