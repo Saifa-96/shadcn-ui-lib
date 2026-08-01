@@ -116,6 +116,12 @@ const initialValue: Value = [
     ],
   },
   {
+    type: "img",
+    children: [{ text: "" }],
+    url: "https://github.com/shadcn.png",
+    caption: [{ text: "An image block with a caption" }],
+  },
+  {
     type: "h2",
     children: [{ text: "Lists" }],
   },

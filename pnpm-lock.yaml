@@ -17,6 +17,9 @@ importers:
       '@platejs/basic-nodes':
         specifier: ^53.0.0
         version: 53.0.0(platejs@53.2.4(@types/react@19.2.17)(immer@10.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.8)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@platejs/caption':
+        specifier: 53.0.0
+        version: 53.0.0(@types/react@19.2.17)(platejs@53.2.4(@types/react@19.2.17)(immer@10.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.8)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@platejs/dnd':
         specifier: ^53.1.0
         version: 53.1.0(platejs@53.2.4(@types/react@19.2.17)(immer@10.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.8)))(react-dnd-html5-backend@16.0.1)(react-dnd@16.0.1(@types/node@26.1.1)(@types/react@19.2.17)(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -29,6 +32,9 @@ importers:
       '@platejs/list':
         specifier: ^53.1.3
         version: 53.1.3(platejs@53.2.4(@types/react@19.2.17)(immer@10.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.8)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@platejs/media':
+        specifier: 53.0.0
+        version: 53.0.0(platejs@53.2.4(@types/react@19.2.17)(immer@10.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.8)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@platejs/resizable':
         specifier: ^53.0.0
         version: 53.0.0(platejs@53.2.4(@types/react@19.2.17)(immer@10.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.8)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -44,6 +50,9 @@ importers:
       '@radix-ui/react-toolbar':
         specifier: ^1.1.19
         version: 1.1.19(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@udecode/cn':
+        specifier: ^52.3.4
+        version: 52.3.4(@types/react@19.2.17)(class-variance-authority@0.7.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(tailwind-merge@2.6.1)
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.1
@@ -401,6 +410,13 @@ packages:
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
 
+  '@platejs/caption@53.0.0':
+    resolution: {integrity: sha512-UpErr8INm2Tlkb1PvuQUaCIiU2cQQaLmZeIQzx4Spqpvy3v77253gyPWqiaJ+hGQJSbYXZ/DfTVkQ2qAgTWlgQ==}
+    peerDependencies:
+      platejs: '>=53.0.0'
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+
   '@platejs/core@53.2.4':
     resolution: {integrity: sha512-RVtsNDrufyTNUnjU8mGm3s1yhiXF0tKmXdXkWNi4NNK1MsE2Skkc7nmgNF1ul1tHc6hHVPr5Kv8kMh1YdcEm2g==}
     peerDependencies:
@@ -432,6 +448,13 @@ packages:
 
   '@platejs/list@53.1.3':
     resolution: {integrity: sha512-mNcqpWO2xpv1aOiX20Y5MB7cBr8tbre84aDHqFLtdGj57TSM9Mj9v6PUtORPkZgsBSHqVW7Qm7P2PQRzgeYnpQ==}
+    peerDependencies:
+      platejs: '>=53.0.0'
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+
+  '@platejs/media@53.0.0':
+    resolution: {integrity: sha512-zifkAicgCtWv1b5eC6DErMGxht6ANqYcqAJBfEFeqXtoovuDmU/tEUvJYBIVD5jlwg1qQxZbFk2h/EKRdOKzvQ==}
     peerDependencies:
       platejs: '>=53.0.0'
       react: '>=18.0.0'
@@ -1287,6 +1310,14 @@ packages:
     resolution: {integrity: sha512-mbCddXd+jm7hfx7w2YU64/Av4/NqqeG3GoRZgxPcgoTxYjhrcfJRw9ULch71SS4G+Q3bOXFhRvPqjguN0Hyp5w==}
     hasBin: true
 
+  '@udecode/cn@52.3.4':
+    resolution: {integrity: sha512-mf+vcfWl1N3Vo5lqiX79zggiun0ftbue0/DMoWfQiZrym64nxJ7emfOMm8Hb5MI0MoTEncg2Zvr7ntoIgrMN8g==}
+    peerDependencies:
+      class-variance-authority: '>=0.7.0'
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+      tailwind-merge: '>=2.2.0'
+
   '@udecode/react-hotkeys@52.0.11':
     resolution: {integrity: sha512-MwdQlfTZhrP0O+BazuNgY9g2qJSZAB05ykdVCdWmBsjv5VQvQ3R9RkXLUMGD20TqUR62iT/Phb/ca8toxiCm0w==}
     peerDependencies:
@@ -2002,6 +2033,9 @@ packages:
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
+  js-video-url-parser@0.5.1:
+    resolution: {integrity: sha512-/vwqT67k0AyIGMHAvSOt+n4JfrZWF7cPKgKswDO35yr27GfW4HtjpQVlTx6JLF45QuPm8mkzFHkZgFVnFm4x/w==}
+
   js-yaml@4.3.0:
     resolution: {integrity: sha512-1td788aAnnZ5qs7V2QIRl1owjtYpbKt749Y3xauqQgwIIGF/xXWz1wMTEBx5O3LK3lXLVuqXPdPxj2BoFHaW9Q==}
     hasBin: true
@@ -2484,6 +2518,12 @@ packages:
       '@types/react':
         optional: true
 
+  react-textarea-autosize@8.5.9:
+    resolution: {integrity: sha512-U1DGlIQN5AwgjTyOEnI1oCcMuEr1pv1qOtklB2l4nyMGbHzWrI0eFsYK0zos2YWqAolJyG0IWJaqWmWj5ETh0A==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
   react-tracked@1.7.14:
     resolution: {integrity: sha512-6UMlgQeRAGA+uyYzuQGm7kZB6ZQYFhc7sntgP7Oxwwd6M0Ud/POyb4K3QWT1eXvoifSa80nrAWnXWFGpOvbwkw==}
     peerDependencies:
@@ -2834,6 +2874,15 @@ packages:
       '@types/react':
         optional: true
 
+  use-composed-ref@1.4.0:
+    resolution: {integrity: sha512-djviaxuOOh7wkj0paeO1Q/4wMZ8Zrnag5H6yBvzN7AKKe8beOaED9SF5/ByLqsku8NP4zQqsvM2u3ew/tJK8/w==}
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
   use-context-selector@1.4.4:
     resolution: {integrity: sha512-pS790zwGxxe59GoBha3QYOwk8AFGp4DN6DOtH+eoqVmgBBRXVx4IlPDhJmmMiNQAgUaLlP+58aqRC3A4rdaSjg==}
     peerDependencies:
@@ -2851,6 +2900,24 @@ packages:
     resolution: {integrity: sha512-94iG+dEdEP/Sl3WWde+w9StIunlV8Dgj+vkt5wTwMoFQLaijiEZSXXy8KtcStpmEDtIptRJiNeD4ACTtVvnIKA==}
     peerDependencies:
       react: '>=16.8.0'
+
+  use-isomorphic-layout-effect@1.2.1:
+    resolution: {integrity: sha512-tpZZ+EX0gaghDAiFR37hj5MgY6ZN55kLiPkJsKxBMZ6GZdOSPJXiOzPM984oPYZ5AnehYx5WQp1+ME8I/P/pRA==}
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
+  use-latest@1.3.0:
+    resolution: {integrity: sha512-mhg3xdm9NaM8q+gLT8KryJPnRFOz1/5XPBhmDEVZK1webPzDjrPk7f/mbpeLqTgB9msytYWANxgALOCJKnLvcQ==}
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   use-sidecar@1.1.3:
     resolution: {integrity: sha512-Fedw0aZvkhynoPYlA5WXrMCAMm+nSWdZt6lzJQ7Ok8S6Q+VsHmHpRWndVRJ8Be0ZbkfPc5LRYH+5XrzXcEeLRQ==}
@@ -3361,6 +3428,16 @@ snapshots:
       react-compiler-runtime: 1.0.0(react@19.2.8)
       react-dom: 19.2.8(react@19.2.8)
 
+  '@platejs/caption@53.0.0(@types/react@19.2.17)(platejs@53.2.4(@types/react@19.2.17)(immer@10.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.8)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+    dependencies:
+      platejs: 53.2.4(@types/react@19.2.17)(immer@10.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.8))
+      react: 19.2.8
+      react-compiler-runtime: 1.0.0(react@19.2.8)
+      react-dom: 19.2.8(react@19.2.8)
+      react-textarea-autosize: 8.5.9(@types/react@19.2.17)(react@19.2.8)
+    transitivePeerDependencies:
+      - '@types/react'
+
   '@platejs/core@53.2.4(@types/react@19.2.17)(immer@10.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.8))':
     dependencies:
       '@platejs/slate': 53.0.7
@@ -3425,6 +3502,14 @@ snapshots:
       '@platejs/indent': 53.0.0(platejs@53.2.4(@types/react@19.2.17)(immer@10.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.8)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       clsx: 2.1.1
       lodash: 4.18.1
+      platejs: 53.2.4(@types/react@19.2.17)(immer@10.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.8))
+      react: 19.2.8
+      react-compiler-runtime: 1.0.0(react@19.2.8)
+      react-dom: 19.2.8(react@19.2.8)
+
+  '@platejs/media@53.0.0(platejs@53.2.4(@types/react@19.2.17)(immer@10.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.8)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+    dependencies:
+      js-video-url-parser: 0.5.1
       platejs: 53.2.4(@types/react@19.2.17)(immer@10.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.8))
       react: 19.2.8
       react-compiler-runtime: 1.0.0(react@19.2.8)
@@ -4080,6 +4165,17 @@ snapshots:
     dependencies:
       '@typescript/old': typescript@6.0.3
 
+  '@udecode/cn@52.3.4(@types/react@19.2.17)(class-variance-authority@0.7.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(tailwind-merge@2.6.1)':
+    dependencies:
+      '@udecode/react-utils': 52.3.4(@types/react@19.2.17)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      class-variance-authority: 0.7.1
+      react: 19.2.8
+      react-compiler-runtime: 1.0.0(react@19.2.8)
+      react-dom: 19.2.8(react@19.2.8)
+      tailwind-merge: 2.6.1
+    transitivePeerDependencies:
+      - '@types/react'
+
   '@udecode/react-hotkeys@52.0.11(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
       react: 19.2.8
@@ -4706,6 +4802,8 @@ snapshots:
 
   js-tokens@4.0.0: {}
 
+  js-video-url-parser@0.5.1: {}
+
   js-yaml@4.3.0:
     dependencies:
       argparse: 2.0.1
@@ -5127,6 +5225,15 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       '@types/react': 19.2.17
+
+  react-textarea-autosize@8.5.9(@types/react@19.2.17)(react@19.2.8):
+    dependencies:
+      '@babel/runtime': 7.29.7
+      react: 19.2.8
+      use-composed-ref: 1.4.0(@types/react@19.2.17)(react@19.2.8)
+      use-latest: 1.3.0(@types/react@19.2.17)(react@19.2.8)
+    transitivePeerDependencies:
+      - '@types/react'
 
   react-tracked@1.7.14(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(scheduler@0.27.0):
     dependencies:
@@ -5550,6 +5657,12 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.2.17
 
+  use-composed-ref@1.4.0(@types/react@19.2.17)(react@19.2.8):
+    dependencies:
+      react: 19.2.8
+    optionalDependencies:
+      '@types/react': 19.2.17
+
   use-context-selector@1.4.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(scheduler@0.27.0):
     dependencies:
       react: 19.2.8
@@ -5561,6 +5674,19 @@ snapshots:
     dependencies:
       dequal: 2.0.3
       react: 19.2.8
+
+  use-isomorphic-layout-effect@1.2.1(@types/react@19.2.17)(react@19.2.8):
+    dependencies:
+      react: 19.2.8
+    optionalDependencies:
+      '@types/react': 19.2.17
+
+  use-latest@1.3.0(@types/react@19.2.17)(react@19.2.8):
+    dependencies:
+      react: 19.2.8
+      use-isomorphic-layout-effect: 1.2.1(@types/react@19.2.17)(react@19.2.8)
+    optionalDependencies:
+      '@types/react': 19.2.17
 
   use-sidecar@1.1.3(@types/react@19.2.17)(react@19.2.8):
     dependencies:

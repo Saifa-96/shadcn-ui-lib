@@ -35,6 +35,7 @@ import { useTableMergeState } from "@platejs/table/react";
 
 import { ToolbarButton, ToolbarGroup } from "./toolbar";
 import { RedoToolbarButton, UndoToolbarButton } from "./history-toolbar-button";
+import { InsertImageToolbarButton } from "./insert-image-toolbar-button";
 import { IndentToolbarButton, OutdentToolbarButton } from "./indent-toolbar-button";
 import {
   BulletedListToolbarButton,
@@ -81,6 +82,7 @@ export function FixedToolbarButtons() {
             >
               <TableIcon />
             </ToolbarButton>
+            <InsertImageToolbarButton />
           </ToolbarGroup>
           <TableToolbarButtons />
         </>

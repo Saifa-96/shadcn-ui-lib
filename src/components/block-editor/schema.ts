@@ -37,6 +37,17 @@ const blockquoteSchema = z.object({
   children: z.array(paragraphSchema).min(1),
 });
 
+// ─── Image ───────────────────────────────────────────────────────────────────
+
+const imageSchema = z.object({
+  type: z.literal("img"),
+  children: inlineChildrenSchema,
+  url: z.string(),
+  width: z.number().optional(),
+  align: z.enum(["center", "left", "right"]).optional(),
+  caption: inlineChildrenSchema.optional(),
+});
+
 // ─── Table ───────────────────────────────────────────────────────────────────
 
 const tableCellBorderSchema = z.object({
@@ -81,6 +92,7 @@ const blockSchema = z.discriminatedUnion("type", [
   headingSchema,
   blockquoteSchema,
   tableSchema,
+  imageSchema,
 ]);
 
 // ─── Editor value (root) ─────────────────────────────────────────────────────

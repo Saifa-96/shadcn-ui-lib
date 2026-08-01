@@ -8,7 +8,9 @@ import {
   ItalicPlugin,
   UnderlinePlugin,
 } from "@platejs/basic-nodes/react";
+import { CaptionPlugin } from "@platejs/caption/react";
 import { IndentPlugin } from "@platejs/indent/react";
+import { ImagePlugin } from "@platejs/media/react";
 import {
   BulletedListRules,
   isOrderedList,
@@ -34,6 +36,7 @@ import {
   TableCellElement,
   TableCellHeaderElement,
 } from "./blocks/table-node";
+import { ImageElement } from "./blocks/image-node";
 import { FloatingToolbarPlugin } from "./toolbar/floating-toolbar-plugin";
 import { FixedToolbarPlugin } from "./toolbar/fixed-toolbar-plugin";
 import { DndPlugins } from "./dnd";
@@ -109,6 +112,19 @@ export const plugins: PluginConfig[] = [
   TableRowPlugin.withComponent(TableRowElement),
   TableCellPlugin.withComponent(TableCellElement),
   TableCellHeaderPlugin.withComponent(TableCellHeaderElement),
+
+  // image
+  ImagePlugin.configure({
+    options: { disableUploadInsert: true },
+    render: { node: ImageElement },
+  }),
+  CaptionPlugin.configure({
+    options: {
+      query: {
+        allow: [KEYS.img],
+      },
+    },
+  }),
 
   // block interaction
   ...DndPlugins,
