@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import {
   AlertDialogSection,
   AlertSection,
+  AttachmentSection,
   AvatarSection,
   BadgeSection,
   BreadcrumbSection,
@@ -32,6 +33,7 @@ import {
 const SECTIONS = [
   { id: "alert", label: "Alert", Component: AlertSection },
   { id: "alert-dialog", label: "Alert Dialog", Component: AlertDialogSection },
+  { id: "attachment", label: "Attachment", Component: AttachmentSection },
   { id: "avatar", label: "Avatar", Component: AvatarSection },
   { id: "badge", label: "Badge", Component: BadgeSection },
   { id: "breadcrumb", label: "Breadcrumb", Component: BreadcrumbSection },

@@ -1,5 +1,6 @@
 export { AlertDialogSection } from "./alert-dialog-section";
 export { AlertSection } from "./alert-section";
+export { AttachmentSection } from "./attachment-section";
 export { AvatarSection } from "./avatar-section";
 export { BadgeSection } from "./badge-section";
 export { BreadcrumbSection } from "./breadcrumb-section";
