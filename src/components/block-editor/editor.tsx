@@ -1,21 +1,32 @@
 "use client";
 
+import { bytesToFileSize, type FileSize, PlaceholderPlugin } from "@platejs/media/react";
 import type { Value } from "platejs";
+import { KEYS } from "platejs";
 import type { PlateEditor } from "platejs/react";
 import { Plate, PlateContent, usePlateEditor } from "platejs/react";
 import { useEffect } from "react";
-import { plugins } from "./plugins";
 
+import { plugins } from "./plugins";
+import { type UploadConfig, UploadConfigProvider } from "./upload/upload-config";
+
+export type { UploadConfig, UploadedFile, UploadFileFn } from "./upload/upload-config";
 export type { PlateEditor };
 
 export interface BlockEditorProps {
   initialValue?: Value;
   onValueChange?: (v: Value) => void;
   onEditorReady?: (editor: PlateEditor) => void;
+  /**
+   * Upload configuration. Required: image uploads (picker, paste, drop) are
+   * always enabled. Pass a stable reference (module const or memoized) to
+   * avoid re-syncing plugin options on every render.
+   */
+  uploadConfig: UploadConfig;
 }
 
 export const BlockEditor: React.FC<BlockEditorProps> = (props) => {
-  const { initialValue, onValueChange, onEditorReady } = props;
+  const { initialValue, onValueChange, onEditorReady, uploadConfig } = props;
   const editor = usePlateEditor({ plugins, value: initialValue });
 
   useEffect(() => {
@@ -24,14 +35,27 @@ export const BlockEditor: React.FC<BlockEditorProps> = (props) => {
     onEditorReady?.(editor);
   }, [editor, onEditorReady]);
 
+  useEffect(() => {
+    editor.setOption(PlaceholderPlugin, "uploadConfig", {
+      image: {
+        // plate's FileSize type only admits power-of-two literals, but the
+        // runtime parser accepts any integer — bytesToFileSize output is safe.
+        maxFileSize: bytesToFileSize(uploadConfig.maxSize) as FileSize,
+        mediaType: KEYS.img,
+      },
+    });
+  }, [editor, uploadConfig]);
+
   return (
     <div className="relative isolate">
-      <Plate editor={editor} onChange={({ value }) => onValueChange?.(value)}>
-        <PlateContent
-          className="size-full px-16 pt-4 pb-72 text-base sm:px-[max(64px,calc(50%-350px))]"
-          placeholder="Type your amazing content here..."
-        />
-      </Plate>
+      <UploadConfigProvider config={uploadConfig}>
+        <Plate editor={editor} onChange={({ value }) => onValueChange?.(value)}>
+          <PlateContent
+            className="size-full px-16 pt-4 pb-72 text-base sm:px-[max(64px,calc(50%-350px))]"
+            placeholder="Type your amazing content here..."
+          />
+        </Plate>
+      </UploadConfigProvider>
     </div>
   );
 };

@@ -50,6 +50,12 @@ const imageSchema = z.object({
   width: z.number().optional(),
   align: z.enum(["center", "left", "right"]).optional(),
   caption: inlineChildrenSchema.optional(),
+  // fields carried by nodes produced from an upload placeholder
+  initialWidth: z.number().optional(),
+  initialHeight: z.number().optional(),
+  isUpload: z.boolean().optional(),
+  name: z.string().optional(),
+  placeholderId: z.string().optional(),
 });
 
 // ─── Table ───────────────────────────────────────────────────────────────────

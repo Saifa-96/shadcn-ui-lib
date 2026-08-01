@@ -11,7 +11,7 @@ import { CaptionPlugin } from "@platejs/caption/react";
 import { IndentPlugin } from "@platejs/indent/react";
 import { BulletedListRules, isOrderedList, OrderedListRules, TaskListRules } from "@platejs/list";
 import { ListPlugin } from "@platejs/list/react";
-import { ImagePlugin } from "@platejs/media/react";
+import { ImagePlugin, PlaceholderPlugin } from "@platejs/media/react";
 import {
   TableCellHeaderPlugin,
   TableCellPlugin,
@@ -25,6 +25,7 @@ import { BlockquoteElement } from "./blocks/block-quote";
 import { H1Element, H2Element, H3Element } from "./blocks/headers";
 import { ImageElement } from "./blocks/image-node";
 import { BlockList } from "./blocks/list-node";
+import { PlaceholderElement } from "./blocks/media-placeholder-node";
 import { ParagraphElement } from "./blocks/paragraph";
 import {
   TableCellElement,
@@ -35,6 +36,7 @@ import {
 import { DndPlugins } from "./dnd";
 import { FixedToolbarPlugin } from "./toolbar/fixed-toolbar-plugin";
 import { FloatingToolbarPlugin } from "./toolbar/floating-toolbar-plugin";
+import { MediaUploadToast } from "./upload/media-upload-toast";
 
 export const plugins: PluginConfig[] = [
   // text
@@ -119,6 +121,12 @@ export const plugins: PluginConfig[] = [
         allow: [KEYS.img],
       },
     },
+  }),
+
+  // upload placeholder
+  PlaceholderPlugin.configure({
+    options: { disableEmptyPlaceholder: true },
+    render: { afterEditable: MediaUploadToast, node: PlaceholderElement },
   }),
 
   // block interaction
