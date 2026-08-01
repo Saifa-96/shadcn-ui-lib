@@ -29,7 +29,7 @@ export const BlockEditor: React.FC<BlockEditorProps> = (props) => {
     <div className="relative isolate">
       <Plate editor={editor} onChange={({ value }) => onValueChange?.(value)}>
         <PlateContent
-          style={{ padding: "16px 64px", minHeight: "100px" }}
+          className="size-full px-16 pt-4 pb-72 text-base sm:px-[max(64px,calc(50%-350px))]"
           placeholder="Type your amazing content here..."
         />
       </Plate>
