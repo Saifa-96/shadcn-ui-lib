@@ -17,10 +17,10 @@ Internal UI component library built on [shadcn/ui](https://ui.shadcn.com/) + [Ba
 pnpm add shadcn-ui-lib
 ```
 
-Peer dependencies (install if not already present):
+Peer dependencies (install if not already present; `react`/`react-dom` are assumed since this is a React library):
 
 ```bash
-pnpm add react react-dom lucide-react zod
+pnpm add lucide-react zod @tanstack/react-form
 ```
 
 ### 2. Setup Tailwind
@@ -40,6 +40,7 @@ Install Tailwind CSS v4 in your project, then in your app's entry CSS file:
 ```tsx
 import { Button, Dialog, DialogContent, DialogTrigger } from "shadcn-ui-lib";
 import { BlockEditor } from "shadcn-ui-lib/block-editor";
+import { useAppForm } from "shadcn-ui-lib/form";
 ```
 
 ## Dev
@@ -59,4 +60,4 @@ Use the shadcn CLI with Base UI style:
 pnpm dlx shadcn@latest add <component>
 ```
 
-Then re-export from `src/index.ts`.
+Then follow the export + showcase steps in `AGENTS.md`.
