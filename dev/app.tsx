@@ -40,7 +40,7 @@ export function App() {
 
   return (
     <TooltipProvider>
-      <div className="mx-auto max-w-3xl p-8">
+      <div className="mx-auto max-w-5xl p-8">
         <h1 className="text-2xl font-bold text-foreground">ws-ui dev</h1>
 
         <nav className="mt-4 flex gap-1 border-b border-border">
@@ -53,7 +53,11 @@ export function App() {
         </nav>
 
         <div className="mt-8">
-          {tab === "ui" && <UiTab />}
+          {tab === "ui" && (
+            <div className="mx-auto max-w-3xl">
+              <UiTab />
+            </div>
+          )}
           {tab === "block-editor" && (
             <div className="space-y-4">
               <button
