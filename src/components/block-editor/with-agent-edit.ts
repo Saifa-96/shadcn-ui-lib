@@ -8,7 +8,7 @@ interface AgentEditSuccess {
 
 interface AgentEditFailure {
   success: false;
-  error: { issues: Array<{ path: Array<string | number>; message: string }> };
+  error: { issues: Array<{ path: PropertyKey[]; message: string }> };
 }
 
 export type AgentEditResult = AgentEditSuccess | AgentEditFailure;
