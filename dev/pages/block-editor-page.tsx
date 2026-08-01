@@ -1,6 +1,6 @@
 import type { SlateEditor, Value } from "platejs";
 import { useRef } from "react";
-import { BlockEditor } from "@/components/block-editor/editor";
+import { BlockEditor, type UploadConfig } from "@/components/block-editor/editor";
 import { withAgentEdit } from "@/components/block-editor/with-agent-edit";
 
 export function BlockEditorPage() {
@@ -29,6 +29,7 @@ export function BlockEditorPage() {
         Agent Edit: Insert Paragraph
       </button>
       <BlockEditor
+        uploadConfig={uploadConfig}
         initialValue={initialValue}
         onEditorReady={(editor) => {
           editorRef.current = editor;
@@ -37,6 +38,24 @@ export function BlockEditorPage() {
     </div>
   );
 }
+
+// Simulated upload for the showcase: fake progress, resolves to a local object URL.
+const uploadConfig: UploadConfig = {
+  accept: ["image/*"],
+  maxSize: 5 * 1024 * 1024,
+  uploadFile: async (file, onProgress) => {
+    for (let progress = 0; progress < 100; progress += 2) {
+      await new Promise((resolve) => setTimeout(resolve, 25));
+      onProgress?.(progress);
+    }
+    return {
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      url: URL.createObjectURL(file),
+    };
+  },
+};
 
 const initialValue: Value = [
   {

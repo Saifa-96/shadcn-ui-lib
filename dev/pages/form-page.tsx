@@ -2,7 +2,6 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 import { useAppForm } from "@/components/form";
-import { Toaster } from "@/components/ui/sonner";
 
 const ROLE_GROUPS = [
   {
@@ -83,8 +82,6 @@ export function FormPage() {
           <form.SubmitButton pendingLabel="Submitting…">Submit</form.SubmitButton>
         </form.AppForm>
       </form>
-
-      <Toaster />
     </div>
   );
 }

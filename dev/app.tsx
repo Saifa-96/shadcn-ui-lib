@@ -1,5 +1,6 @@
 import { Navigate, NavLink, Route, Routes } from "react-router";
 
+import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { BlockEditorPage } from "./pages/block-editor-page";
 import { FormPage } from "./pages/form-page";
@@ -26,6 +27,8 @@ export function App() {
           </Routes>
         </div>
       </div>
+
+      <Toaster />
     </TooltipProvider>
   );
 }
