@@ -1,9 +1,11 @@
 import { ListStyleType } from "@platejs/list";
+import { PlaceholderPlugin } from "@platejs/media/react";
 import { insertTable } from "@platejs/table";
 import { Plus } from "lucide-react";
 import { KEYS } from "platejs";
 import { useEditorRef, useElement } from "platejs/react";
 import * as React from "react";
+import { useFilePicker } from "use-file-picker";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,22 +13,27 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 import { ImageUrlDialog } from "../toolbar/image-url-dialog";
+import { useUploadConfig } from "../upload/upload-config";
 
-const INSERT_ITEMS = [
+const BLOCK_ITEMS = [
   { type: KEYS.p, label: "Paragraph" },
   { type: KEYS.h1, label: "Heading 1" },
   { type: KEYS.h2, label: "Heading 2" },
   { type: KEYS.h3, label: "Heading 3" },
   { type: KEYS.blockquote, label: "Blockquote" },
-  { type: KEYS.p, label: "Bulleted List", listStyleType: ListStyleType.Disc },
-  { type: KEYS.p, label: "Numbered List", listStyleType: ListStyleType.Decimal },
-  { type: KEYS.p, label: "Todo List", listStyleType: "todo", checked: false },
-  { type: KEYS.table, label: "Table" },
-  { type: KEYS.img, label: "Image" },
+];
+
+const LIST_ITEMS = [
+  { label: "Bulleted List", listStyleType: ListStyleType.Disc },
+  { label: "Numbered List", listStyleType: ListStyleType.Decimal },
+  { label: "Todo List", listStyleType: "todo", checked: false },
 ];
 
 interface InsertBlockButtonProps {
@@ -37,6 +44,7 @@ interface InsertBlockButtonProps {
 export function InsertBlockButton({ className, style }: InsertBlockButtonProps) {
   const editor = useEditorRef();
   const element = useElement();
+  const { accept } = useUploadConfig();
 
   const [imageDialogOpen, setImageDialogOpen] = React.useState(false);
 
@@ -47,32 +55,47 @@ export function InsertBlockButton({ className, style }: InsertBlockButtonProps) 
     return [index + 1];
   };
 
-  const handleInsert = (item: (typeof INSERT_ITEMS)[number]) => {
-    if (item.type === KEYS.img) {
-      setImageDialogOpen(true);
-      return;
-    }
-
+  const handleInsertBlock = (type: string) => {
     const nextPath = findNextPath();
     if (!nextPath) return;
 
-    if (item.type === KEYS.table) {
+    if (type === KEYS.table) {
       editor.tf.select({ path: nextPath, offset: 0 });
       insertTable(editor, {});
       return;
     }
 
+    editor.tf.insertNodes({ type, children: [{ text: "" }] }, { at: nextPath, select: true });
+    editor.tf.focus();
+  };
+
+  const handleInsertList = (item: (typeof LIST_ITEMS)[number]) => {
+    const nextPath = findNextPath();
+    if (!nextPath) return;
+
     editor.tf.insertNodes(
       {
-        type: item.type,
+        type: KEYS.p,
         children: [{ text: "" }],
-        ...("listStyleType" in item && { listStyleType: item.listStyleType, indent: 1 }),
+        listStyleType: item.listStyleType,
+        indent: 1,
         ...("checked" in item && { checked: item.checked }),
       },
       { at: nextPath, select: true },
     );
     editor.tf.focus();
   };
+
+  const { openFilePicker } = useFilePicker({
+    accept,
+    multiple: true,
+    onFilesSelected: ({ plainFiles }) => {
+      const nextPath = findNextPath();
+      if (!nextPath) return;
+
+      editor.getTransforms(PlaceholderPlugin).insert.media(plainFiles, { at: nextPath });
+    },
+  });
 
   const handleImageSubmit = (url: string) => {
     const nextPath = findNextPath();
@@ -96,12 +119,39 @@ export function InsertBlockButton({ className, style }: InsertBlockButtonProps) 
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" side="bottom">
         <DropdownMenuGroup>
-          {INSERT_ITEMS.map((item) => (
-            <DropdownMenuItem key={item.label} onClick={() => handleInsert(item)}>
+          {BLOCK_ITEMS.map((item) => (
+            <DropdownMenuItem key={item.label} onClick={() => handleInsertBlock(item.type)}>
               {item.label}
             </DropdownMenuItem>
           ))}
         </DropdownMenuGroup>
+
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>List</DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            {LIST_ITEMS.map((item) => (
+              <DropdownMenuItem key={item.label} onClick={() => handleInsertList(item)}>
+                {item.label}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+
+        <DropdownMenuGroup>
+          <DropdownMenuItem onClick={() => handleInsertBlock(KEYS.table)}>Table</DropdownMenuItem>
+        </DropdownMenuGroup>
+
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>Image</DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            <DropdownMenuItem onClick={() => openFilePicker()}>
+              Upload from computer
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setImageDialogOpen(true)}>
+              Insert via URL
+            </DropdownMenuItem>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
       </DropdownMenuContent>
 
       <ImageUrlDialog
