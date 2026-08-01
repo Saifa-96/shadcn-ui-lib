@@ -67,7 +67,7 @@ export function AttachmentSection() {
       {/* File mode: horizontal rows stacked vertically */}
       <div className="flex flex-col gap-2">
         {FILES.map((file) => (
-          <Attachment key={file.name} state={file.state}>
+          <Attachment key={file.name} state={file.state} className="w-80">
             <AttachmentMedia>
               <file.icon />
             </AttachmentMedia>
