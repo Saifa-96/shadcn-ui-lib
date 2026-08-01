@@ -2,6 +2,7 @@ import { Navigate, NavLink, Route, Routes } from "react-router";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { BlockEditorPage } from "./pages/block-editor-page";
+import { FormPage } from "./pages/form-page";
 import { UiPage } from "./pages/ui-page";
 
 export function App() {
@@ -13,6 +14,7 @@ export function App() {
         <nav className="mt-4 flex gap-1 border-b border-border">
           <NavButton to="/ui">UI Components</NavButton>
           <NavButton to="/block-editor">Block Editor</NavButton>
+          <NavButton to="/form">Form</NavButton>
         </nav>
 
         <div className="mt-8">
@@ -20,6 +22,7 @@ export function App() {
             <Route path="/" element={<Navigate to="/ui" replace />} />
             <Route path="/ui" element={<UiPage />} />
             <Route path="/block-editor" element={<BlockEditorPage />} />
+            <Route path="/form" element={<FormPage />} />
           </Routes>
         </div>
       </div>
