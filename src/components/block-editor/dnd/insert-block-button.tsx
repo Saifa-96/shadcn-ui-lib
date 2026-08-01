@@ -1,9 +1,9 @@
-import * as React from "react";
 import { ListStyleType } from "@platejs/list";
+import { insertTable } from "@platejs/table";
 import { Plus } from "lucide-react";
 import { KEYS } from "platejs";
 import { useEditorRef, useElement } from "platejs/react";
-import { insertTable } from "@platejs/table";
+import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -42,8 +42,9 @@ export function InsertBlockButton({ className, style }: InsertBlockButtonProps) 
 
   const findNextPath = () => {
     const path = editor.api.findPath(element);
-    if (!path) return;
-    return [path[0]! + 1];
+    const index = path?.[0];
+    if (index === undefined) return;
+    return [index + 1];
   };
 
   const handleInsert = (item: (typeof INSERT_ITEMS)[number]) => {
@@ -68,7 +69,7 @@ export function InsertBlockButton({ className, style }: InsertBlockButtonProps) 
         ...("listStyleType" in item && { listStyleType: item.listStyleType, indent: 1 }),
         ...("checked" in item && { checked: item.checked }),
       },
-      { at: nextPath, select: true }
+      { at: nextPath, select: true },
     );
     editor.tf.focus();
   };
@@ -79,7 +80,7 @@ export function InsertBlockButton({ className, style }: InsertBlockButtonProps) 
 
     editor.tf.insertNodes(
       { type: KEYS.img, url, children: [{ text: "" }] },
-      { at: nextPath, select: true }
+      { at: nextPath, select: true },
     );
     editor.tf.focus();
   };
@@ -88,12 +89,7 @@ export function InsertBlockButton({ className, style }: InsertBlockButtonProps) 
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
-          <Button
-            variant="ghost"
-            className={className}
-            style={style}
-            data-plate-prevent-deselect
-          />
+          <Button variant="ghost" className={className} style={style} data-plate-prevent-deselect />
         }
       >
         <Plus className="size-3.5 text-muted-foreground" />
@@ -101,10 +97,7 @@ export function InsertBlockButton({ className, style }: InsertBlockButtonProps) 
       <DropdownMenuContent align="start" side="bottom">
         <DropdownMenuGroup>
           {INSERT_ITEMS.map((item) => (
-            <DropdownMenuItem
-              key={item.label}
-              onClick={() => handleInsert(item)}
-            >
+            <DropdownMenuItem key={item.label} onClick={() => handleInsert(item)}>
               {item.label}
             </DropdownMenuItem>
           ))}

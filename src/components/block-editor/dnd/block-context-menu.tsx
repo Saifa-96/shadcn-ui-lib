@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   BLOCK_CONTEXT_MENU_ID,
   BlockMenuPlugin,
@@ -6,6 +5,7 @@ import {
 } from "@platejs/selection/react";
 import { KEYS } from "platejs";
 import { useEditorPlugin, usePlateState, usePluginOption } from "platejs/react";
+import * as React from "react";
 
 import {
   ContextMenu,
@@ -36,7 +36,7 @@ export function BlockContextMenu({ children }: { children: React.ReactNode }) {
           editor.tf.toggleBlock(type, { at: path });
         });
     },
-    [editor]
+    [editor],
   );
 
   return (
@@ -68,15 +68,11 @@ export function BlockContextMenu({ children }: { children: React.ReactNode }) {
         <div className="w-full">{children}</div>
       </ContextMenuTrigger>
       {isOpen && (
-        <ContextMenuContent
-          className="w-64"
-        >
+        <ContextMenuContent className="w-64">
           <ContextMenuGroup>
             <ContextMenuItem
               onClick={() => {
-                editor
-                  .getTransforms(BlockSelectionPlugin)
-                  .blockSelection.removeNodes();
+                editor.getTransforms(BlockSelectionPlugin).blockSelection.removeNodes();
                 editor.tf.focus();
               }}
             >
@@ -84,9 +80,7 @@ export function BlockContextMenu({ children }: { children: React.ReactNode }) {
             </ContextMenuItem>
             <ContextMenuItem
               onClick={() => {
-                editor
-                  .getTransforms(BlockSelectionPlugin)
-                  .blockSelection.duplicate();
+                editor.getTransforms(BlockSelectionPlugin).blockSelection.duplicate();
               }}
             >
               Duplicate
@@ -94,18 +88,10 @@ export function BlockContextMenu({ children }: { children: React.ReactNode }) {
             <ContextMenuSub>
               <ContextMenuSubTrigger>Turn into</ContextMenuSubTrigger>
               <ContextMenuSubContent className="w-48">
-                <ContextMenuItem onClick={() => handleTurnInto(KEYS.p)}>
-                  Paragraph
-                </ContextMenuItem>
-                <ContextMenuItem onClick={() => handleTurnInto(KEYS.h1)}>
-                  Heading 1
-                </ContextMenuItem>
-                <ContextMenuItem onClick={() => handleTurnInto(KEYS.h2)}>
-                  Heading 2
-                </ContextMenuItem>
-                <ContextMenuItem onClick={() => handleTurnInto(KEYS.h3)}>
-                  Heading 3
-                </ContextMenuItem>
+                <ContextMenuItem onClick={() => handleTurnInto(KEYS.p)}>Paragraph</ContextMenuItem>
+                <ContextMenuItem onClick={() => handleTurnInto(KEYS.h1)}>Heading 1</ContextMenuItem>
+                <ContextMenuItem onClick={() => handleTurnInto(KEYS.h2)}>Heading 2</ContextMenuItem>
+                <ContextMenuItem onClick={() => handleTurnInto(KEYS.h3)}>Heading 3</ContextMenuItem>
                 <ContextMenuItem onClick={() => handleTurnInto(KEYS.blockquote)}>
                   Blockquote
                 </ContextMenuItem>

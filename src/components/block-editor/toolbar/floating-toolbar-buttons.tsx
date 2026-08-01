@@ -1,10 +1,6 @@
 import { BoldIcon, ItalicIcon, UnderlineIcon } from "lucide-react";
 import { KEYS } from "platejs";
-import {
-  useEditorReadOnly,
-  useMarkToolbarButton,
-  useMarkToolbarButtonState,
-} from "platejs/react";
+import { useEditorReadOnly, useMarkToolbarButton, useMarkToolbarButtonState } from "platejs/react";
 
 import { ToolbarButton, ToolbarGroup } from "./toolbar";
 

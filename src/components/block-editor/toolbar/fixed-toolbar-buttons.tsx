@@ -1,4 +1,16 @@
 import {
+  deleteColumn,
+  deleteRow,
+  deleteTable,
+  getTableAbove,
+  insertTable,
+  insertTableColumn,
+  insertTableRow,
+  mergeTableCells,
+  splitTableCell,
+} from "@platejs/table";
+import { useTableMergeState } from "@platejs/table/react";
+import {
   ArrowDown,
   ArrowLeft,
   ArrowRight,
@@ -20,28 +32,15 @@ import {
   useMarkToolbarButton,
   useMarkToolbarButtonState,
 } from "platejs/react";
-import {
-  deleteColumn,
-  deleteRow,
-  deleteTable,
-  getTableAbove,
-  insertTable,
-  insertTableColumn,
-  insertTableRow,
-  mergeTableCells,
-  splitTableCell,
-} from "@platejs/table";
-import { useTableMergeState } from "@platejs/table/react";
-
-import { ToolbarButton, ToolbarGroup } from "./toolbar";
 import { RedoToolbarButton, UndoToolbarButton } from "./history-toolbar-button";
-import { InsertImageToolbarButton } from "./insert-image-toolbar-button";
 import { IndentToolbarButton, OutdentToolbarButton } from "./indent-toolbar-button";
+import { InsertImageToolbarButton } from "./insert-image-toolbar-button";
 import {
   BulletedListToolbarButton,
   NumberedListToolbarButton,
   TodoListToolbarButton,
 } from "./list-toolbar-button";
+import { ToolbarButton, ToolbarGroup } from "./toolbar";
 
 export function FixedToolbarButtons() {
   const editor = useEditorRef();
@@ -76,10 +75,7 @@ export function FixedToolbarButtons() {
             <IndentToolbarButton />
           </ToolbarGroup>
           <ToolbarGroup>
-            <ToolbarButton
-              tooltip="Insert Table"
-              onClick={() => insertTable(editor, {})}
-            >
+            <ToolbarButton tooltip="Insert Table" onClick={() => insertTable(editor, {})}>
               <TableIcon />
             </ToolbarButton>
             <InsertImageToolbarButton />
@@ -111,10 +107,7 @@ function MarkButton({ nodeType, tooltip, children }: MarkButtonProps) {
 
 function TableToolbarButtons() {
   const editor = useEditorRef();
-  const isInTable = useEditorSelector(
-    (editor) => !!getTableAbove(editor),
-    []
-  );
+  const isInTable = useEditorSelector((editor) => !!getTableAbove(editor), []);
   const { canMerge, canSplit } = useTableMergeState();
 
   if (!isInTable) return null;

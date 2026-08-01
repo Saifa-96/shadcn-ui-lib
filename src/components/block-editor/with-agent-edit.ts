@@ -1,5 +1,4 @@
-import type { Value } from "platejs";
-import type { SlateEditor } from "platejs";
+import type { SlateEditor, Value } from "platejs";
 
 import { blockEditorValueSchema } from "./schema";
 
@@ -23,10 +22,7 @@ export type AgentEditResult = AgentEditSuccess | AgentEditFailure;
  * 4. On failure: restores the snapshot and returns the error
  * 5. On success: commits as a single undo batch
  */
-export function withAgentEdit(
-  editor: SlateEditor,
-  fn: () => void
-): AgentEditResult {
+export function withAgentEdit(editor: SlateEditor, fn: () => void): AgentEditResult {
   const snapshot = structuredClone(editor.children) as Value;
   const selectionBefore = editor.selection ? structuredClone(editor.selection) : null;
 

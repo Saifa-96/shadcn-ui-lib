@@ -1,14 +1,10 @@
-import * as React from "react";
 import * as ToolbarPrimitive from "@radix-ui/react-toolbar";
-import { type VariantProps, cva } from "class-variance-authority";
+import { cva, type VariantProps } from "class-variance-authority";
 import { ChevronDown } from "lucide-react";
+import * as React from "react";
 
 import { Separator } from "@/components/ui/separator";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 export function Toolbar({
@@ -70,7 +66,7 @@ const dropdownArrowVariants = cva(
           "border border-input border-l-0 bg-transparent hover:bg-accent hover:text-accent-foreground",
       },
     },
-  }
+  },
 );
 
 const toolbarButtonVariants = cva(
@@ -92,7 +88,7 @@ const toolbarButtonVariants = cva(
           "border border-input bg-transparent shadow-xs hover:bg-accent hover:text-accent-foreground",
       },
     },
-  }
+  },
 );
 
 interface ToolbarButtonProps
@@ -114,7 +110,9 @@ export function ToolbarButton({
   ...props
 }: ToolbarButtonProps) {
   const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => { setMounted(true); }, []);
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const button =
     typeof pressed === "boolean" ? (
@@ -123,16 +121,14 @@ export function ToolbarButton({
           className={cn(
             toolbarButtonVariants({ size, variant }),
             isDropdown && "justify-between gap-1 pr-1",
-            className
+            className,
           )}
           value={pressed ? "single" : ""}
           {...props}
         >
           {isDropdown ? (
             <>
-              <div className="flex flex-1 items-center gap-2 whitespace-nowrap">
-                {children}
-              </div>
+              <div className="flex flex-1 items-center gap-2 whitespace-nowrap">{children}</div>
               <div>
                 <ChevronDown className="size-3.5 text-muted-foreground" />
               </div>
@@ -144,11 +140,7 @@ export function ToolbarButton({
       </ToolbarToggleGroup>
     ) : (
       <ToolbarPrimitive.Button
-        className={cn(
-          toolbarButtonVariants({ size, variant }),
-          isDropdown && "pr-1",
-          className
-        )}
+        className={cn(toolbarButtonVariants({ size, variant }), isDropdown && "pr-1", className)}
         {...props}
       >
         {children}
@@ -180,10 +172,7 @@ export function ToolbarSplitButton({
 }
 
 interface ToolbarSplitButtonPrimaryProps
-  extends Omit<
-    React.ComponentPropsWithoutRef<typeof ToolbarToggleItem>,
-    "value"
-  >,
+  extends Omit<React.ComponentPropsWithoutRef<typeof ToolbarToggleItem>, "value">,
     VariantProps<typeof toolbarButtonVariants> {}
 
 export function ToolbarSplitButtonPrimary({
@@ -199,7 +188,7 @@ export function ToolbarSplitButtonPrimary({
         toolbarButtonVariants({ size, variant }),
         "rounded-r-none",
         "group-data-[pressed=true]:bg-accent group-data-[pressed=true]:text-accent-foreground",
-        className
+        className,
       )}
       {...props}
     >
@@ -223,7 +212,7 @@ export function ToolbarSplitButtonSecondary({
       className={cn(
         dropdownArrowVariants({ size, variant }),
         "group-data-[pressed=true]:bg-accent group-data-[pressed=true]:text-accent-foreground",
-        className
+        className,
       )}
       onClick={(e) => e.stopPropagation()}
       role="button"
@@ -234,18 +223,9 @@ export function ToolbarSplitButtonSecondary({
   );
 }
 
-export function ToolbarGroup({
-  children,
-  className,
-}: React.ComponentProps<"div">) {
+export function ToolbarGroup({ children, className }: React.ComponentProps<"div">) {
   return (
-    <div
-      className={cn(
-        "group/toolbar-group",
-        "relative hidden has-[button]:flex",
-        className
-      )}
-    >
+    <div className={cn("group/toolbar-group", "relative hidden has-[button]:flex", className)}>
       <div className="flex items-center">{children}</div>
       <div className="group-last/toolbar-group:hidden! mx-1.5 py-0.5">
         <Separator orientation="vertical" />

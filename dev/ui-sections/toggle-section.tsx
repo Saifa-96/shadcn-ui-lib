@@ -1,5 +1,5 @@
-import { Toggle } from "@/components/ui/toggle";
 import { Bold, Italic, Underline } from "lucide-react";
+import { Toggle } from "@/components/ui/toggle";
 
 export function ToggleSection() {
   return (

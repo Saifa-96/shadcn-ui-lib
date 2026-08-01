@@ -22,15 +22,19 @@ const listFieldsSchema = z.object({
   checked: z.boolean().optional(),
 });
 
-const paragraphSchema = z.object({
-  type: z.literal("p"),
-  children: inlineChildrenSchema,
-}).merge(listFieldsSchema);
+const paragraphSchema = z
+  .object({
+    type: z.literal("p"),
+    children: inlineChildrenSchema,
+  })
+  .merge(listFieldsSchema);
 
-const headingSchema = z.object({
-  type: z.enum(["h1", "h2", "h3"]),
-  children: inlineChildrenSchema,
-}).merge(listFieldsSchema);
+const headingSchema = z
+  .object({
+    type: z.enum(["h1", "h2", "h3"]),
+    children: inlineChildrenSchema,
+  })
+  .merge(listFieldsSchema);
 
 const blockquoteSchema = z.object({
   type: z.literal("blockquote"),

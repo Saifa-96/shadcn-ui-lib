@@ -11,6 +11,6 @@ if (root) {
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </StrictMode>
+    </StrictMode>,
   );
 }

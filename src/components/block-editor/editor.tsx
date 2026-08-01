@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
 import type { Value } from "platejs";
 import type { PlateEditor } from "platejs/react";
-
 import { Plate, PlateContent, usePlateEditor } from "platejs/react";
+import { useEffect } from "react";
 import { plugins } from "./plugins";
 
 export type { PlateEditor };

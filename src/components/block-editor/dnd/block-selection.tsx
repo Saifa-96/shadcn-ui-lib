@@ -1,4 +1,3 @@
-import * as React from "react";
 import { DndPlugin } from "@platejs/dnd";
 import { useBlockSelected } from "@platejs/selection/react";
 import { cva } from "class-variance-authority";
@@ -16,7 +15,7 @@ const blockSelectionVariants = cva(
         true: "opacity-100",
       },
     },
-  }
+  },
 );
 
 export function BlockSelection() {

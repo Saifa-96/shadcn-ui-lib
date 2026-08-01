@@ -1,8 +1,8 @@
-import { defineConfig } from "vite";
+import { readdirSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
-import { resolve } from "path";
-import { readFileSync, readdirSync } from "fs";
 
 const pkg = JSON.parse(readFileSync("./package.json", "utf-8"));
 const srcDir = resolve(__dirname, "src");
@@ -14,7 +14,10 @@ const external = [
 const uiEntries = Object.fromEntries(
   readdirSync("src/components/ui")
     .filter((f) => f.endsWith(".tsx"))
-    .map((f) => [`components/ui/${f.replace(".tsx", "")}`, resolve(__dirname, `src/components/ui/${f}`)])
+    .map((f) => [
+      `components/ui/${f.replace(".tsx", "")}`,
+      resolve(__dirname, `src/components/ui/${f}`),
+    ]),
 );
 
 export default defineConfig({
@@ -43,8 +46,7 @@ export default defineConfig({
       formats: ["es"],
     },
     rollupOptions: {
-      external: (id) =>
-        external.some((dep) => id === dep || id.startsWith(`${dep}/`)),
+      external: (id) => external.some((dep) => id === dep || id.startsWith(`${dep}/`)),
       output: {
         preserveModules: true,
         preserveModulesRoot: srcDir,

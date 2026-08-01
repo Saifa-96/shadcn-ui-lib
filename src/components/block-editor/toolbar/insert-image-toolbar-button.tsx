@@ -1,9 +1,9 @@
 "use client";
 
-import * as React from "react";
 import { ImageIcon } from "lucide-react";
 import { KEYS } from "platejs";
 import { useEditorRef } from "platejs/react";
+import * as React from "react";
 
 import { ImageUrlDialog } from "./image-url-dialog";
 import { ToolbarButton } from "./toolbar";

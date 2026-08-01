@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,16 +8,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
 
 export function DropdownMenuSection() {
   return (
     <section className="space-y-3">
       <h2 className="text-lg font-semibold text-foreground">Dropdown Menu</h2>
       <DropdownMenu>
-        <DropdownMenuTrigger render={<Button variant="outline" />}>
-          Open Menu
-        </DropdownMenuTrigger>
+        <DropdownMenuTrigger render={<Button variant="outline" />}>Open Menu</DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuGroup>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>

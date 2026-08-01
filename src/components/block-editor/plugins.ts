@@ -1,4 +1,3 @@
-import type { PluginConfig } from "platejs";
 import {
   BlockquotePlugin,
   BoldPlugin,
@@ -10,36 +9,32 @@ import {
 } from "@platejs/basic-nodes/react";
 import { CaptionPlugin } from "@platejs/caption/react";
 import { IndentPlugin } from "@platejs/indent/react";
+import { BulletedListRules, isOrderedList, OrderedListRules, TaskListRules } from "@platejs/list";
+import { ListPlugin } from "@platejs/list/react";
 import { ImagePlugin } from "@platejs/media/react";
 import {
-  BulletedListRules,
-  isOrderedList,
-  OrderedListRules,
-  TaskListRules,
-} from "@platejs/list";
-import { ListPlugin } from "@platejs/list/react";
-import {
+  TableCellHeaderPlugin,
+  TableCellPlugin,
   TablePlugin,
   TableRowPlugin,
-  TableCellPlugin,
-  TableCellHeaderPlugin,
 } from "@platejs/table/react";
+import type { PluginConfig } from "platejs";
 import { KEYS } from "platejs";
 import { ParagraphPlugin } from "platejs/react";
+import { BlockquoteElement } from "./blocks/block-quote";
+import { H1Element, H2Element, H3Element } from "./blocks/headers";
+import { ImageElement } from "./blocks/image-node";
 import { BlockList } from "./blocks/list-node";
 import { ParagraphElement } from "./blocks/paragraph";
-import { H1Element, H2Element, H3Element } from "./blocks/headers";
-import { BlockquoteElement } from "./blocks/block-quote";
 import {
-  TableElement,
-  TableRowElement,
   TableCellElement,
   TableCellHeaderElement,
+  TableElement,
+  TableRowElement,
 } from "./blocks/table-node";
-import { ImageElement } from "./blocks/image-node";
-import { FloatingToolbarPlugin } from "./toolbar/floating-toolbar-plugin";
-import { FixedToolbarPlugin } from "./toolbar/fixed-toolbar-plugin";
 import { DndPlugins } from "./dnd";
+import { FixedToolbarPlugin } from "./toolbar/fixed-toolbar-plugin";
+import { FloatingToolbarPlugin } from "./toolbar/floating-toolbar-plugin";
 
 export const plugins: PluginConfig[] = [
   // text

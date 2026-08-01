@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   type FloatingToolbarState,
   flip,
@@ -7,6 +6,7 @@ import {
   useFloatingToolbarState,
 } from "@platejs/floating";
 import { useEditorId, useEventEditorValue } from "platejs/react";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -16,12 +16,7 @@ interface FloatingToolbarProps extends React.ComponentProps<typeof Toolbar> {
   state?: FloatingToolbarState;
 }
 
-export function FloatingToolbar({
-  children,
-  className,
-  state,
-  ...props
-}: FloatingToolbarProps) {
+export function FloatingToolbar({ children, className, state, ...props }: FloatingToolbarProps) {
   const editorId = useEditorId();
   const focusedEditorId = useEventEditorValue("focus");
 
@@ -33,12 +28,7 @@ export function FloatingToolbar({
       middleware: [
         offset(12),
         flip({
-          fallbackPlacements: [
-            "top-start",
-            "top-end",
-            "bottom-start",
-            "bottom-end",
-          ],
+          fallbackPlacements: ["top-start", "top-end", "bottom-start", "bottom-end"],
           padding: 12,
         }),
       ],
@@ -63,7 +53,7 @@ export function FloatingToolbar({
         (props.ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
       }
     },
-    [floatingRef, props.ref]
+    [floatingRef, props.ref],
   );
 
   if (hidden) return null;
@@ -77,7 +67,7 @@ export function FloatingToolbar({
         className={cn(
           "scrollbar-hide absolute z-50 overflow-x-auto whitespace-nowrap rounded-md border bg-popover p-1 opacity-100 shadow-md print:hidden",
           "max-w-[80vw]",
-          className
+          className,
         )}
       >
         {children}

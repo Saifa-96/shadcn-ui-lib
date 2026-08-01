@@ -1,7 +1,7 @@
 "use client";
 
-import * as React from "react";
 import { isUrl } from "platejs";
+import * as React from "react";
 import { toast } from "sonner";
 
 import {

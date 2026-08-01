@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -6,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
 export function CardSection() {
   return (
@@ -18,9 +18,7 @@ export function CardSection() {
           <CardDescription>Card description goes here.</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-muted-foreground">
-            This is the card content area.
-          </p>
+          <p className="text-sm text-muted-foreground">This is the card content area.</p>
         </CardContent>
         <CardFooter>
           <Button size="sm">Action</Button>

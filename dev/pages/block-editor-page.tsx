@@ -1,8 +1,7 @@
-import { useRef } from "react";
 import type { SlateEditor, Value } from "platejs";
-
-import { withAgentEdit } from "@/components/block-editor/with-agent-edit";
+import { useRef } from "react";
 import { BlockEditor } from "@/components/block-editor/editor";
+import { withAgentEdit } from "@/components/block-editor/with-agent-edit";
 
 export function BlockEditorPage() {
   const editorRef = useRef<SlateEditor | null>(null);
@@ -21,7 +20,7 @@ export function BlockEditorPage() {
                 type: "p",
                 children: [{ text: "🤖 This paragraph was inserted by withAgentEdit!" }],
               },
-              { at: [editor.children.length] }
+              { at: [editor.children.length] },
             );
           });
           console.log("withAgentEdit result:", result);
@@ -31,7 +30,9 @@ export function BlockEditorPage() {
       </button>
       <BlockEditor
         initialValue={initialValue}
-        onEditorReady={(editor) => { editorRef.current = editor; }}
+        onEditorReady={(editor) => {
+          editorRef.current = editor;
+        }}
       />
     </div>
   );
@@ -47,13 +48,17 @@ const initialValue: Value = [
     children: [
       { text: "This document outlines the key deliverables for " },
       { text: "Q3 2025", bold: true },
-      { text: ". All teams should align sprint goals with these milestones. Priority is determined by customer impact and technical dependencies — if something blocks another team, it ships first." },
+      {
+        text: ". All teams should align sprint goals with these milestones. Priority is determined by customer impact and technical dependencies — if something blocks another team, it ships first.",
+      },
     ],
   },
   {
     type: "p",
     children: [
-      { text: "We are targeting three major workstreams this quarter: infrastructure hardening, user-facing redesign, and API scalability. Each workstream has a dedicated owner responsible for weekly status updates and cross-team coordination." },
+      {
+        text: "We are targeting three major workstreams this quarter: infrastructure hardening, user-facing redesign, and API scalability. Each workstream has a dedicated owner responsible for weekly status updates and cross-team coordination.",
+      },
     ],
   },
   {
@@ -61,7 +66,9 @@ const initialValue: Value = [
     children: [
       { text: "Key principles for this cycle: " },
       { text: "ship incrementally", italic: true },
-      { text: ", gather feedback early, and avoid large-batch releases. Feature flags should gate all user-visible changes so we can decouple deploy from release." },
+      {
+        text: ", gather feedback early, and avoid large-batch releases. Feature flags should gate all user-visible changes so we can decouple deploy from release.",
+      },
     ],
   },
   {

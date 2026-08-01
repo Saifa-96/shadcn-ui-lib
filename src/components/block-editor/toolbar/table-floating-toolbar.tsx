@@ -1,4 +1,16 @@
-import * as React from "react";
+import {
+  deleteColumn,
+  deleteRow,
+  insertTableColumn,
+  insertTableRow,
+  mergeTableCells,
+  splitTableCell,
+} from "@platejs/table";
+import {
+  TablePlugin,
+  useTableBordersDropdownMenuContentState,
+  useTableMergeState,
+} from "@platejs/table/react";
 import {
   ArrowDown,
   ArrowLeft,
@@ -10,23 +22,8 @@ import {
   Trash2Icon,
   XIcon,
 } from "lucide-react";
+import type { TTableElement } from "platejs";
 import {
-  deleteColumn,
-  deleteRow,
-  deleteTable,
-  insertTableColumn,
-  insertTableRow,
-  mergeTableCells,
-  splitTableCell,
-} from "@platejs/table";
-import {
-  TablePlugin,
-  useTableBordersDropdownMenuContentState,
-  useTableMergeState,
-} from "@platejs/table/react";
-import { type TTableElement } from "platejs";
-import {
-  useEditorPlugin,
   useEditorRef,
   useEditorSelector,
   useElement,
@@ -34,6 +31,7 @@ import {
   useRemoveNodeButton,
   useSelected,
 } from "platejs/react";
+import * as React from "react";
 
 import {
   DropdownMenu,
@@ -43,9 +41,6 @@ import {
   DropdownMenuPortal,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import { TablePopover, TablePopoverAnchor, TablePopoverContent } from "./table-popover";
-import { Toolbar, ToolbarButton, ToolbarGroup } from "./toolbar";
 import {
   BorderAllIcon,
   BorderBottomIcon,
@@ -54,6 +49,8 @@ import {
   BorderRightIcon,
   BorderTopIcon,
 } from "./table-icons";
+import { TablePopover, TablePopoverAnchor, TablePopoverContent } from "./table-popover";
+import { Toolbar, ToolbarButton, ToolbarGroup } from "./toolbar";
 
 const TABLE_MULTI_SELECTION_TOOLBAR_DELAY_MS = 150;
 
@@ -64,7 +61,7 @@ const TABLE_MULTI_SELECTION_TOOLBAR_DELAY_MS = 150;
 export function TableFloatingToolbar({ children }: { children: React.ReactNode }) {
   const selectedCellCount = useEditorSelector(
     (editor) => editor.getApi(TablePlugin).table.getSelectedCellIds()?.length ?? 0,
-    []
+    [],
   );
   const selected = useSelected();
   const isFocusedLast = useFocusedLast();
@@ -78,7 +75,10 @@ export function TableFloatingToolbar({ children }: { children: React.ReactNode }
       setIsExpandedReady(false);
       return;
     }
-    const id = window.setTimeout(() => setIsExpandedReady(true), TABLE_MULTI_SELECTION_TOOLBAR_DELAY_MS);
+    const id = window.setTimeout(
+      () => setIsExpandedReady(true),
+      TABLE_MULTI_SELECTION_TOOLBAR_DELAY_MS,
+    );
     return () => window.clearTimeout(id);
   }, [isExpandedPending]);
 
@@ -168,7 +168,11 @@ function SingleCellToolbarContent() {
 
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger
-              render={<ToolbarButton tooltip="Cell borders"><Grid2X2Icon /></ToolbarButton>}
+              render={
+                <ToolbarButton tooltip="Cell borders">
+                  <Grid2X2Icon />
+                </ToolbarButton>
+              }
             />
             <DropdownMenuPortal>
               <TableBordersDropdownMenuContent />
@@ -233,7 +237,7 @@ function SingleCellToolbarContent() {
 }
 
 function TableBordersDropdownMenuContent() {
-  const editor = useEditorRef();
+  const _editor = useEditorRef();
   const {
     getOnSelectTableBorder,
     hasBottomBorder,
@@ -245,36 +249,49 @@ function TableBordersDropdownMenuContent() {
   } = useTableBordersDropdownMenuContentState();
 
   return (
-    <DropdownMenuContent
-      className="min-w-[220px]"
-      align="start"
-      side="right"
-      sideOffset={0}
-    >
+    <DropdownMenuContent className="min-w-[220px]" align="start" side="right" sideOffset={0}>
       <DropdownMenuGroup>
-        <DropdownMenuCheckboxItem checked={hasTopBorder} onCheckedChange={getOnSelectTableBorder("top")}>
+        <DropdownMenuCheckboxItem
+          checked={hasTopBorder}
+          onCheckedChange={getOnSelectTableBorder("top")}
+        >
           <BorderTopIcon />
           <div>Top Border</div>
         </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem checked={hasRightBorder} onCheckedChange={getOnSelectTableBorder("right")}>
+        <DropdownMenuCheckboxItem
+          checked={hasRightBorder}
+          onCheckedChange={getOnSelectTableBorder("right")}
+        >
           <BorderRightIcon />
           <div>Right Border</div>
         </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem checked={hasBottomBorder} onCheckedChange={getOnSelectTableBorder("bottom")}>
+        <DropdownMenuCheckboxItem
+          checked={hasBottomBorder}
+          onCheckedChange={getOnSelectTableBorder("bottom")}
+        >
           <BorderBottomIcon />
           <div>Bottom Border</div>
         </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem checked={hasLeftBorder} onCheckedChange={getOnSelectTableBorder("left")}>
+        <DropdownMenuCheckboxItem
+          checked={hasLeftBorder}
+          onCheckedChange={getOnSelectTableBorder("left")}
+        >
           <BorderLeftIcon />
           <div>Left Border</div>
         </DropdownMenuCheckboxItem>
       </DropdownMenuGroup>
       <DropdownMenuGroup>
-        <DropdownMenuCheckboxItem checked={hasNoBorders} onCheckedChange={getOnSelectTableBorder("none")}>
+        <DropdownMenuCheckboxItem
+          checked={hasNoBorders}
+          onCheckedChange={getOnSelectTableBorder("none")}
+        >
           <BorderNoneIcon />
           <div>No Border</div>
         </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem checked={hasOuterBorders} onCheckedChange={getOnSelectTableBorder("outer")}>
+        <DropdownMenuCheckboxItem
+          checked={hasOuterBorders}
+          onCheckedChange={getOnSelectTableBorder("outer")}
+        >
           <BorderAllIcon />
           <div>Outside Borders</div>
         </DropdownMenuCheckboxItem>

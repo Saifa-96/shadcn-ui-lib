@@ -1,7 +1,5 @@
 "use client";
 
-import * as React from "react";
-import type { WithRequiredKey } from "platejs";
 import {
   FloatingMedia as FloatingMediaPrimitive,
   FloatingMediaStore,
@@ -9,6 +7,7 @@ import {
 } from "@platejs/media/react";
 import { cva } from "class-variance-authority";
 import { Link, Trash2Icon } from "lucide-react";
+import type { WithRequiredKey } from "platejs";
 import {
   useEditorSelector,
   useElement,
@@ -17,6 +16,7 @@ import {
   useRemoveNodeButton,
   useSelected,
 } from "platejs/react";
+import * as React from "react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -29,7 +29,7 @@ import {
 } from "./table-popover";
 
 const inputVariants = cva(
-  "flex h-[28px] w-full rounded-md border-none bg-transparent px-1.5 py-1 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-transparent md:text-sm"
+  "flex h-[28px] w-full rounded-md border-none bg-transparent px-1.5 py-1 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-transparent md:text-sm",
 );
 
 interface MediaToolbarProps {
@@ -45,18 +45,15 @@ export function MediaToolbar({ children, plugin }: MediaToolbarProps) {
   const readOnly = useReadOnly();
   const selected = useSelected();
   const isFocusedLast = useFocusedLast();
-  const selectionCollapsed = useEditorSelector(
-    (editor) => !editor.api.isExpanded(),
-    []
-  );
+  const selectionCollapsed = useEditorSelector((editor) => !editor.api.isExpanded(), []);
   const open = isFocusedLast && !readOnly && selected && selectionCollapsed;
   const isEditing = useFloatingMediaValue("isEditing");
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: mirrors official plate-ui effect semantics
   React.useEffect(() => {
     if (!open && isEditing) {
       FloatingMediaStore.set("isEditing", false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const element = useElement();
@@ -66,10 +63,7 @@ export function MediaToolbar({ children, plugin }: MediaToolbarProps) {
     <Popover open={open} modal={false}>
       <PopoverAnchor asChild>{children}</PopoverAnchor>
 
-      <PopoverContent
-        className="w-auto p-1"
-        onOpenAutoFocus={(e) => e.preventDefault()}
-      >
+      <PopoverContent className="w-auto p-1" onOpenAutoFocus={(e) => e.preventDefault()}>
         {isEditing ? (
           <div className="flex w-[330px] flex-col">
             <div className="flex items-center">

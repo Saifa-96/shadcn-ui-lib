@@ -1,19 +1,10 @@
 "use client";
 
-import React from "react";
-
-import type { TListElement } from "platejs";
-
 import { isOrderedList } from "@platejs/list";
-import {
-  useTodoListElement,
-  useTodoListElementState,
-} from "@platejs/list/react";
-import {
-  type PlateElementProps,
-  type RenderNodeWrapper,
-  useReadOnly,
-} from "platejs/react";
+import { useTodoListElement, useTodoListElementState } from "@platejs/list/react";
+import type { TListElement } from "platejs";
+import { type PlateElementProps, type RenderNodeWrapper, useReadOnly } from "platejs/react";
+import type React from "react";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
@@ -70,10 +61,7 @@ function TodoMarker(props: PlateElementProps) {
   return (
     <div contentEditable={false}>
       <Checkbox
-        className={cn(
-          "-left-6 absolute top-1",
-          readOnly && "pointer-events-none"
-        )}
+        className={cn("-left-6 absolute top-1", readOnly && "pointer-events-none")}
         {...checkboxProps}
       />
     </div>
@@ -89,7 +77,7 @@ function TodoLi({ children, element, lineBreakBadge }: TodoLiProps) {
     <li
       className={cn(
         "list-none",
-        (element.checked as boolean) && "text-muted-foreground line-through"
+        (element.checked as boolean) && "text-muted-foreground line-through",
       )}
     >
       {children}

@@ -1,26 +1,22 @@
-import * as React from "react";
 import { DndPlugin, useDraggable, useDropLine } from "@platejs/dnd";
 import { expandListItemsWithChildren } from "@platejs/list";
 import { BlockSelectionPlugin } from "@platejs/selection/react";
 import { GripVertical } from "lucide-react";
-import { type TElement, getPluginByType, isType, KEYS } from "platejs";
+import { getPluginByType, isType, KEYS, type TElement } from "platejs";
 import {
+  MemoizedChildren,
   type PlateEditor,
   type PlateElementProps,
   type RenderNodeWrapper,
-  MemoizedChildren,
   useEditorRef,
   useElement,
   usePluginOption,
+  useSelected,
 } from "platejs/react";
-import { useSelected } from "platejs/react";
+import * as React from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 import { InsertBlockButton } from "./insert-block-button";
@@ -63,18 +59,17 @@ function Draggable(props: PlateElementProps) {
   const { children, editor, element, path } = props;
   const blockSelectionApi = editor.getApi(BlockSelectionPlugin).blockSelection;
 
-  const { isAboutToDrag, isDragging, nodeRef, previewRef, handleRef } =
-    useDraggable({
-      element,
-      onDropHandler: (_, { dragItem }) => {
-        const id = (dragItem as { id: string[] | string }).id;
+  const { isAboutToDrag, isDragging, nodeRef, previewRef, handleRef } = useDraggable({
+    element,
+    onDropHandler: (_, { dragItem }) => {
+      const id = (dragItem as { id: string[] | string }).id;
 
-        if (blockSelectionApi) {
-          blockSelectionApi.add(id);
-        }
-        resetPreview();
-      },
-    });
+      if (blockSelectionApi) {
+        blockSelectionApi.add(id);
+      }
+      resetPreview();
+    },
+  });
 
   const isInColumn = path.length === 3;
   const isInTable = path.length === 4;
@@ -88,18 +83,18 @@ function Draggable(props: PlateElementProps) {
     }
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: mirrors official plate-ui effect semantics
   React.useEffect(() => {
     if (!isDragging) {
       resetPreview();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDragging]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: mirrors official plate-ui effect semantics
   React.useEffect(() => {
     if (isAboutToDrag) {
       previewRef.current?.classList.remove("opacity-0");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAboutToDrag]);
 
   const [dragButtonTop, setDragButtonTop] = React.useState(0);
@@ -109,9 +104,7 @@ function Draggable(props: PlateElementProps) {
       className={cn(
         "relative",
         isDragging && "opacity-50",
-        getPluginByType(editor, element.type)?.node.isContainer
-          ? "group/container"
-          : "group"
+        getPluginByType(editor, element.type)?.node.isContainer ? "group/container" : "group",
       )}
       onMouseEnter={() => {
         if (isDragging) return;
@@ -120,18 +113,12 @@ function Draggable(props: PlateElementProps) {
     >
       {!isInTable && (
         <Gutter>
-          <div
-            className={cn(
-              "slate-blockToolbarWrapper",
-              "flex h-[1.5em]",
-              isInColumn && "h-4"
-            )}
-          >
+          <div className={cn("slate-blockToolbarWrapper", "flex h-[1.5em]", isInColumn && "h-4")}>
             <div
               className={cn(
                 "slate-blockToolbar relative flex w-9",
                 "pointer-events-auto mr-1 items-center gap-0.5",
-                isInColumn && "mr-1.5"
+                isInColumn && "mr-1.5",
               )}
             >
               <InsertBlockButton
@@ -168,9 +155,7 @@ function Draggable(props: PlateElementProps) {
         ref={nodeRef}
         className="slate-blockWrapper flow-root"
         onContextMenu={(event) =>
-          editor
-            .getApi(BlockSelectionPlugin)
-            .blockSelection.addOnContextMenu({ element, event })
+          editor.getApi(BlockSelectionPlugin).blockSelection.addOnContextMenu({ element, event })
         }
       >
         <MemoizedChildren>{children}</MemoizedChildren>
@@ -180,17 +165,10 @@ function Draggable(props: PlateElementProps) {
   );
 }
 
-function Gutter({
-  children,
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+function Gutter({ children, className, ...props }: React.ComponentProps<"div">) {
   const editor = useEditorRef();
   const element = useElement();
-  const isSelectionAreaVisible = usePluginOption(
-    BlockSelectionPlugin,
-    "isSelectionAreaVisible"
-  );
+  const isSelectionAreaVisible = usePluginOption(BlockSelectionPlugin, "isSelectionAreaVisible");
   const selected = useSelected();
 
   return (
@@ -204,7 +182,7 @@ function Gutter({
           : "group-hover:opacity-100",
         isSelectionAreaVisible && "hidden",
         !selected && "opacity-0",
-        className
+        className,
       )}
       contentEditable={false}
     >
@@ -251,18 +229,14 @@ const DragHandle = React.memo(function DragHandle({
             .blockSelection.getNodes({ sort: true });
 
           let selectionNodes =
-            blockSelection.length > 0
-              ? blockSelection
-              : editor.api.blocks({ mode: "highest" });
+            blockSelection.length > 0 ? blockSelection : editor.api.blocks({ mode: "highest" });
 
           if (!selectionNodes.some(([node]) => node.id === element.id)) {
-            selectionNodes = [[element, editor.api.findPath(element)!]];
+            const elementPath = editor.api.findPath(element);
+            if (elementPath) selectionNodes = [[element, elementPath]];
           }
 
-          const blocks = expandListItemsWithChildren(
-            editor,
-            selectionNodes
-          ).map(([node]) => node);
+          const blocks = expandListItemsWithChildren(editor, selectionNodes).map(([node]) => node);
 
           if (blockSelection.length === 0) {
             editor.tf.blur();
@@ -287,18 +261,14 @@ const DragHandle = React.memo(function DragHandle({
             .blockSelection.getNodes({ sort: true });
 
           let selectedBlocks =
-            blockSelection.length > 0
-              ? blockSelection
-              : editor.api.blocks({ mode: "highest" });
+            blockSelection.length > 0 ? blockSelection : editor.api.blocks({ mode: "highest" });
 
           if (!selectedBlocks.some(([node]) => node.id === element.id)) {
-            selectedBlocks = [[element, editor.api.findPath(element)!]];
+            const elementPath = editor.api.findPath(element);
+            if (elementPath) selectedBlocks = [[element, elementPath]];
           }
 
-          const processedBlocks = expandListItemsWithChildren(
-            editor,
-            selectedBlocks
-          );
+          const processedBlocks = expandListItemsWithChildren(editor, selectedBlocks);
 
           const ids = processedBlocks.map((block) => block[0].id as string);
 
@@ -340,26 +310,20 @@ const DropLine = React.memo(function DropLine({
         "bg-primary/50",
         dropLine === "top" && "-top-px",
         dropLine === "bottom" && "-bottom-px",
-        className
+        className,
       )}
     />
   );
 });
 
-function createDragPreviewElements(
-  editor: PlateEditor,
-  blocks: TElement[]
-): HTMLElement[] {
+function createDragPreviewElements(editor: PlateEditor, blocks: TElement[]): HTMLElement[] {
   const elements: HTMLElement[] = [];
   const ids: string[] = [];
 
   const removeDataAttributes = (element: HTMLElement) => {
     const attrs = Array.from(element.attributes);
     for (const attr of attrs) {
-      if (
-        attr.name.startsWith("data-slate") ||
-        attr.name.startsWith("data-block-id")
-      ) {
+      if (attr.name.startsWith("data-slate") || attr.name.startsWith("data-block-id")) {
         element.removeAttribute(attr.name);
       }
     }
@@ -370,13 +334,11 @@ function createDragPreviewElements(
   };
 
   const resolveElement = (node: TElement, index: number) => {
-    const domNode = editor.api.toDOMNode(node)!;
+    const domNode = editor.api.toDOMNode(node);
+    if (!domNode) return;
     const newDomNode = domNode.cloneNode(true) as HTMLElement;
 
-    const applyScrollCompensation = (
-      original: Element,
-      cloned: HTMLElement
-    ) => {
+    const applyScrollCompensation = (original: Element, cloned: HTMLElement) => {
       const scrollLeft = original.scrollLeft;
 
       if (scrollLeft > 0) {
@@ -412,14 +374,17 @@ function createDragPreviewElements(
 
     if (lastDomNode) {
       const lastDomNodeRect = editor.api
-        .toDOMNode(lastDomNode)!
-        .parentElement!.getBoundingClientRect();
+        .toDOMNode(lastDomNode)
+        ?.parentElement?.getBoundingClientRect();
 
-      const domNodeRect = domNode.parentElement!.getBoundingClientRect();
-      const distance = domNodeRect.top - lastDomNodeRect.bottom;
+      const domNodeRect = domNode.parentElement?.getBoundingClientRect();
 
-      if (distance > 15) {
-        wrapper.style.marginTop = `${distance}px`;
+      if (domNodeRect && lastDomNodeRect) {
+        const distance = domNodeRect.top - lastDomNodeRect.bottom;
+
+        if (distance > 15) {
+          wrapper.style.marginTop = `${distance}px`;
+        }
       }
     }
 
@@ -438,47 +403,33 @@ function createDragPreviewElements(
 
 function calculatePreviewTop(
   editor: PlateEditor,
-  { blocks, element }: { blocks: TElement[]; element: TElement }
+  { blocks, element }: { blocks: TElement[]; element: TElement },
 ): number {
-  const child = editor.api.toDOMNode(element)!;
-  const editable = editor.api.toDOMNode(editor)!;
-  const firstSelectedChild = blocks[0]!;
+  const child = editor.api.toDOMNode(element);
+  const editable = editor.api.toDOMNode(editor);
+  const firstSelectedChild = blocks[0];
+  const firstDomNode = firstSelectedChild ? editor.api.toDOMNode(firstSelectedChild) : undefined;
 
-  const firstDomNode = editor.api.toDOMNode(firstSelectedChild)!;
-  const editorPaddingTop = Number(
-    window.getComputedStyle(editable).paddingTop.replace("px", "")
-  );
+  if (!child || !editable || !firstDomNode) return 0;
+  const editorPaddingTop = Number(window.getComputedStyle(editable).paddingTop.replace("px", ""));
 
   const firstNodeToEditorDistance =
     firstDomNode.getBoundingClientRect().top -
     editable.getBoundingClientRect().top -
     editorPaddingTop;
 
-  const marginTop = Number(
-    window.getComputedStyle(firstDomNode).marginTop.replace("px", "")
-  );
+  const marginTop = Number(window.getComputedStyle(firstDomNode).marginTop.replace("px", ""));
 
   const currentToEditorDistance =
-    child.getBoundingClientRect().top -
-    editable.getBoundingClientRect().top -
-    editorPaddingTop;
+    child.getBoundingClientRect().top - editable.getBoundingClientRect().top - editorPaddingTop;
 
-  const currentMarginTop = Number(
-    window.getComputedStyle(child).marginTop.replace("px", "")
-  );
+  const currentMarginTop = Number(window.getComputedStyle(child).marginTop.replace("px", ""));
 
-  return (
-    currentToEditorDistance -
-    firstNodeToEditorDistance +
-    marginTop -
-    currentMarginTop
-  );
+  return currentToEditorDistance - firstNodeToEditorDistance + marginTop - currentMarginTop;
 }
 
 function calcDragButtonTop(editor: PlateEditor, element: TElement): number {
-  const child = editor.api.toDOMNode(element)!;
-  const currentMarginTop = Number(
-    window.getComputedStyle(child).marginTop.replace("px", "")
-  );
-  return currentMarginTop;
+  const child = editor.api.toDOMNode(element);
+  if (!child) return 0;
+  return Number(window.getComputedStyle(child).marginTop.replace("px", ""));
 }
