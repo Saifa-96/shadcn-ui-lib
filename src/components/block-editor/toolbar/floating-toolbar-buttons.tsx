@@ -3,6 +3,7 @@ import { KEYS } from "platejs";
 import { useEditorReadOnly, useMarkToolbarButton, useMarkToolbarButtonState } from "platejs/react";
 
 import { ToolbarButton, ToolbarGroup } from "./toolbar";
+import { TurnIntoToolbarButton } from "./turn-into-toolbar-button";
 
 export function FloatingToolbarButtons() {
   const readOnly = useEditorReadOnly();
@@ -10,17 +11,22 @@ export function FloatingToolbarButtons() {
   if (readOnly) return null;
 
   return (
-    <ToolbarGroup>
-      <MarkButton nodeType={KEYS.bold} tooltip="Bold (⌘+B)">
-        <BoldIcon />
-      </MarkButton>
-      <MarkButton nodeType={KEYS.italic} tooltip="Italic (⌘+I)">
-        <ItalicIcon />
-      </MarkButton>
-      <MarkButton nodeType={KEYS.underline} tooltip="Underline (⌘+U)">
-        <UnderlineIcon />
-      </MarkButton>
-    </ToolbarGroup>
+    <>
+      <ToolbarGroup>
+        <TurnIntoToolbarButton />
+      </ToolbarGroup>
+      <ToolbarGroup>
+        <MarkButton nodeType={KEYS.bold} tooltip="Bold (⌘+B)">
+          <BoldIcon />
+        </MarkButton>
+        <MarkButton nodeType={KEYS.italic} tooltip="Italic (⌘+I)">
+          <ItalicIcon />
+        </MarkButton>
+        <MarkButton nodeType={KEYS.underline} tooltip="Underline (⌘+U)">
+          <UnderlineIcon />
+        </MarkButton>
+      </ToolbarGroup>
+    </>
   );
 }
 

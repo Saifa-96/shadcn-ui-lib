@@ -41,6 +41,7 @@ import {
   TodoListToolbarButton,
 } from "./list-toolbar-button";
 import { ToolbarButton, ToolbarGroup } from "./toolbar";
+import { TurnIntoToolbarButton } from "./turn-into-toolbar-button";
 
 export function FixedToolbarButtons() {
   const editor = useEditorRef();
@@ -53,6 +54,9 @@ export function FixedToolbarButtons() {
           <ToolbarGroup>
             <UndoToolbarButton />
             <RedoToolbarButton />
+          </ToolbarGroup>
+          <ToolbarGroup>
+            <TurnIntoToolbarButton />
           </ToolbarGroup>
           <ToolbarGroup>
             <BulletedListToolbarButton />

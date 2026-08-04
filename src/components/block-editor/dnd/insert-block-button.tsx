@@ -24,10 +24,16 @@ import { useUploadConfig } from "../upload/upload-config";
 
 const BLOCK_ITEMS = [
   { type: KEYS.p, label: "Paragraph" },
+  { type: KEYS.blockquote, label: "Blockquote" },
+];
+
+const HEADING_ITEMS = [
   { type: KEYS.h1, label: "Heading 1" },
   { type: KEYS.h2, label: "Heading 2" },
   { type: KEYS.h3, label: "Heading 3" },
-  { type: KEYS.blockquote, label: "Blockquote" },
+  { type: KEYS.h4, label: "Heading 4" },
+  { type: KEYS.h5, label: "Heading 5" },
+  { type: KEYS.h6, label: "Heading 6" },
 ];
 
 const LIST_ITEMS = [
@@ -125,6 +131,17 @@ export function InsertBlockButton({ className, style }: InsertBlockButtonProps) 
             </DropdownMenuItem>
           ))}
         </DropdownMenuGroup>
+
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>Heading</DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            {HEADING_ITEMS.map((item) => (
+              <DropdownMenuItem key={item.label} onClick={() => handleInsertBlock(item.type)}>
+                {item.label}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
 
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>List</DropdownMenuSubTrigger>

@@ -2,7 +2,11 @@ import * as ToolbarPrimitive from "@radix-ui/react-toolbar";
 import { cva, type VariantProps } from "class-variance-authority";
 import { ChevronDown } from "lucide-react";
 import * as React from "react";
-
+import {
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
@@ -231,5 +235,37 @@ export function ToolbarGroup({ children, className }: React.ComponentProps<"div"
         <Separator orientation="vertical" />
       </div>
     </div>
+  );
+}
+
+interface ToolbarMenuGroupProps extends React.ComponentProps<typeof DropdownMenuRadioGroup> {
+  label?: string;
+}
+
+export function ToolbarMenuGroup({ children, className, label, ...props }: ToolbarMenuGroupProps) {
+  return (
+    <>
+      <DropdownMenuSeparator
+        className={cn(
+          "hidden",
+          "mb-0 shrink-0 peer-has-[[role=menuitem]]/menu-group:block peer-has-[[role=menuitemradio]]/menu-group:block peer-has-[[role=option]]/menu-group:block",
+        )}
+      />
+      <DropdownMenuRadioGroup
+        {...props}
+        className={cn(
+          "hidden",
+          "peer/menu-group group/menu-group my-1.5 has-[[role=menuitem]]:block has-[[role=menuitemradio]]:block has-[[role=option]]:block",
+          className,
+        )}
+      >
+        {label && (
+          <DropdownMenuLabel className="select-none font-semibold text-muted-foreground text-xs">
+            {label}
+          </DropdownMenuLabel>
+        )}
+        {children}
+      </DropdownMenuRadioGroup>
+    </>
   );
 }

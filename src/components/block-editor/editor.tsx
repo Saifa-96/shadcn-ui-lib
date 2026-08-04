@@ -16,10 +16,10 @@ export type { PlateEditor };
 export interface BlockEditorProps {
   initialValue?: Value;
   /**
-   * Called with the document value on every change after initialization
-   * completes. It does not fire on open: plate's init pipeline (e.g. node id
-   * minting) mutates the document before the editor is ready, and those
-   * init-time changes are never emitted.
+   * Called with the document value on content changes (selection-only moves
+   * do not fire it), and only after initialization completes: plate's init
+   * pipeline (e.g. node id minting) mutates the document before the editor
+   * is ready, and those init-time changes are never emitted.
    */
   onValueChange?: (v: Value) => void;
   onEditorReady?: (editor: PlateEditor) => void;
@@ -70,7 +70,7 @@ export const BlockEditor: React.FC<BlockEditorProps> = (props) => {
       <UploadConfigProvider config={uploadConfig}>
         <Plate
           editor={editor}
-          onChange={({ value }) => {
+          onValueChange={({ value }) => {
             if (!initReadyRef.current) return;
             onValueChange?.(value);
           }}
