@@ -1,9 +1,20 @@
 import {
+  BlockquoteRules,
+  BoldRules,
+  HeadingRules,
+  ItalicRules,
+  MarkComboRules,
+  UnderlineRules,
+} from "@platejs/basic-nodes";
+import {
   BlockquotePlugin,
   BoldPlugin,
   H1Plugin,
   H2Plugin,
   H3Plugin,
+  H4Plugin,
+  H5Plugin,
+  H6Plugin,
   ItalicPlugin,
   UnderlinePlugin,
 } from "@platejs/basic-nodes/react";
@@ -19,10 +30,10 @@ import {
   TableRowPlugin,
 } from "@platejs/table/react";
 import type { PluginConfig } from "platejs";
-import { KEYS } from "platejs";
+import { ExitBreakPlugin, KEYS } from "platejs";
 import { ParagraphPlugin } from "platejs/react";
 import { BlockquoteElement } from "./blocks/block-quote";
-import { H1Element, H2Element, H3Element } from "./blocks/headers";
+import { H1Element, H2Element, H3Element, H4Element, H5Element, H6Element } from "./blocks/headers";
 import { ImageElement } from "./blocks/image-node";
 import { BlockList } from "./blocks/list-node";
 import { PlaceholderElement } from "./blocks/media-placeholder-node";
@@ -40,20 +51,70 @@ import { MediaUploadToast } from "./upload/media-upload-toast";
 
 export const plugins: PluginConfig[] = [
   // text
-  BoldPlugin,
-  ItalicPlugin,
-  UnderlinePlugin,
+  BoldPlugin.configure({
+    inputRules: [
+      BoldRules.markdown({ variant: "*" }),
+      BoldRules.markdown({ variant: "_" }),
+      MarkComboRules.markdown({ variant: "boldItalic" }),
+      MarkComboRules.markdown({ variant: "boldUnderline" }),
+      MarkComboRules.markdown({ variant: "boldItalicUnderline" }),
+      MarkComboRules.markdown({ variant: "italicUnderline" }),
+    ],
+  }),
+  ItalicPlugin.configure({
+    inputRules: [ItalicRules.markdown({ variant: "*" }), ItalicRules.markdown({ variant: "_" })],
+  }),
+  UnderlinePlugin.configure({
+    inputRules: [UnderlineRules.markdown()],
+  }),
 
   // paragraph
   ParagraphPlugin.withComponent(ParagraphElement),
 
   // header
-  H1Plugin.withComponent(H1Element),
-  H2Plugin.withComponent(H2Element),
-  H3Plugin.withComponent(H3Element),
+  H1Plugin.configure({
+    inputRules: [HeadingRules.markdown()],
+    node: { component: H1Element },
+    rules: { break: { empty: "reset" } },
+    shortcuts: { toggle: { keys: "mod+alt+1" } },
+  }),
+  H2Plugin.configure({
+    inputRules: [HeadingRules.markdown()],
+    node: { component: H2Element },
+    rules: { break: { empty: "reset" } },
+    shortcuts: { toggle: { keys: "mod+alt+2" } },
+  }),
+  H3Plugin.configure({
+    inputRules: [HeadingRules.markdown()],
+    node: { component: H3Element },
+    rules: { break: { empty: "reset" } },
+    shortcuts: { toggle: { keys: "mod+alt+3" } },
+  }),
+  H4Plugin.configure({
+    inputRules: [HeadingRules.markdown()],
+    node: { component: H4Element },
+    rules: { break: { empty: "reset" } },
+    shortcuts: { toggle: { keys: "mod+alt+4" } },
+  }),
+  H5Plugin.configure({
+    inputRules: [HeadingRules.markdown()],
+    node: { component: H5Element },
+    rules: { break: { empty: "reset" } },
+    shortcuts: { toggle: { keys: "mod+alt+5" } },
+  }),
+  H6Plugin.configure({
+    inputRules: [HeadingRules.markdown()],
+    node: { component: H6Element },
+    rules: { break: { empty: "reset" } },
+    shortcuts: { toggle: { keys: "mod+alt+6" } },
+  }),
 
   // quote
-  BlockquotePlugin.withComponent(BlockquoteElement),
+  BlockquotePlugin.configure({
+    inputRules: [BlockquoteRules.markdown()],
+    node: { component: BlockquoteElement },
+    shortcuts: { toggle: { keys: "mod+shift+period" } },
+  }),
 
   // indent
   IndentPlugin.configure({
@@ -131,6 +192,14 @@ export const plugins: PluginConfig[] = [
 
   // block interaction
   ...DndPlugins,
+
+  // editing
+  ExitBreakPlugin.configure({
+    shortcuts: {
+      insert: { keys: "mod+enter" },
+      insertBefore: { keys: "mod+shift+enter" },
+    },
+  }),
 
   // toolbar
   FixedToolbarPlugin,

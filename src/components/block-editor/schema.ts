@@ -46,14 +46,16 @@ const paragraphSchema = z
 
 const headingSchema = z
   .object({
-    type: z.enum(["h1", "h2", "h3"]),
+    type: z.enum(["h1", "h2", "h3", "h4", "h5", "h6"]),
     children: inlineChildrenSchema,
   })
   .merge(listFieldsSchema);
 
 const blockquoteSchema = z.object({
   type: z.literal("blockquote"),
-  children: z.array(paragraphSchema).min(1),
+  get children() {
+    return z.array(z.union([paragraphSchema, headingSchema, blockquoteSchema])).min(1);
+  },
 });
 
 // ─── Image ───────────────────────────────────────────────────────────────────
@@ -83,7 +85,7 @@ const tableCellBorderSchema = z.object({
 
 const tableCellSchema = z.object({
   type: z.enum(["td", "th"]),
-  children: z.array(paragraphSchema).min(1),
+  children: z.array(z.union([paragraphSchema, headingSchema, blockquoteSchema])).min(1),
   colSpan: z.number().int().min(1).optional(),
   rowSpan: z.number().int().min(1).optional(),
   background: z.string().optional(),

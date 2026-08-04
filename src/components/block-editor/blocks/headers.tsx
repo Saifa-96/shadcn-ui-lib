@@ -29,3 +29,33 @@ export const H3Element: React.FC<PlateElementProps> = (props) => {
     />
   );
 };
+
+export const H4Element: React.FC<PlateElementProps> = (props) => {
+  return (
+    <PlateElement
+      as="h4"
+      className="relative mt-[0.75em] text-lg font-semibold tracking-tight"
+      {...props}
+    />
+  );
+};
+
+export const H5Element: React.FC<PlateElementProps> = (props) => {
+  return (
+    <PlateElement
+      as="h5"
+      className="relative mt-[0.75em] text-lg font-semibold tracking-tight"
+      {...props}
+    />
+  );
+};
+
+export const H6Element: React.FC<PlateElementProps> = (props) => {
+  return (
+    <PlateElement
+      as="h6"
+      className="relative mt-[0.75em] text-base font-semibold tracking-tight"
+      {...props}
+    />
+  );
+};
