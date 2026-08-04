@@ -5,7 +5,7 @@ import type { Value } from "platejs";
 import { KEYS } from "platejs";
 import type { PlateEditor } from "platejs/react";
 import { Plate, PlateContent, usePlateEditor } from "platejs/react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { plugins } from "./plugins";
 import { type UploadConfig, UploadConfigProvider } from "./upload/upload-config";
@@ -15,6 +15,12 @@ export type { PlateEditor };
 
 export interface BlockEditorProps {
   initialValue?: Value;
+  /**
+   * Called with the document value on every change after initialization
+   * completes. It does not fire on open: plate's init pipeline (e.g. node id
+   * minting) mutates the document before the editor is ready, and those
+   * init-time changes are never emitted.
+   */
   onValueChange?: (v: Value) => void;
   onEditorReady?: (editor: PlateEditor) => void;
   /**
@@ -32,7 +38,15 @@ export interface BlockEditorProps {
 
 export const BlockEditor: React.FC<BlockEditorProps> = (props) => {
   const { initialValue, onValueChange, onEditorReady, readOnly, uploadConfig } = props;
-  const editor = usePlateEditor({ plugins, value: initialValue });
+  const initReadyRef = useRef(false);
+  const editor = usePlateEditor({
+    plugins,
+    value: initialValue,
+    onReady: () => {
+      // gate opens only after plate's init pipeline (value load + id minting)
+      initReadyRef.current = true;
+    },
+  });
 
   useEffect(() => {
     if (!editor) return;
@@ -54,7 +68,14 @@ export const BlockEditor: React.FC<BlockEditorProps> = (props) => {
   return (
     <div className="relative isolate">
       <UploadConfigProvider config={uploadConfig}>
-        <Plate editor={editor} onChange={({ value }) => onValueChange?.(value)} readOnly={readOnly}>
+        <Plate
+          editor={editor}
+          onChange={({ value }) => {
+            if (!initReadyRef.current) return;
+            onValueChange?.(value);
+          }}
+          readOnly={readOnly}
+        >
           <PlateContent
             className="size-full px-16 pt-4 pb-72 text-base sm:px-[max(64px,calc(50%-350px))]"
             placeholder="Type your amazing content here..."

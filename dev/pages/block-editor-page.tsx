@@ -41,6 +41,9 @@ export function BlockEditorPage() {
         uploadConfig={uploadConfig}
         initialValue={initialValue}
         readOnly={readOnly}
+        onValueChange={(value) => {
+          console.log("onValueChange fired, blocks:", value.length, value);
+        }}
         onEditorReady={(editor) => {
           editorRef.current = editor;
         }}
