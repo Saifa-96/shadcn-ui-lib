@@ -18,6 +18,11 @@ export interface BlockEditorProps {
   onValueChange?: (v: Value) => void;
   onEditorReady?: (editor: PlateEditor) => void;
   /**
+   * Whether the editor is read-only. When true, content is not editable and
+   * all interactive controls (toolbars, drag handles, table controls) hide.
+   */
+  readOnly?: boolean;
+  /**
    * Upload configuration. Required: image uploads (picker, paste, drop) are
    * always enabled. Pass a stable reference (module const or memoized) to
    * avoid re-syncing plugin options on every render.
@@ -26,7 +31,7 @@ export interface BlockEditorProps {
 }
 
 export const BlockEditor: React.FC<BlockEditorProps> = (props) => {
-  const { initialValue, onValueChange, onEditorReady, uploadConfig } = props;
+  const { initialValue, onValueChange, onEditorReady, readOnly, uploadConfig } = props;
   const editor = usePlateEditor({ plugins, value: initialValue });
 
   useEffect(() => {
@@ -49,7 +54,11 @@ export const BlockEditor: React.FC<BlockEditorProps> = (props) => {
   return (
     <div className="relative isolate">
       <UploadConfigProvider config={uploadConfig}>
-        <Plate editor={editor} onChange={({ value }) => onValueChange?.(value)}>
+        <Plate
+          editor={editor}
+          onChange={({ value }) => onValueChange?.(value)}
+          readOnly={readOnly}
+        >
           <PlateContent
             className="size-full px-16 pt-4 pb-72 text-base sm:px-[max(64px,calc(50%-350px))]"
             placeholder="Type your amazing content here..."

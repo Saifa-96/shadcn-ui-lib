@@ -1,14 +1,18 @@
 import type { SlateEditor, Value } from "platejs";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { BlockEditor, type UploadConfig } from "@/components/block-editor/editor";
 import { withAgentEdit } from "@/components/block-editor/with-agent-edit";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
 export function BlockEditorPage() {
   const editorRef = useRef<SlateEditor | null>(null);
+  const [readOnly, setReadOnly] = useState(false);
 
   return (
     <div className="space-y-4">
-      <button
+      <div className="flex items-center gap-4">
+        <button
         type="button"
         className="rounded bg-primary px-3 py-1.5 text-sm text-primary-foreground"
         onClick={() => {
@@ -28,9 +32,15 @@ export function BlockEditorPage() {
       >
         Agent Edit: Insert Paragraph
       </button>
+        <div className="flex items-center space-x-2">
+          <Switch id="read-only" checked={readOnly} onCheckedChange={setReadOnly} />
+          <Label htmlFor="read-only">Read Only</Label>
+        </div>
+      </div>
       <BlockEditor
         uploadConfig={uploadConfig}
         initialValue={initialValue}
+        readOnly={readOnly}
         onEditorReady={(editor) => {
           editorRef.current = editor;
         }}
