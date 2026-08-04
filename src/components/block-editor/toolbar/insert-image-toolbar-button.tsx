@@ -44,9 +44,6 @@ export function InsertImageToolbarButton() {
   return (
     <>
       <ToolbarSplitButton
-        onClick={() => {
-          openFilePicker();
-        }}
         onKeyDown={(e) => {
           if (e.key === "ArrowDown") {
             e.preventDefault();
@@ -55,16 +52,19 @@ export function InsertImageToolbarButton() {
         }}
         pressed={open}
       >
-        <ToolbarSplitButtonPrimary>
+        <ToolbarSplitButtonPrimary onClick={() => openFilePicker()}>
           <ImageIcon className="size-4" />
         </ToolbarSplitButtonPrimary>
 
         <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
-          <DropdownMenuTrigger>
-            <ToolbarSplitButtonSecondary />
-          </DropdownMenuTrigger>
+          <DropdownMenuTrigger nativeButton={false} render={<ToolbarSplitButtonSecondary />} />
 
-          <DropdownMenuContent onClick={(e) => e.stopPropagation()} align="start" alignOffset={-32}>
+          <DropdownMenuContent
+            className="w-auto!"
+            onClick={(e) => e.stopPropagation()}
+            align="start"
+            alignOffset={-32}
+          >
             <DropdownMenuGroup>
               <DropdownMenuItem onClick={() => openFilePicker()}>
                 <ImageIcon className="size-4" />

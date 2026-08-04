@@ -13,25 +13,25 @@ export function BlockEditorPage() {
     <div className="space-y-4">
       <div className="flex items-center gap-4">
         <button
-        type="button"
-        className="rounded bg-primary px-3 py-1.5 text-sm text-primary-foreground"
-        onClick={() => {
-          const editor = editorRef.current;
-          if (!editor) return;
-          const result = withAgentEdit(editor, () => {
-            editor.tf.insertNodes(
-              {
-                type: "p",
-                children: [{ text: "🤖 This paragraph was inserted by withAgentEdit!" }],
-              },
-              { at: [editor.children.length] },
-            );
-          });
-          console.log("withAgentEdit result:", result);
-        }}
-      >
-        Agent Edit: Insert Paragraph
-      </button>
+          type="button"
+          className="rounded bg-primary px-3 py-1.5 text-sm text-primary-foreground"
+          onClick={() => {
+            const editor = editorRef.current;
+            if (!editor) return;
+            const result = withAgentEdit(editor, () => {
+              editor.tf.insertNodes(
+                {
+                  type: "p",
+                  children: [{ text: "🤖 This paragraph was inserted by withAgentEdit!" }],
+                },
+                { at: [editor.children.length] },
+              );
+            });
+            console.log("withAgentEdit result:", result);
+          }}
+        >
+          Agent Edit: Insert Paragraph
+        </button>
         <div className="flex items-center space-x-2">
           <Switch id="read-only" checked={readOnly} onCheckedChange={setReadOnly} />
           <Label htmlFor="read-only">Read Only</Label>

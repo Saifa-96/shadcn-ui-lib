@@ -41,11 +41,9 @@ export function BulletedListToolbarButton() {
       </ToolbarSplitButtonPrimary>
 
       <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
-        <DropdownMenuTrigger>
-          <ToolbarSplitButtonSecondary />
-        </DropdownMenuTrigger>
+        <DropdownMenuTrigger nativeButton={false} render={<ToolbarSplitButtonSecondary />} />
 
-        <DropdownMenuContent align="start" alignOffset={-32}>
+        <DropdownMenuContent className="w-auto!" align="start" alignOffset={-32}>
           <DropdownMenuGroup>
             <DropdownMenuItem
               onClick={() => toggleList(editor, { listStyleType: ListStyleType.Disc })}
@@ -105,11 +103,9 @@ export function NumberedListToolbarButton() {
       </ToolbarSplitButtonPrimary>
 
       <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
-        <DropdownMenuTrigger>
-          <ToolbarSplitButtonSecondary />
-        </DropdownMenuTrigger>
+        <DropdownMenuTrigger nativeButton={false} render={<ToolbarSplitButtonSecondary />} />
 
-        <DropdownMenuContent align="start" alignOffset={-32}>
+        <DropdownMenuContent className="w-auto!" align="start" alignOffset={-32}>
           <DropdownMenuGroup>
             <DropdownMenuItem
               onSelect={() => toggleList(editor, { listStyleType: ListStyleType.Decimal })}

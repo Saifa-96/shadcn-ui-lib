@@ -54,11 +54,7 @@ export const BlockEditor: React.FC<BlockEditorProps> = (props) => {
   return (
     <div className="relative isolate">
       <UploadConfigProvider config={uploadConfig}>
-        <Plate
-          editor={editor}
-          onChange={({ value }) => onValueChange?.(value)}
-          readOnly={readOnly}
-        >
+        <Plate editor={editor} onChange={({ value }) => onValueChange?.(value)} readOnly={readOnly}>
           <PlateContent
             className="size-full px-16 pt-4 pb-72 text-base sm:px-[max(64px,calc(50%-350px))]"
             placeholder="Type your amazing content here..."
