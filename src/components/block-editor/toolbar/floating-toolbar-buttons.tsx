@@ -2,6 +2,8 @@ import { BoldIcon, ItalicIcon, UnderlineIcon } from "lucide-react";
 import { KEYS } from "platejs";
 import { useEditorReadOnly, useMarkToolbarButton, useMarkToolbarButtonState } from "platejs/react";
 
+import { CommentToolbarButton } from "../comments/comment-toolbar-button";
+import { SuggestionToolbarButton } from "../comments/suggestion-toolbar-button";
 import { ToolbarButton, ToolbarGroup } from "./toolbar";
 import { TurnIntoToolbarButton } from "./turn-into-toolbar-button";
 
@@ -25,6 +27,10 @@ export function FloatingToolbarButtons() {
         <MarkButton nodeType={KEYS.underline} tooltip="Underline (⌘+U)">
           <UnderlineIcon />
         </MarkButton>
+      </ToolbarGroup>
+      <ToolbarGroup>
+        <CommentToolbarButton />
+        <SuggestionToolbarButton />
       </ToolbarGroup>
     </>
   );

@@ -2,12 +2,24 @@ import { z } from "zod";
 
 // ─── Text (leaf) ─────────────────────────────────────────────────────────────
 
-const textNodeSchema = z.object({
-  text: z.string(),
-  bold: z.boolean().optional(),
-  italic: z.boolean().optional(),
-  underline: z.boolean().optional(),
+// Suggestion data attached to a text node by the suggestion plugin
+// (`suggestion_<id>` marks). Comment marks (`comment` / `comment_<id>`) are
+// plain booleans on the same nodes.
+const suggestionMarkSchema = z.object({
+  id: z.string(),
+  createdAt: z.number(),
+  type: z.enum(["insert", "remove", "update"]),
+  userId: z.string(),
 });
+
+const textNodeSchema = z
+  .object({
+    text: z.string(),
+    bold: z.boolean().optional(),
+    italic: z.boolean().optional(),
+    underline: z.boolean().optional(),
+  })
+  .catchall(z.union([z.boolean(), suggestionMarkSchema]));
 
 // ─── Inline children (text only, no inline elements yet) ─────────────────────
 

@@ -44,6 +44,9 @@ import {
   TableElement,
   TableRowElement,
 } from "./blocks/table-node";
+import { CommentKit } from "./comments/comment-kit";
+import { DiscussionKit } from "./comments/discussion-kit";
+import { SuggestionKit } from "./comments/suggestion-kit";
 import { DndPlugins } from "./dnd";
 import { FixedToolbarPlugin } from "./toolbar/fixed-toolbar-plugin";
 import { FloatingToolbarPlugin } from "./toolbar/floating-toolbar-plugin";
@@ -189,6 +192,11 @@ export const plugins: PluginConfig[] = [
     options: { disableEmptyPlaceholder: true },
     render: { afterEditable: MediaUploadToast, node: PlaceholderElement },
   }),
+
+  // collaboration (comments & suggestions)
+  ...DiscussionKit,
+  ...CommentKit,
+  ...SuggestionKit,
 
   // block interaction
   ...DndPlugins,
