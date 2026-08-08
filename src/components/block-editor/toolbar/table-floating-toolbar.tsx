@@ -167,13 +167,11 @@ function SingleCellToolbarContent() {
           )}
 
           <DropdownMenu modal={false}>
-            <DropdownMenuTrigger
-              render={
-                <ToolbarButton tooltip="Cell borders">
-                  <Grid2X2Icon />
-                </ToolbarButton>
-              }
-            />
+            <DropdownMenuTrigger asChild>
+              <ToolbarButton tooltip="Cell borders">
+                <Grid2X2Icon />
+              </ToolbarButton>
+            </DropdownMenuTrigger>
             <DropdownMenuPortal>
               <TableBordersDropdownMenuContent />
             </DropdownMenuPortal>

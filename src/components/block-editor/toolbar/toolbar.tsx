@@ -98,6 +98,7 @@ const toolbarButtonVariants = cva(
 interface ToolbarButtonProps
   extends Omit<React.ComponentPropsWithoutRef<typeof ToolbarToggleItem>, "asChild" | "value">,
     VariantProps<typeof toolbarButtonVariants> {
+  asChild?: boolean;
   isDropdown?: boolean;
   pressed?: boolean;
   tooltip?: React.ReactNode;
@@ -111,6 +112,7 @@ export function ToolbarButton({
   size = "sm",
   tooltip,
   variant,
+  asChild: _asChild,
   ...props
 }: ToolbarButtonProps) {
   const [mounted, setMounted] = React.useState(false);
@@ -154,7 +156,7 @@ export function ToolbarButton({
   if (tooltip && mounted) {
     return (
       <Tooltip>
-        <TooltipTrigger render={button} />
+        <TooltipTrigger asChild>{button}</TooltipTrigger>
         <TooltipContent>{tooltip}</TooltipContent>
       </Tooltip>
     );

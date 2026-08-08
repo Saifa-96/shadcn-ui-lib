@@ -1,13 +1,24 @@
-import type { SlateEditor, Value } from "platejs";
-import { useRef, useState } from "react";
+import type { Value } from "platejs";
+import { useState } from "react";
+import type { TDiscussion } from "@/components/block-editor/comments/discussion-kit";
 import { BlockEditor, type UploadConfig } from "@/components/block-editor/editor";
+import { type DiscussionData, useBlockEditor } from "@/components/block-editor/use-block-editor";
 import { withAgentEdit } from "@/components/block-editor/with-agent-edit";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 
 export function BlockEditorPage() {
-  const editorRef = useRef<SlateEditor | null>(null);
   const [readOnly, setReadOnly] = useState(false);
+  const { editor, setDiscussionData } = useBlockEditor({
+    initialValue,
+    discussionData,
+    onDiscussionChange: (data) => {
+      console.log("persist discussions:", data.discussions);
+      setPersistedDiscussionCount(data.discussions.length);
+    },
+  });
+  const [blockCount, setBlockCount] = useState(0);
+  const [persistedDiscussionCount, setPersistedDiscussionCount] = useState(0);
 
   return (
     <div className="space-y-4">
@@ -16,8 +27,6 @@ export function BlockEditorPage() {
           type="button"
           className="rounded bg-primary px-3 py-1.5 text-sm text-primary-foreground"
           onClick={() => {
-            const editor = editorRef.current;
-            if (!editor) return;
             const result = withAgentEdit(editor, () => {
               editor.tf.insertNodes(
                 {
@@ -37,20 +46,123 @@ export function BlockEditorPage() {
           <Label htmlFor="read-only">Read Only</Label>
         </div>
       </div>
+      <button
+        type="button"
+        className="rounded bg-primary px-3 py-1.5 text-sm text-primary-foreground"
+        onClick={() => setDiscussionData({ ...discussionData, currentUserId: "bob" })}
+      >
+        Switch current user to Bob
+      </button>
       <BlockEditor
+        editor={editor}
         uploadConfig={uploadConfig}
-        initialValue={initialValue}
         readOnly={readOnly}
-        onValueChange={(value) => {
-          console.log("onValueChange fired, blocks:", value.length, value);
-        }}
-        onEditorReady={(editor) => {
-          editorRef.current = editor;
-        }}
+        onValueChange={(value) => setBlockCount(value.length)}
       />
+      <p className="text-sm text-muted-foreground">Blocks: {blockCount}</p>
+      <p className="text-sm text-muted-foreground">
+        Discussions (persisted via onDiscussionChange): {persistedDiscussionCount}
+      </p>
     </div>
   );
 }
+
+// ─── Discussion mock data (injected via setDiscussionData) ─────────────────────
+
+const avatarUrl = (seed: string) => `https://api.dicebear.com/9.x/glass/svg?seed=${seed}`;
+
+const users = {
+  alice: { id: "alice", avatarUrl: avatarUrl("alice6"), name: "Alice" },
+  bob: { id: "bob", avatarUrl: avatarUrl("bob4"), name: "Bob" },
+  charlie: { id: "charlie", avatarUrl: avatarUrl("charlie2"), name: "Charlie" },
+};
+
+const discussions: TDiscussion[] = [
+  {
+    id: "discussion1",
+    comments: [
+      {
+        id: "comment1",
+        contentRich: [
+          {
+            children: [
+              {
+                text: "Comments are a great way to provide feedback and discuss changes.",
+              },
+            ],
+            type: "p",
+          },
+        ],
+        createdAt: new Date(Date.now() - 600_000),
+        discussionId: "discussion1",
+        isEdited: false,
+        userId: "charlie",
+      },
+      {
+        id: "comment2",
+        contentRich: [
+          {
+            children: [{ text: "Agreed! The link to the docs makes it easy to learn more." }],
+            type: "p",
+          },
+        ],
+        createdAt: new Date(Date.now() - 500_000),
+        discussionId: "discussion1",
+        isEdited: false,
+        userId: "bob",
+      },
+    ],
+    createdAt: new Date(),
+    documentContent: "comments",
+    isResolved: false,
+    userId: "charlie",
+  },
+  {
+    id: "discussion2",
+    comments: [
+      {
+        id: "comment1",
+        contentRich: [
+          {
+            children: [
+              {
+                text: "Nice demonstration of overlapping annotations with both comments and suggestions!",
+              },
+            ],
+            type: "p",
+          },
+        ],
+        createdAt: new Date(Date.now() - 300_000),
+        discussionId: "discussion2",
+        isEdited: false,
+        userId: "bob",
+      },
+      {
+        id: "comment2",
+        contentRich: [
+          {
+            children: [{ text: "This helps users understand how powerful the editor can be." }],
+            type: "p",
+          },
+        ],
+        createdAt: new Date(Date.now() - 200_000),
+        discussionId: "discussion2",
+        isEdited: false,
+        userId: "charlie",
+      },
+    ],
+    createdAt: new Date(),
+    documentContent: "overlapping",
+    isResolved: false,
+    userId: "bob",
+  },
+];
+
+const discussionData: DiscussionData = {
+  currentUserId: "alice",
+  discussions,
+  users,
+};
 
 // Simulated upload for the showcase: fake progress, resolves to a local object URL.
 const uploadConfig: UploadConfig = {
@@ -74,6 +186,78 @@ const initialValue: Value = [
   {
     type: "h1",
     children: [{ text: "Q3 Product Roadmap" }],
+  },
+  {
+    type: "h2",
+    children: [{ text: "Collaborative Editing" }],
+  },
+  {
+    type: "p",
+    children: [
+      { text: "Review and refine content seamlessly. Use " },
+      {
+        suggestion: true,
+        suggestion_playground1: {
+          id: "playground1",
+          createdAt: Date.now(),
+          type: "insert",
+          userId: "alice",
+        },
+        text: "suggestions",
+      },
+      {
+        suggestion: true,
+        suggestion_playground1: {
+          id: "playground1",
+          createdAt: Date.now(),
+          type: "insert",
+          userId: "alice",
+        },
+        text: " ",
+      },
+      {
+        suggestion: true,
+        suggestion_playground1: {
+          id: "playground1",
+          createdAt: Date.now(),
+          type: "insert",
+          userId: "alice",
+        },
+        text: "like this added text",
+      },
+      { text: " or to " },
+      {
+        suggestion: true,
+        suggestion_playground2: {
+          id: "playground2",
+          createdAt: Date.now(),
+          type: "remove",
+          userId: "bob",
+        },
+        text: "mark text for removal",
+      },
+      { text: ". Discuss changes using " },
+      { comment: true, comment_discussion1: true, text: "comments" },
+      {
+        comment: true,
+        comment_discussion1: true,
+        text: " on many text segments",
+      },
+      { text: ". You can even have " },
+      {
+        comment: true,
+        comment_discussion2: true,
+        suggestion: true,
+        suggestion_playground3: {
+          id: "playground3",
+          createdAt: Date.now(),
+          type: "insert",
+          userId: "charlie",
+        },
+        text: "overlapping",
+      },
+      { text: " annotations!" },
+    ],
   },
   {
     type: "p",

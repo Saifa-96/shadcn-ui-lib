@@ -32,6 +32,8 @@ import {
   useMarkToolbarButton,
   useMarkToolbarButtonState,
 } from "platejs/react";
+import { CommentToolbarButton } from "../comments/comment-toolbar-button";
+import { SuggestionToolbarButton } from "../comments/suggestion-toolbar-button";
 import { RedoToolbarButton, UndoToolbarButton } from "./history-toolbar-button";
 import { IndentToolbarButton, OutdentToolbarButton } from "./indent-toolbar-button";
 import { InsertImageToolbarButton } from "./insert-image-toolbar-button";
@@ -190,6 +192,10 @@ function TableToolbarButtons() {
         >
           <Trash2Icon />
         </ToolbarButton>
+      </ToolbarGroup>
+      <ToolbarGroup>
+        <CommentToolbarButton />
+        <SuggestionToolbarButton />
       </ToolbarGroup>
     </>
   );

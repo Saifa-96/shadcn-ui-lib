@@ -208,13 +208,7 @@ const DragHandle = React.memo(function DragHandle({
   return (
     <Tooltip>
       <TooltipTrigger
-        render={
-          <div
-            className="flex size-full items-center justify-center"
-            role="button"
-            data-plate-prevent-deselect
-          />
-        }
+        asChild
         onClick={(e) => {
           e.preventDefault();
           editor.getApi(BlockSelectionPlugin).blockSelection.focus();
@@ -286,7 +280,13 @@ const DragHandle = React.memo(function DragHandle({
           resetPreview();
         }}
       >
-        <GripVertical className="text-muted-foreground" />
+        <div
+          className="flex size-full items-center justify-center"
+          role="button"
+          data-plate-prevent-deselect
+        >
+          <GripVertical className="text-muted-foreground" />
+        </div>
       </TooltipTrigger>
       <TooltipContent>Drag to move</TooltipContent>
     </Tooltip>
