@@ -80,27 +80,40 @@ export function useBlockEditor(options: UseBlockEditorOptions = {}) {
   // Keep the returned discussionData in sync with in-editor mutations and
   // surface them to the caller for persistence. Subscribes to the plugin's
   // options store directly (not the Plate context, which is unavailable
-  // before the editor renders). Skip the mount baseline and the initial
-  // injection (same reference as the baseline).
+  // before the editor renders). Only `discussions` reference changes are
+  // watched — the initial injection updates three options one by one, and
+  // watching all three would fire on the intermediate state with empty
+  // discussions.
   const discussionStore = editor.getOptionsStore(discussionPlugin);
-  const currentUserId = discussionStore.useValue("currentUserId");
   const discussions = discussionStore.useValue("discussions");
-  const users = discussionStore.useValue("users");
   const firstSyncRef = React.useRef(true);
+  const lastNotifiedDiscussionsRef = React.useRef<TDiscussion[] | null>(null);
 
   React.useEffect(() => {
-    const data: DiscussionData = { currentUserId, discussions, users };
-
-    setDiscussionDataState(data);
-
     if (firstSyncRef.current) {
       firstSyncRef.current = false;
       return;
     }
-    if (baselineDiscussionsRef.current === discussions) return;
+    if (discussions === baselineDiscussionsRef.current) return;
 
+    // StrictMode replays effects with the stale pre-injection snapshot, so
+    // decide on the live store value, not the render-time `discussions`.
+    const latest = editor.getOption(discussionPlugin, "discussions");
+    if (latest === baselineDiscussionsRef.current) return;
+    if (latest === lastNotifiedDiscussionsRef.current) return;
+    lastNotifiedDiscussionsRef.current = latest;
+
+    // Read the sibling options fresh (not from the closure): the initial
+    // injection updates three options one by one, and this effect only fires
+    // once discussions actually changed.
+    const data: DiscussionData = {
+      currentUserId: editor.getOption(discussionPlugin, "currentUserId"),
+      discussions: latest,
+      users: editor.getOption(discussionPlugin, "users"),
+    };
+    setDiscussionDataState(data);
     onDiscussionChangeRef.current?.(data);
-  }, [currentUserId, discussions, users]);
+  }, [discussions, editor]);
 
   return { editor, discussionData, setDiscussionData: updateDiscussionData };
 }
