@@ -16,8 +16,8 @@ export function AlertDialogSection() {
     <section className="space-y-3">
       <h2 className="text-lg font-semibold text-foreground">Alert Dialog</h2>
       <AlertDialog>
-        <AlertDialogTrigger render={<Button variant="destructive" />}>
-          Delete Item
+        <AlertDialogTrigger asChild>
+          <Button variant="destructive">Delete Item</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>

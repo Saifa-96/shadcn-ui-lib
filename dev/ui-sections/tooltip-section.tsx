@@ -6,7 +6,9 @@ export function TooltipSection() {
     <section className="space-y-3">
       <h2 className="text-lg font-semibold text-foreground">Tooltip</h2>
       <Tooltip>
-        <TooltipTrigger render={<Button variant="outline" />}>Hover me</TooltipTrigger>
+        <TooltipTrigger asChild>
+          <Button variant="outline">Hover me</Button>
+        </TooltipTrigger>
         <TooltipContent>This is a tooltip</TooltipContent>
       </Tooltip>
     </section>
