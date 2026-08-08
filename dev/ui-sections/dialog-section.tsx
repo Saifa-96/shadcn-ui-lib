@@ -14,7 +14,9 @@ export function DialogSection() {
     <section className="space-y-3">
       <h2 className="text-lg font-semibold text-foreground">Dialog</h2>
       <Dialog>
-        <DialogTrigger render={<Button variant="outline" />}>Open Dialog</DialogTrigger>
+        <DialogTrigger asChild>
+          <Button variant="outline">Open Dialog</Button>
+        </DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Dialog Title</DialogTitle>

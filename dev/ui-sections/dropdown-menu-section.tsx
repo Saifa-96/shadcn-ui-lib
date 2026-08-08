@@ -14,7 +14,9 @@ export function DropdownMenuSection() {
     <section className="space-y-3">
       <h2 className="text-lg font-semibold text-foreground">Dropdown Menu</h2>
       <DropdownMenu>
-        <DropdownMenuTrigger render={<Button variant="outline" />}>Open Menu</DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline">Open Menu</Button>
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuGroup>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
