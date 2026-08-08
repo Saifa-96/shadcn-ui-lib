@@ -41,7 +41,9 @@ export function BulletedListToolbarButton() {
       </ToolbarSplitButtonPrimary>
 
       <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
-        <DropdownMenuTrigger nativeButton={false} render={<ToolbarSplitButtonSecondary />} />
+        <DropdownMenuTrigger asChild>
+          <ToolbarSplitButtonSecondary />
+        </DropdownMenuTrigger>
 
         <DropdownMenuContent className="w-auto!" align="start" alignOffset={-32}>
           <DropdownMenuGroup>
@@ -103,7 +105,9 @@ export function NumberedListToolbarButton() {
       </ToolbarSplitButtonPrimary>
 
       <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
-        <DropdownMenuTrigger nativeButton={false} render={<ToolbarSplitButtonSecondary />} />
+        <DropdownMenuTrigger asChild>
+          <ToolbarSplitButtonSecondary />
+        </DropdownMenuTrigger>
 
         <DropdownMenuContent className="w-auto!" align="start" alignOffset={-32}>
           <DropdownMenuGroup>

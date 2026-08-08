@@ -57,7 +57,9 @@ export function InsertImageToolbarButton() {
         </ToolbarSplitButtonPrimary>
 
         <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
-          <DropdownMenuTrigger nativeButton={false} render={<ToolbarSplitButtonSecondary />} />
+          <DropdownMenuTrigger asChild>
+            <ToolbarSplitButtonSecondary />
+          </DropdownMenuTrigger>
 
           <DropdownMenuContent
             className="w-auto!"

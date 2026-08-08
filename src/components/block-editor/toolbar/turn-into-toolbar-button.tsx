@@ -82,13 +82,11 @@ export function TurnIntoToolbarButton(props: React.ComponentProps<typeof Dropdow
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen} modal={false} {...props}>
-      <DropdownMenuTrigger
-        render={
-          <ToolbarButton className="min-w-[125px]" pressed={open} tooltip="Turn into" isDropdown>
-            {selectedItem.label}
-          </ToolbarButton>
-        }
-      />
+      <DropdownMenuTrigger asChild>
+        <ToolbarButton className="min-w-[125px]" pressed={open} tooltip="Turn into" isDropdown>
+          {selectedItem.label}
+        </ToolbarButton>
+      </DropdownMenuTrigger>
 
       <DropdownMenuContent className="ignore-click-outside/toolbar min-w-0" align="start">
         <ToolbarMenuGroup
