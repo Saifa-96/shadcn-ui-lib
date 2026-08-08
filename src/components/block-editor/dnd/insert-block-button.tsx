@@ -115,7 +115,7 @@ export function InsertBlockButton({ className, style }: InsertBlockButtonProps) 
   };
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className={className} style={style} data-plate-prevent-deselect>
           <Plus className="size-3.5 text-muted-foreground" />
