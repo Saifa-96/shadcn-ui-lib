@@ -29,16 +29,29 @@ const formSchema = z.object({
   bio: z.string().max(200, "Keep it under 200 characters"),
   role: z.string().min(1, "Pick a role"),
   skills: z.array(z.string()).min(1, "Pick at least one skill"),
+  newsletter: z.boolean(),
+  publicProfile: z.boolean(),
+  team: z.string().min(1, "Pick a team"),
+  volume: z.number().min(0).max(100),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
-const defaultValues: FormValues = { name: "", bio: "", role: "", skills: [] };
+const defaultValues: FormValues = {
+  name: "",
+  bio: "",
+  role: "",
+  skills: [],
+  newsletter: false,
+  publicProfile: false,
+  team: "",
+  volume: 50,
+};
 
 export function FormPage() {
   const form = useAppForm({
     defaultValues,
-    validators: { onChange: formSchema },
+    validators: { onSubmit: formSchema },
     onSubmit: ({ value }) => {
       toast.success("Submitted", { description: JSON.stringify(value) });
     },
@@ -78,8 +91,42 @@ export function FormPage() {
           {(field) => <field.BadgeToggleField label="Skills" options={SKILL_OPTIONS} />}
         </form.AppField>
 
+        <form.AppField name="team">
+          {(field) => (
+            <field.RadioGroupField
+              label="Team"
+              required
+              options={[
+                { value: "platform", label: "Platform" },
+                { value: "design", label: "Design" },
+                { value: "data", label: "Data" },
+              ]}
+            />
+          )}
+        </form.AppField>
+
+        <form.AppField name="volume">
+          {(field) => <field.SliderField label="Volume" min={0} max={100} step={5} />}
+        </form.AppField>
+
+        <form.AppField name="newsletter">
+          {(field) => (
+            <field.CheckboxField
+              label="Subscribe to the newsletter"
+              description="Occasional product updates, no spam."
+            />
+          )}
+        </form.AppField>
+
+        <form.AppField name="publicProfile">
+          {(field) => <field.SwitchField label="Public profile" />}
+        </form.AppField>
+
         <form.AppForm>
-          <form.SubmitButton pendingLabel="Submitting…">Submit</form.SubmitButton>
+          <div className="flex gap-2">
+            <form.SubmitButton pendingLabel="Submitting…">Submit</form.SubmitButton>
+            <form.ResetButton>Reset</form.ResetButton>
+          </div>
         </form.AppForm>
       </form>
     </div>
