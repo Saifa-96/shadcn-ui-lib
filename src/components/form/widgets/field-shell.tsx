@@ -58,7 +58,7 @@ export function FieldShell({
           <Loader2 className="size-3 animate-spin text-muted-foreground" aria-label="Validating" />
         )}
       </FieldLabel>
-      <div className="w-full min-w-0">{children}</div>
+      {children}
       {error ? (
         <FieldError>{error}</FieldError>
       ) : description ? (

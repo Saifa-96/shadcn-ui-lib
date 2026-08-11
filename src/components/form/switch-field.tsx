@@ -1,13 +1,22 @@
 "use client";
 
 import { useSelector } from "@tanstack/react-form";
+import { Loader2 } from "lucide-react";
 import type * as React from "react";
 
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field";
 import { Switch } from "@/components/ui/switch";
+import { cn } from "@/lib/utils";
 
 import { useFieldContext } from "./widgets/context";
 import { firstFieldError } from "./widgets/error-utils";
-import { type FieldCommonProps, FieldShell } from "./widgets/field-shell";
+import type { FieldCommonProps } from "./widgets/field-shell";
 
 type SwitchFieldProps = Omit<
   React.ComponentProps<typeof Switch>,
@@ -28,21 +37,32 @@ export function SwitchField({
   const error = firstFieldError(issues);
 
   return (
-    <FieldShell
-      id={field.name}
-      label={label}
-      required={required}
-      description={description}
-      error={error}
-      isValidating={isValidating}
-      className={className}
-    >
+    <Field orientation="horizontal" className={cn("gap-2", className)}>
       <Switch
         id={field.name}
         checked={field.state.value ?? false}
         onCheckedChange={(checked) => field.handleChange(checked)}
         {...switchProps}
       />
-    </FieldShell>
+      <FieldContent>
+        <FieldLabel htmlFor={field.name} className="items-center gap-1.5">
+          {label}
+          {required && (
+            <>
+              <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full bg-destructive" />
+              <span className="sr-only">(required)</span>
+            </>
+          )}
+          {isValidating && (
+            <Loader2
+              className="size-3 animate-spin text-muted-foreground"
+              aria-label="Validating"
+            />
+          )}
+        </FieldLabel>
+        {description && <FieldDescription>{description}</FieldDescription>}
+        {error && <FieldError>{error}</FieldError>}
+      </FieldContent>
+    </Field>
   );
 }

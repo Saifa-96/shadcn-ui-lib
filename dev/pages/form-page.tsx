@@ -33,6 +33,7 @@ const formSchema = z.object({
   publicProfile: z.boolean(),
   team: z.string().min(1, "Pick a team"),
   volume: z.number().min(0).max(100),
+  startDate: z.date().min(new Date("2025-01-01"), "Pick a date in 2025 or later").optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -46,6 +47,7 @@ const defaultValues: FormValues = {
   publicProfile: false,
   team: "",
   volume: 50,
+  startDate: undefined,
 };
 
 export function FormPage() {
@@ -107,6 +109,12 @@ export function FormPage() {
 
         <form.AppField name="volume">
           {(field) => <field.SliderField label="Volume" min={0} max={100} step={5} />}
+        </form.AppField>
+
+        <form.AppField name="startDate">
+          {(field) => (
+            <field.DateField label="Start date" required placeholder="Pick a start date" />
+          )}
         </form.AppField>
 
         <form.AppField name="newsletter">
