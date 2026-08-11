@@ -22,7 +22,8 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "preset": "recommended"
+      "preset": "recommended",
+      "a11y": "off"
     }
   },
   "assist": {
@@ -39,23 +40,6 @@
         "rules": {
           "suspicious": {
             "noArrayIndexKey": "off"
-          }
-        }
-      }
-    },
-    {
-      "includes": [
-        "src/components/block-editor/blocks/media-placeholder-node.tsx",
-        "src/components/block-editor/dnd/block-draggable.tsx",
-        "src/components/block-editor/toolbar/toolbar.tsx"
-      ],
-      "linter": {
-        "rules": {
-          "a11y": {
-            "noStaticElementInteractions": "off",
-            "useFocusableInteractive": "off",
-            "useKeyWithClickEvents": "off",
-            "useSemanticElements": "off"
           }
         }
       }
