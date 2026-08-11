@@ -17,7 +17,7 @@ export function BlockEditorPage() {
       setPersistedDiscussionCount(data.discussions.length);
     },
   });
-  const [blockCount, setBlockCount] = useState(0);
+  const [blockCount, setBlockCount] = useState(() => initialValue.length);
   const [persistedDiscussionCount, setPersistedDiscussionCount] = useState(0);
 
   return (

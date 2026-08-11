@@ -18,6 +18,15 @@ export type { PlateEditor };
 export interface BlockEditorProps {
   /** Editor instance from {@link useBlockEditor}. */
   editor: PlateEditor;
+  /**
+   * Called whenever the document value changes (not on selection-only changes
+   * like focus or cursor moves).
+   *
+   * Pass a stable reference — memoize the callback (e.g. `useCallback`) or
+   * define it at module scope. A new function identity on every parent render
+   * defeats `<Plate>`'s internal prop memo and re-renders the whole editor
+   * subtree, so keep the callback cached.
+   */
   onValueChange?: (v: Value) => void;
   /**
    * Whether the editor is read-only. When true, content is not editable and
@@ -52,7 +61,11 @@ export const BlockEditor: React.FC<BlockEditorProps> = ({
   return (
     <div className="relative isolate">
       <UploadConfigProvider config={uploadConfig}>
-        <Plate editor={editor} onChange={({ value }) => onValueChange?.(value)} readOnly={readOnly}>
+        <Plate
+          editor={editor}
+          onValueChange={({ value }) => onValueChange?.(value)}
+          readOnly={readOnly}
+        >
           <PlateContent
             className="size-full px-16 pt-4 pb-72 text-base sm:px-[max(64px,calc(50%-350px))]"
             placeholder="Type your amazing content here..."

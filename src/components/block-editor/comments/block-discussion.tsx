@@ -32,12 +32,6 @@ const BlockCommentContent = ({ children, element }: PlateElementProps) => {
   const draftCommentNode = isTopLevelBlock
     ? commentsApi.node({ at: blockPath, isDraft: true })
     : undefined;
-  const commentNodes = isTopLevelBlock ? [...commentsApi.nodes({ at: blockPath })] : [];
-  const suggestionNodes = isTopLevelBlock
-    ? [...editor.getApi(SuggestionPlugin).suggestion.nodes({ at: blockPath })].filter(
-        ([node]) => !node[getTransientSuggestionKey()],
-      )
-    : [];
   const { resolvedDiscussions, resolvedSuggestions } = useBlockDiscussionItems(blockPath);
 
   const suggestionsCount = resolvedSuggestions.length;
@@ -77,17 +71,20 @@ const BlockCommentContent = ({ children, element }: PlateElementProps) => {
     let activeNode: NodeEntry | undefined;
 
     if (activeSuggestion) {
-      activeNode = suggestionNodes.find(
-        ([node]) =>
-          editor.getApi(SuggestionPlugin).suggestion.nodeId(node) === activeSuggestion.suggestionId,
-      );
+      activeNode = [...editor.getApi(SuggestionPlugin).suggestion.nodes({ at: blockPath })]
+        .filter(([node]) => !node[getTransientSuggestionKey()])
+        .find(
+          ([node]) =>
+            editor.getApi(SuggestionPlugin).suggestion.nodeId(node) ===
+            activeSuggestion.suggestionId,
+        );
     }
 
     if (activeCommentId) {
       if (activeCommentId === getDraftCommentKey()) {
         activeNode = draftCommentNode;
       } else {
-        activeNode = commentNodes.find(
+        activeNode = [...commentsApi.nodes({ at: blockPath })].find(
           ([node]) => editor.getApi(commentPlugin).comment.nodeId(node) === activeCommentId,
         );
       }
@@ -98,16 +95,7 @@ const BlockCommentContent = ({ children, element }: PlateElementProps) => {
     // Fixes plate-ui's own popover-anchor bug where the first open renders
     // with a null anchor.
     setAnchorElement(activeNode ? (editor.api.toDOMNode(activeNode[0]) ?? null) : null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    open,
-    activeSuggestion,
-    activeCommentId,
-    editor.api,
-    suggestionNodes,
-    draftCommentNode,
-    commentNodes,
-  ]);
+  }, [open, activeSuggestion, activeCommentId, draftCommentNode]);
   if (!isTopLevelBlock) return <>{children}</>;
 
   if (suggestionsCount + resolvedDiscussions.length === 0 && !draftCommentNode)
