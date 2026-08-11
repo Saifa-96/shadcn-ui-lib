@@ -1,11 +1,11 @@
 # shadcn-ui-lib
 
-Internal UI component library built on [shadcn/ui](https://ui.shadcn.com/) + [Base UI](https://base-ui.com/) + Tailwind CSS v4.
+Internal UI component library built on [shadcn/ui](https://ui.shadcn.com/) + [Radix UI](https://www.radix-ui.com/) + Tailwind CSS v4.
 
 ## How it works
 
 - Components are pre-built as ESM with full type declarations.
-- All dependencies (Base UI, platejs, etc.) are bundled — consumers only need to install peer dependencies.
+- All dependencies (Radix UI, platejs, etc.) are bundled — consumers only need to install peer dependencies.
 - Multi-entry build with `sideEffects: false` enables tree-shaking: only imported components end up in your bundle.
 - Theme variables and base styles are exported via `src/styles/globals.css` — Tailwind utility classes are generated on demand by the consuming project.
 
@@ -54,7 +54,7 @@ pnpm typecheck  # runs tsc --noEmit
 
 ## Adding components
 
-Use the shadcn CLI with Base UI style:
+Use the shadcn CLI with Radix UI style (configured in `components.json`):
 
 ```bash
 pnpm dlx shadcn@latest add <component>
