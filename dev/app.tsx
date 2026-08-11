@@ -13,9 +13,9 @@ export function App() {
       <div className="min-h-screen">
         <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
           <div className="flex h-14 items-center gap-6 px-6">
-            <span className="text-sm font-bold text-foreground">ws-ui dev</span>
+            <span className="text-sm font-bold text-foreground">shadcn-ui-lib</span>
             <nav className="flex gap-1">
-              <NavButton to="/ui">UI Components</NavButton>
+              <NavButton to="/ui">UI</NavButton>
               <NavButton to="/chat">Chat</NavButton>
               <NavButton to="/block-editor">Block Editor</NavButton>
               <NavButton to="/form">Form</NavButton>

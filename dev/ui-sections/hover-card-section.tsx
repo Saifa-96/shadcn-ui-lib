@@ -7,7 +7,7 @@ export function HoverCardSection() {
       <h2 className="text-lg font-semibold text-foreground">Hover Card</h2>
       <HoverCard>
         <HoverCardTrigger asChild>
-          <Button variant="link">@ws-ui</Button>
+          <Button variant="link">@shadcn-ui-lib</Button>
         </HoverCardTrigger>
         <HoverCardContent>
           <p className="text-sm">Internal UI component library for the workspace.</p>
