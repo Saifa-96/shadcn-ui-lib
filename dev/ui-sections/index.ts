@@ -15,6 +15,7 @@ export { DialogSection } from "./dialog-section";
 export { DirectionSection } from "./direction-section";
 export { DropdownMenuSection } from "./dropdown-menu-section";
 export { EmptySection } from "./empty-section";
+export { FieldSection } from "./field-section";
 export { HoverCardSection } from "./hover-card-section";
 export { InputSection } from "./input-section";
 export { ItemSection } from "./item-section";

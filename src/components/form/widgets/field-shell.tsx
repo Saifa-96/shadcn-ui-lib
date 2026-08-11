@@ -1,7 +1,7 @@
 import { Loader2 } from "lucide-react";
 import type * as React from "react";
 
-import { Label } from "@/components/ui/label";
+import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
 import { cn } from "@/lib/utils";
 
 /**
@@ -41,11 +41,13 @@ export function FieldShell({
   associateLabel = true,
 }: FieldShellProps) {
   return (
-    <div className={cn("space-y-2", className)}>
-      <div className="flex items-center gap-1.5">
-        <Label id={`${id}-label`} htmlFor={associateLabel ? id : undefined}>
-          {label}
-        </Label>
+    <Field className={cn("gap-2.5", className)}>
+      <FieldLabel
+        id={`${id}-label`}
+        htmlFor={associateLabel ? id : undefined}
+        className="items-center gap-1.5"
+      >
+        {label}
         {required && (
           <>
             <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full bg-destructive" />
@@ -55,13 +57,13 @@ export function FieldShell({
         {isValidating && (
           <Loader2 className="size-3 animate-spin text-muted-foreground" aria-label="Validating" />
         )}
-      </div>
+      </FieldLabel>
       {children}
       {error ? (
-        <p className="text-xs font-medium text-destructive">{error}</p>
+        <FieldError>{error}</FieldError>
       ) : description ? (
-        <p className="text-xs text-muted-foreground">{description}</p>
+        <FieldDescription>{description}</FieldDescription>
       ) : null}
-    </div>
+    </Field>
   );
 }
