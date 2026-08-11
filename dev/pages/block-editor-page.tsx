@@ -21,7 +21,7 @@ export function BlockEditorPage() {
   const [persistedDiscussionCount, setPersistedDiscussionCount] = useState(0);
 
   return (
-    <div className="space-y-4">
+    <div className="mx-auto max-w-6xl space-y-4">
       <div className="flex items-center gap-4">
         <button
           type="button"

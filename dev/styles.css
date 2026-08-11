@@ -1,3 +1,4 @@
 @import "../src/styles/globals.css";
+@import "../src/styles/scrollbar.css";
 @source "../src/**/*.{ts,tsx}";
 @source "./**/*.{ts,tsx}";

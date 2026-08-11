@@ -9,23 +9,26 @@ import { UiPage } from "./pages/ui-page";
 export function App() {
   return (
     <TooltipProvider>
-      <div className="mx-auto max-w-5xl p-8">
-        <h1 className="text-2xl font-bold text-foreground">ws-ui dev</h1>
+      <div className="min-h-screen">
+        <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
+          <div className="flex h-14 items-center gap-6 px-6">
+            <span className="text-sm font-bold text-foreground">ws-ui dev</span>
+            <nav className="flex gap-1">
+              <NavButton to="/ui">UI Components</NavButton>
+              <NavButton to="/block-editor">Block Editor</NavButton>
+              <NavButton to="/form">Form</NavButton>
+            </nav>
+          </div>
+        </header>
 
-        <nav className="mt-4 flex gap-1 border-b border-border">
-          <NavButton to="/ui">UI Components</NavButton>
-          <NavButton to="/block-editor">Block Editor</NavButton>
-          <NavButton to="/form">Form</NavButton>
-        </nav>
-
-        <div className="mt-8">
+        <main className="px-6 py-8">
           <Routes>
             <Route path="/" element={<Navigate to="/ui" replace />} />
             <Route path="/ui" element={<UiPage />} />
             <Route path="/block-editor" element={<BlockEditorPage />} />
             <Route path="/form" element={<FormPage />} />
           </Routes>
-        </div>
+        </main>
       </div>
 
       <Toaster />
@@ -43,10 +46,8 @@ function NavButton({ to, children }: NavButtonProps) {
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `px-3 py-2 text-sm font-medium transition-colors ${
-          isActive
-            ? "border-b-2 border-primary text-foreground"
-            : "text-muted-foreground hover:text-foreground"
+        `rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+          isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
         }`
       }
     >

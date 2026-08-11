@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
   AccordionSection,
@@ -74,38 +73,36 @@ const SECTIONS = [
 
 export function UiPage() {
   return (
-    <div className="relative mx-auto max-w-3xl">
-      <nav className="absolute top-0 -left-60 hidden h-full w-48 xl:block">
-        <Card className="sticky top-8 gap-0 py-3">
-          <CardHeader className="px-3">
-            <CardTitle className="text-sm">Components</CardTitle>
-          </CardHeader>
-          <CardContent className="px-3">
-            <ul className="space-y-0.5">
-              {SECTIONS.map((section) => (
-                <li key={section.id}>
-                  <a
-                    href={`#${section.id}`}
-                    className="block rounded-md px-2 py-1 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-                  >
-                    {section.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      </nav>
+    <div className="flex items-start">
+      <aside className="fixed bottom-0 left-0 top-14 z-30 hidden w-48 flex-col border-r border-border lg:flex">
+        <p className="shrink-0 px-3 py-3 text-sm font-medium text-foreground">Components</p>
+        <div className="min-h-0 flex-1 overflow-y-auto">
+          <ul className="space-y-0.5 px-2 pb-4">
+            {SECTIONS.map((section) => (
+              <li key={section.id}>
+                <a
+                  href={`#${section.id}`}
+                  className="block rounded-md px-2 py-1 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                >
+                  {section.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
 
-      <div className="space-y-8">
-        {SECTIONS.map((section, index) => (
-          <React.Fragment key={section.id}>
-            <section id={section.id} className="scroll-mt-8">
-              <section.Component />
-            </section>
-            {index < SECTIONS.length - 1 && <Separator />}
-          </React.Fragment>
-        ))}
+      <div className="ml-48 min-w-0 flex-1">
+        <div className="mx-auto max-w-3xl space-y-8">
+          {SECTIONS.map((section, index) => (
+            <React.Fragment key={section.id}>
+              <section id={section.id} className="scroll-mt-20">
+                <section.Component />
+              </section>
+              {index < SECTIONS.length - 1 && <Separator />}
+            </React.Fragment>
+          ))}
+        </div>
       </div>
     </div>
   );
