@@ -15,6 +15,10 @@
       "types": "./dist/block-editor.d.ts",
       "import": "./dist/block-editor.js"
     },
+    "./form": {
+      "types": "./dist/form.d.ts",
+      "import": "./dist/form.js"
+    },
     "./lib": {
       "types": "./dist/lib.d.ts",
       "import": "./dist/lib.js"
