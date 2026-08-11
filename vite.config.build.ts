@@ -36,7 +36,6 @@ export default defineConfig({
   build: {
     lib: {
       entry: {
-        index: resolve(__dirname, "src/index.ts"),
         ui: resolve(__dirname, "src/ui.ts"),
         "block-editor": resolve(__dirname, "src/block-editor.ts"),
         form: resolve(__dirname, "src/form.ts"),
