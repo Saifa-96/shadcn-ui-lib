@@ -80,6 +80,7 @@
     "@platejs/table": "^53.0.9",
     "@radix-ui/react-popover": "^1.1.23",
     "@radix-ui/react-toolbar": "^1.1.19",
+    "@shadcn/react": "^0.3.0",
     "@udecode/cn": "^52.3.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
