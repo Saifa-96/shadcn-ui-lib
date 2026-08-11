@@ -68,67 +68,77 @@ export function FormPage() {
           form.handleSubmit();
         }}
       >
-        <form.AppField name="name">
-          {(field) => <field.TextField label="Name" required placeholder="Ada Lovelace" />}
-        </form.AppField>
+        <form.FieldSet legend="Profile" description="Fill in your profile information.">
+          <form.FieldGroup>
+            <form.AppField name="name">
+              {(field) => <field.TextField label="Name" required placeholder="Ada Lovelace" />}
+            </form.AppField>
 
-        <form.AppField name="bio">
-          {(field) => (
-            <field.TextareaField label="Bio" description="Optional. 200 characters max." />
-          )}
-        </form.AppField>
+            <form.AppField name="bio">
+              {(field) => (
+                <field.TextareaField label="Bio" description="Optional. 200 characters max." />
+              )}
+            </form.AppField>
 
-        <form.AppField name="role">
-          {(field) => (
-            <field.SelectField
-              label="Role"
-              required
-              placeholder="Pick a role"
-              groups={ROLE_GROUPS}
-            />
-          )}
-        </form.AppField>
+            <form.AppField name="role">
+              {(field) => (
+                <field.SelectField
+                  label="Role"
+                  required
+                  placeholder="Pick a role"
+                  groups={ROLE_GROUPS}
+                />
+              )}
+            </form.AppField>
 
-        <form.AppField name="skills">
-          {(field) => <field.BadgeToggleField label="Skills" options={SKILL_OPTIONS} />}
-        </form.AppField>
+            <form.AppField name="skills">
+              {(field) => <field.BadgeToggleField label="Skills" options={SKILL_OPTIONS} />}
+            </form.AppField>
+          </form.FieldGroup>
+        </form.FieldSet>
 
-        <form.AppField name="team">
-          {(field) => (
-            <field.RadioGroupField
-              label="Team"
-              required
-              options={[
-                { value: "platform", label: "Platform" },
-                { value: "design", label: "Design" },
-                { value: "data", label: "Data" },
-              ]}
-            />
-          )}
-        </form.AppField>
+        <form.FieldSet legend="Preferences" description="Tune your workspace.">
+          <form.FieldGroup>
+            <form.AppField name="team">
+              {(field) => (
+                <field.RadioGroupField
+                  label="Team"
+                  required
+                  options={[
+                    { value: "platform", label: "Platform" },
+                    { value: "design", label: "Design" },
+                    { value: "data", label: "Data" },
+                  ]}
+                />
+              )}
+            </form.AppField>
 
-        <form.AppField name="volume">
-          {(field) => <field.SliderField label="Volume" min={0} max={100} step={5} />}
-        </form.AppField>
+            <form.AppField name="volume">
+              {(field) => <field.SliderField label="Volume" min={0} max={100} step={5} />}
+            </form.AppField>
 
-        <form.AppField name="startDate">
-          {(field) => (
-            <field.DateField label="Start date" required placeholder="Pick a start date" />
-          )}
-        </form.AppField>
+            <form.AppField name="startDate">
+              {(field) => (
+                <field.DateField label="Start date" required placeholder="Pick a start date" />
+              )}
+            </form.AppField>
 
-        <form.AppField name="newsletter">
-          {(field) => (
-            <field.CheckboxField
-              label="Subscribe to the newsletter"
-              description="Occasional product updates, no spam."
-            />
-          )}
-        </form.AppField>
+            <form.FieldSeparator>Notifications</form.FieldSeparator>
 
-        <form.AppField name="publicProfile">
-          {(field) => <field.SwitchField label="Public profile" />}
-        </form.AppField>
+            <form.AppField name="newsletter">
+              {(field) => (
+                <field.CheckboxField
+                  label="Subscribe to the newsletter"
+                  description="Occasional product updates, no spam."
+                />
+              )}
+            </form.AppField>
+
+            <form.AppField name="publicProfile">
+              {(field) => <field.SwitchField label="Public profile" />}
+            </form.AppField>
+          </form.FieldGroup>
+        </form.FieldSet>
 
         <form.AppForm>
           <div className="flex gap-2">

@@ -3,6 +3,9 @@ import { createFormHook } from "@tanstack/react-form";
 import { BadgeToggleField } from "./badge-toggle-field";
 import { CheckboxField } from "./checkbox-field";
 import { DateField } from "./date-field";
+import { FormFieldGroup } from "./form-field-group";
+import { FormFieldSeparator } from "./form-field-separator";
+import { FormFieldSet } from "./form-field-set";
 import { RadioGroupField } from "./radio-group-field";
 import { ResetButton } from "./reset-button";
 import { SelectField } from "./select-field";
@@ -28,6 +31,9 @@ export const { useAppForm, withForm } = createFormHook({
   formComponents: {
     SubmitButton,
     ResetButton,
+    FieldSet: FormFieldSet,
+    FieldGroup: FormFieldGroup,
+    FieldSeparator: FormFieldSeparator,
   },
   fieldContext,
   formContext,
@@ -37,6 +43,9 @@ export type { BadgeToggleOption } from "./badge-toggle-field";
 export { BadgeToggleField } from "./badge-toggle-field";
 export { CheckboxField } from "./checkbox-field";
 export { DateField } from "./date-field";
+export { FormFieldGroup } from "./form-field-group";
+export { FormFieldSeparator } from "./form-field-separator";
+export { FormFieldSet } from "./form-field-set";
 export type { RadioGroupOption } from "./radio-group-field";
 export { RadioGroupField } from "./radio-group-field";
 export { ResetButton } from "./reset-button";
