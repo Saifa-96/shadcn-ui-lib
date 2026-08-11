@@ -1,6 +1,6 @@
 "use client";
 
-import { useStore } from "@tanstack/react-form";
+import { useSelector } from "@tanstack/react-form";
 import type * as React from "react";
 
 import {
@@ -53,8 +53,8 @@ export function SelectField({
   disabled,
 }: SelectFieldProps) {
   const field = useFieldContext<string>();
-  const issues = useStore(field.store, (state) => state.meta.errors);
-  const isValidating = useStore(field.store, (state) => state.meta.isValidating);
+  const issues = useSelector(field.store, (state) => state.meta.errors);
+  const isValidating = useSelector(field.store, (state) => state.meta.isValidating);
   const error = firstFieldError(issues);
 
   return (

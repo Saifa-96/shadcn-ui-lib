@@ -1,6 +1,6 @@
 "use client";
 
-import { useStore } from "@tanstack/react-form";
+import { useSelector } from "@tanstack/react-form";
 
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -35,8 +35,8 @@ export function BadgeToggleField({
   emptyText = "No options available.",
 }: BadgeToggleFieldProps) {
   const field = useFieldContext<string[]>();
-  const issues = useStore(field.store, (state) => state.meta.errors);
-  const isValidating = useStore(field.store, (state) => state.meta.isValidating);
+  const issues = useSelector(field.store, (state) => state.meta.errors);
+  const isValidating = useSelector(field.store, (state) => state.meta.isValidating);
   const error = firstFieldError(issues);
 
   const toggle = (value: string) => {
@@ -64,14 +64,16 @@ export function BadgeToggleField({
           options.map((option) => {
             const isOn = field.state.value.includes(option.value);
             return (
-              <button key={option.value} type="button" onClick={() => toggle(option.value)}>
-                <Badge
-                  variant={isOn ? "default" : "outline"}
-                  className={cn("cursor-pointer", !isOn && "opacity-70")}
-                >
+              <Badge
+                key={option.value}
+                asChild
+                variant={isOn ? "default" : "outline"}
+                className={cn("cursor-pointer", !isOn && "opacity-70")}
+              >
+                <button type="button" aria-pressed={isOn} onClick={() => toggle(option.value)}>
                   {option.label}
-                </Badge>
-              </button>
+                </button>
+              </Badge>
             );
           })
         )}
