@@ -53,12 +53,14 @@ export function BlockEditorPage() {
       >
         Switch current user to Bob
       </button>
-      <BlockEditor
-        editor={editor}
-        uploadConfig={uploadConfig}
-        readOnly={readOnly}
-        onValueChange={(value) => setBlockCount(value.length)}
-      />
+      <div className="h-[600px]">
+        <BlockEditor
+          editor={editor}
+          uploadConfig={uploadConfig}
+          readOnly={readOnly}
+          onValueChange={(value) => setBlockCount(value.length)}
+        />
+      </div>
       <p className="text-sm text-muted-foreground">Blocks: {blockCount}</p>
       <p className="text-sm text-muted-foreground">
         Discussions (persisted via onDiscussionChange): {persistedDiscussionCount}
