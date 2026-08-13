@@ -25,6 +25,7 @@ export default defineConfig({
     react(),
     dts({
       include: ["src"],
+      exclude: ["**/*.test.ts"],
       outDirs: "dist",
     }),
   ],
@@ -41,6 +42,7 @@ export default defineConfig({
         form: resolve(__dirname, "src/form.ts"),
         lib: resolve(__dirname, "src/lib.ts"),
         hooks: resolve(__dirname, "src/hooks.ts"),
+        "sandboxed-render": resolve(__dirname, "src/sandboxed-render.ts"),
         ...uiEntries,
       },
       formats: ["es"],

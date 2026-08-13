@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { BlockEditorPage } from "./pages/block-editor-page";
 import { ChatPage } from "./pages/chat-page";
 import { FormPage } from "./pages/form-page";
+import { SandboxedRenderPage } from "./pages/sandboxed-render-page";
 import { UiPage } from "./pages/ui-page";
 
 export function App() {
@@ -19,6 +20,7 @@ export function App() {
               <NavButton to="/chat">Chat</NavButton>
               <NavButton to="/block-editor">Block Editor</NavButton>
               <NavButton to="/form">Form</NavButton>
+              <NavButton to="/sandbox-render">Sandbox Render</NavButton>
             </nav>
           </div>
         </header>
@@ -30,6 +32,7 @@ export function App() {
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/block-editor" element={<BlockEditorPage />} />
             <Route path="/form" element={<FormPage />} />
+            <Route path="/sandbox-render" element={<SandboxedRenderPage />} />
           </Routes>
         </main>
       </div>

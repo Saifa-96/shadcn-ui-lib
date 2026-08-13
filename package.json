@@ -23,6 +23,10 @@
       "types": "./dist/hooks.d.ts",
       "import": "./dist/hooks.js"
     },
+    "./sandboxed-render": {
+      "types": "./dist/sandboxed-render.d.ts",
+      "import": "./dist/sandboxed-render.js"
+    },
     "./styles/*": "./src/styles/*"
   },
   "sideEffects": false,
@@ -36,6 +40,7 @@
     "build": "vite build --config vite.config.build.ts",
     "typecheck": "tsc --noEmit",
     "lint": "biome check",
+    "test": "vitest run",
     "format": "biome check --write"
   },
   "devDependencies": {
@@ -55,6 +60,7 @@
     "typescript": "^7.0.2",
     "vite": "^8.1.5",
     "vite-plugin-dts": "^5.0.3",
+    "vitest": "^4.1.10",
     "zod": "^4.4.3"
   },
   "peerDependencies": {
