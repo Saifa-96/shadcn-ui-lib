@@ -6,7 +6,16 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["**", "!**/*.css", "!dist", "!src/components/ui", "!src/hooks", "!src/lib"]
+    "includes": [
+      "**",
+      "!**/*.css",
+      "!dist",
+      "!src/components/ui",
+      "!src/hooks",
+      "!src/lib",
+      "!src/components/ppt-editor/bento",
+      "!.vscode"
+    ]
   },
   "formatter": {
     "enabled": true,

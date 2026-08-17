@@ -6,6 +6,7 @@ import { BlockEditorPage } from "./pages/block-editor-page";
 import { ChatPage } from "./pages/chat-page";
 import { FormPage } from "./pages/form-page";
 import { HooksPage } from "./pages/hooks-page";
+import { PptEditorPage } from "./pages/ppt-editor-page";
 import { SandboxedRenderPage } from "./pages/sandboxed-render-page";
 import { UiPage } from "./pages/ui-page";
 
@@ -23,6 +24,7 @@ export function App() {
               <NavButton to="/form">Form</NavButton>
               <NavButton to="/hooks">Hooks</NavButton>
               <NavButton to="/sandbox-render">Sandbox Render</NavButton>
+              <NavButton to="/ppt-editor">PPT Editor</NavButton>
             </nav>
           </div>
         </header>
@@ -36,6 +38,7 @@ export function App() {
             <Route path="/form" element={<FormPage />} />
             <Route path="/hooks" element={<HooksPage />} />
             <Route path="/sandbox-render" element={<SandboxedRenderPage />} />
+            <Route path="/ppt-editor" element={<PptEditorPage />} />
           </Routes>
         </main>
       </div>

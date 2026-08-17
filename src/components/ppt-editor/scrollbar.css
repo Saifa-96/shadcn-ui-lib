@@ -1,0 +1,41 @@
+/*
+ * Scrollbar styling for the bento editor iframe.
+ *
+ * Injected into the shell's <head> at build/bundle time (see bento-html.ts).
+ * Pure CSS on purpose: the iframe is a separate document, so the host app's
+ * Tailwind layers and CSS variables do not exist inside it — colors are
+ * hardcoded to the library's light theme (bento is color-scheme: only light).
+ *
+ * Every declaration carries `!important` so it beats bento's own scrollbar
+ * rules (higher-specificity selectors would otherwise win over this injected
+ * stylesheet).
+ */
+
+* {
+  scrollbar-width: thin !important;
+  scrollbar-color: oklch(0.922 0 0) transparent !important;
+}
+
+*::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: oklch(0.922 0 0) !important;
+  border-radius: 9999px !important;
+  border: 2px solid transparent !important;
+  background-clip: content-box !important;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: oklch(0.556 0 0) !important;
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent !important;
+}

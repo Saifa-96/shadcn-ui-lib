@@ -1,0 +1,27 @@
+/*
+ * Hides bento's built-in branding inside the editor iframe.
+ *
+ * Injected into the shell's <head> at bundle time (see bento-html.ts). These
+ * rules replace the bento-side "debrand" source edits for pure-CSS-hideable UI
+ * (logo, avatars, share, help, about, splash mark), so that diff stays out of
+ * the upstream-most-churned editor.ts. Elements remain in the DOM and their
+ * construction JS still runs — they are simply not visible.
+ *
+ * Every declaration carries `!important`: the injected <style> sits at the end
+ * of <head>, but bento's own rules (class selectors, nested layers) can still
+ * outweigh it, and an inline `display` would otherwise always win.
+ */
+
+.ed-logo,
+.ed-avatars,
+.ed-btn-share,
+.ed-btn-help,
+.ed-about-head,
+.ed-about-promo,
+.bs-mark,
+.bs-word,
+.ed-about-overlay,
+.ed-btn-update,
+.ed-filechip {
+  display: none !important;
+}

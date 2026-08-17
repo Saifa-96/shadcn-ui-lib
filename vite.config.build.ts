@@ -27,6 +27,7 @@ export default defineConfig({
       include: ["src"],
       exclude: ["**/*.test.ts"],
       outDirs: "dist",
+      copyDtsFiles: true,
     }),
   ],
   resolve: {
@@ -43,6 +44,7 @@ export default defineConfig({
         lib: resolve(__dirname, "src/lib.ts"),
         hooks: resolve(__dirname, "src/hooks.ts"),
         "sandboxed-render": resolve(__dirname, "src/sandboxed-render.ts"),
+        "ppt-editor": resolve(__dirname, "src/ppt-editor.ts"),
         ...uiEntries,
       },
       formats: ["es"],

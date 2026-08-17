@@ -1,6 +1,6 @@
 {
   "name": "shadcn-ui-lib",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "type": "module",
   "exports": {
     "./ui": {
@@ -26,6 +26,10 @@
     "./sandboxed-render": {
       "types": "./dist/sandboxed-render.d.ts",
       "import": "./dist/sandboxed-render.js"
+    },
+    "./ppt-editor": {
+      "types": "./dist/ppt-editor.d.ts",
+      "import": "./dist/ppt-editor.js"
     },
     "./styles/*": "./src/styles/*"
   },
@@ -95,6 +99,7 @@
     "date-fns": "^4.4.0",
     "input-otp": "^1.4.2",
     "next-themes": "^0.4.6",
+    "parse5": "^8.0.1",
     "platejs": "^53.2.4",
     "radix-ui": "^1.6.7",
     "react-day-picker": "^10.0.1",
