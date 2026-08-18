@@ -10,8 +10,14 @@
  * Every declaration carries `!important`: the injected <style> sits at the end
  * of <head>, but bento's own rules (class selectors, nested layers) can still
  * outweigh it, and an inline `display` would otherwise always win.
+ *
+ * #bento-splash is hidden entirely: the PptEditor component covers the boot
+ * period with its own skeleton instead, so bento's neutral loader
+ * (sp-ring/sp-bar, added by the bento-side debrand pass) never flashes
+ * between the skeleton lifting and the editor painting.
  */
 
+#bento-splash,
 .ed-logo,
 .ed-avatars,
 .ed-btn-share,
