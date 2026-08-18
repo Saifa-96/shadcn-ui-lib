@@ -12,16 +12,22 @@ const suggestionMarkSchema = z.object({
   userId: z.string(),
 });
 
-const textNodeSchema = z
+export const textNodeSchema = z
   .object({
     text: z.string(),
     bold: z.boolean().optional(),
     italic: z.boolean().optional(),
     underline: z.boolean().optional(),
   })
-  .catchall(z.union([z.boolean(), suggestionMarkSchema]));
+  // catchall admits extra marks: booleans (comments), suggestion objects,
+  // and strings (future string marks) — and keeps the inferred type
+  // constructible from literals (a string-only `text` prop must satisfy it)
+  .catchall(z.union([z.boolean(), z.string(), suggestionMarkSchema]));
 
 // ─── Inline children (text only, no inline elements yet) ─────────────────────
+
+/** Inline text node (leaf) as defined by {@link textNodeSchema}. */
+export type InlineText = z.infer<typeof textNodeSchema>;
 
 const inlineChildrenSchema = z.array(textNodeSchema).min(1);
 

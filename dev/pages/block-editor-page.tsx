@@ -2,6 +2,8 @@ import type { Value } from "platejs";
 import { useState } from "react";
 import type { TDiscussion } from "@/components/block-editor/comments/discussion-kit";
 import { BlockEditor, type UploadConfig } from "@/components/block-editor/editor";
+import { fromMarkdown, toMarkdown } from "@/components/block-editor/markdown";
+import { blockEditorValueSchema } from "@/components/block-editor/schema";
 import { type DiscussionData, useBlockEditor } from "@/components/block-editor/use-block-editor";
 import { withAgentEdit } from "@/components/block-editor/with-agent-edit";
 import { Label } from "@/components/ui/label";
@@ -65,7 +67,80 @@ export function BlockEditorPage() {
       <p className="text-sm text-muted-foreground">
         Discussions (persisted via onDiscussionChange): {persistedDiscussionCount}
       </p>
+
+      <MarkdownPanel editor={editor} />
     </div>
+  );
+}
+
+// ─── Markdown conversion panel ───────────────────────────────────────────────
+
+function MarkdownPanel({ editor }: { editor: ReturnType<typeof useBlockEditor>["editor"] }) {
+  const [md, setMd] = useState(
+    "# Heading\n\nHello **world** and *italics*\n\n- [x] done task\n- [ ] open task\n  - nested bullet\n\n1. first\n2. second\n\n> a quote\n\n![image alt](https://picsum.photos/seed/md/320/180)\n\n| K | V |\n| - | - |\n| a | 1 |\n",
+  );
+  const [status, setStatus] = useState("");
+
+  const exportMd = () => {
+    try {
+      const value = blockEditorValueSchema.parse(editor.children);
+      setMd(toMarkdown(value));
+      setStatus("editor → markdown ✓ (schema validated)");
+    } catch (error) {
+      setStatus(`export failed: ${String(error).slice(0, 200)}`);
+    }
+  };
+
+  const importMd = () => {
+    const value = fromMarkdown(md);
+    editor.tf.setValue(value);
+    setStatus("markdown → editor ✓");
+  };
+
+  const roundtrip = () => {
+    const stable = toMarkdown(fromMarkdown(md)) === md.replace(/\s+$/, "");
+    setStatus(
+      stable
+        ? "fromMarkdown(md) is a fixpoint of toMarkdown ✓"
+        : "not stable — compare textarea & editor",
+    );
+    if (!stable) setMd(toMarkdown(fromMarkdown(md)));
+  };
+
+  return (
+    <section className="space-y-2">
+      <div className="flex items-center gap-4">
+        <h2 className="text-sm font-semibold text-muted-foreground">Markdown helpers</h2>
+        <button
+          type="button"
+          className="rounded bg-primary px-3 py-1 text-sm text-primary-foreground"
+          onClick={exportMd}
+        >
+          Editor → Markdown
+        </button>
+        <button
+          type="button"
+          className="rounded bg-primary px-3 py-1 text-sm text-primary-foreground"
+          onClick={importMd}
+        >
+          Markdown → Editor
+        </button>
+        <button
+          type="button"
+          className="rounded border border-border px-3 py-1 text-sm text-foreground"
+          onClick={roundtrip}
+        >
+          Normalize
+        </button>
+        {status && <span className="text-xs text-muted-foreground">{status}</span>}
+      </div>
+      <textarea
+        className="h-64 w-full rounded-md border border-border bg-background p-3 font-mono text-xs"
+        value={md}
+        onChange={(e) => setMd(e.target.value)}
+        spellCheck={false}
+      />
+    </section>
   );
 }
 

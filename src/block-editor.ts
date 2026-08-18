@@ -1,6 +1,11 @@
 export type { TComment } from "./components/block-editor/comments/comment";
 export * from "./components/block-editor/editor";
-export { type BlockEditorValue, blockEditorValueSchema } from "./components/block-editor/schema";
+export { fromMarkdown, toMarkdown } from "./components/block-editor/markdown";
+export {
+  type BlockEditorValue,
+  blockEditorValueSchema,
+  type InlineText,
+} from "./components/block-editor/schema";
 export type {
   UploadConfig,
   UploadedFile,
