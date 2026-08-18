@@ -30,6 +30,18 @@ export function PptEditorPage() {
     setStatus(`serialized ${runtime.serialize().length} chars`);
   };
 
+  const exportDeck = async () => {
+    if (!runtime?.exportPptx) return;
+    const blob = await runtime.exportPptx();
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `${runtime.doc.title || "presentation"}.pptx`;
+    anchor.click();
+    URL.revokeObjectURL(url);
+    setStatus(`exported "${anchor.download}" (${Math.round(blob.size / 1024)} KB)`);
+  };
+
   return (
     <div className="mx-auto max-w-6xl space-y-4">
       <div>
@@ -59,6 +71,9 @@ export function PptEditorPage() {
         </button>
         <button type="button" onClick={serialize} disabled={!ready} className={BUTTON_PRIMARY}>
           Serialize
+        </button>
+        <button type="button" onClick={exportDeck} disabled={!ready} className={BUTTON_PRIMARY}>
+          Export PPTX
         </button>
         <button
           type="button"

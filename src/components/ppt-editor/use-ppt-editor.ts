@@ -23,6 +23,11 @@ export interface BentoRuntime {
   undo(): void;
   redo(): void;
   comments(): Comment[];
+  /**
+   * Export the deck as a .pptx blob (editor mode only — player/read-only
+   * docs mount no export). Implemented inside the bento runtime.
+   */
+  exportPptx?(): Promise<Blob>;
 }
 
 export interface UsePptEditorOptions {
